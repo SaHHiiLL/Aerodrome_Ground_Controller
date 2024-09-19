@@ -1,21 +1,21 @@
-#include <iostream>
 #include "raylib-cpp.hpp"
-#include "rlgl.h"
 #include "Game.h"
 
 
 int main(void) {
-    float screenWidth = 800;
-    float screenHeight = 450;
+    float screenWidth = 1920;
+    float screenHeight = 1080;
+
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE);
 
     raylib::Window window(screenWidth, screenHeight, "Aerodrome Ground Controller");
     SetTargetFPS(60);
 
     raylib::Camera2D camera = Camera2D();
-    raylib::Vector2 zero = raylib::Vector2(screenWidth/2, screenHeight/2);
 
     camera.SetZoom(1);
-    Game game = Game(&camera);
+    Game game = Game(&camera, &window);
 
     while (!window.ShouldClose())
     {
@@ -24,9 +24,11 @@ int main(void) {
         game.update();
 
         BeginDrawing();
+        {
             camera.BeginMode();
-                game.draw();
+            game.draw();
             camera.EndMode();
+        }
         EndDrawing();
     }
 

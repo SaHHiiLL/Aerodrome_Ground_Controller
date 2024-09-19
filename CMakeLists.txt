@@ -14,5 +14,8 @@ add_subdirectory(libs/raylib)
 add_executable(${PROJECT_NAME} src/main.cpp
         src/Game.cpp
         src/Game.h
+        src/GameObject.h
+        src/Runway.cpp
+        src/Runway.h
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp)
