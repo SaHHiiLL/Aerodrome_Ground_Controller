@@ -27,8 +27,7 @@ void Game::update() {
 
     // Zoom based on mouse wheel
     float wheel = GetMouseWheelMove();
-    if (wheel != 0)
-    {
+    if (wheel != 0) {
         raylib::Vector2 mouseWorldPos = this->camera->GetScreenToWorld(GetMousePosition());
 
         // Set the offset to where the mouse is
@@ -46,7 +45,7 @@ void Game::update() {
 
     if (IsKeyPressed(KEY_R)) {
         this->camera->SetZoom(1);
-        this->camera->SetTarget(raylib::Vector2(GetWindowPosition().x / 2, GetWindowPosition().y / 2 ));
+        this->camera->SetTarget(raylib::Vector2(0 , 0));
         this->camera->SetRotation(0);
     }
 
@@ -57,6 +56,6 @@ void Game::update() {
 
 Game::Game(raylib::Camera2D *cam, raylib::Window *window) {
     this->camera = cam;
-    this->game_objects.push_back(new Runway(166, 1508, raylib::Vector2(0, 0)));
+    this->game_objects.push_back(new Runway(187, 1500, raylib::Vector2(0, 1500)));
     this->window = window;
 }

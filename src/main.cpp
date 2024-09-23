@@ -1,13 +1,11 @@
-#include "raylib-cpp.hpp"
 #include "Game.h"
 
-
 int main(void) {
-    float screenWidth = 1920;
-    float screenHeight = 1080;
+    float screenWidth = 1920 / 2;
+    float screenHeight = 1080 / 2;
 
     SetConfigFlags(FLAG_MSAA_4X_HINT);
-    SetConfigFlags(FLAG_FULLSCREEN_MODE);
+    // SetConfigFlags(FLAG_FULLSCREEN_MODE);
 
     raylib::Window window(screenWidth, screenHeight, "Aerodrome Ground Controller");
     SetTargetFPS(60);

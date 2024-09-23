@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.7)
 project(Aerodrome_Ground_Controller C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Setting parameters for raylib
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
 set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
+
 
 add_subdirectory(libs/raylib-cpp-5.0.2)
 add_subdirectory(libs/raylib)

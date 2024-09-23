@@ -1,3 +1,5 @@
-cmake-build-debug
+cmake-build-*
 .idea
+.cache
 libs
+compile_commands.json
