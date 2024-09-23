@@ -1,24 +1,28 @@
 #pragma once
 
 #include <string>
-#include <utility>
-#include <vector>
 
+// Represents Coordinates from the real world
 class Coordinates {
 public:
-Coordinates(std::string vertical, std::string lateral) :
-        vertical(std::move(vertical)), lateral(std::move(lateral)) {
+    Coordinates(std::string vertical, std::string lateral);
+    Coordinates(float vertical, float lateral) : vertical(vertical), lateral(lateral) {};
+
+    // Creates a coord for "0, 0" 
+    Coordinates();
+
+    std::string to_string() {
+        std::string res;
+        res.push_back(' ');
+        res.append(std::to_string(this->vertical));
+        res.push_back(',');
+        res.push_back(' ');
+        res.append(std::to_string(this->lateral));
+        res.push_back(' ');
+        return res;
     }
 
-
-    std::vector<float> convert_google_earth();
-
 private:
-    std::string lateral;
-    std::string vertical;
-
-    int lateral_i;
-    int vertical_i;
-
-    float parse(std::string s);
+    float lateral;
+    float vertical;
 };

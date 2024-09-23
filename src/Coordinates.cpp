@@ -2,19 +2,14 @@
 #include <cassert>
 #include <cctype>
 #include <string>
-#include <vector>
-#include <iostream>
 #include "Coordinates.h"
 
 // Conveerts this messs 
 //      N053.49.49.450 W001.12.18.620
 // into 
 //      53.8304, -1.2052
-std::vector<float> Coordinates::convert_google_earth() {
-    return { this->parse(this->vertical), this->parse(this->lateral) };
-}
 
-float Coordinates::parse(std::string s) {
+float parse(std::string s) {
      // 1. loop over the string
     // 2. push the number forward
     std::string y;
@@ -44,6 +39,13 @@ float Coordinates::parse(std::string s) {
         assert(isdigit(x) && "INVALID CHAR - NOT A NUMBER");
         y.push_back(x);
     }
+    // convert the last part
     coords[3] = stof(y);
     return (float) neg * ( coords[0] + coords[1] / 60 + (coords[2] + (coords[3] / 1000)) / 3600);
+}
+
+
+Coordinates::Coordinates(std::string vertical, std::string lateral) {
+    this->lateral = parse(lateral);
+    this->vertical = parse(vertical);
 }
