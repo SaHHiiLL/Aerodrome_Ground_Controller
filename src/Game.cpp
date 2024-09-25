@@ -2,9 +2,11 @@
 // Created by Sahil on 9/18/24.
 //
 
+#include <iostream>
 #include "Game.h"
 #include "raylib-cpp.hpp"
 #include "Runway.h"
+#include "raylib.h"
 
 void Game::draw() {
     DrawRectangle(0, 0, 100, 100, GREEN);
@@ -44,9 +46,9 @@ void Game::update() {
     }
 
     if (IsKeyPressed(KEY_R)) {
-        this->camera->SetZoom(1);
-        this->camera->SetTarget(raylib::Vector2(0 , 0));
-        this->camera->SetRotation(0);
+        this->camera->target = raylib::Vector2(0, 0);
+        camera->offset = (Vector2){ GetScreenWidth()/2.0f, GetScreenHeight()/2.0f };
+        this->camera->zoom = 1;
     }
 
     for (auto & game_object : this->game_objects) {
@@ -56,6 +58,20 @@ void Game::update() {
 
 Game::Game(raylib::Camera2D *cam, raylib::Window *window) {
     this->camera = cam;
-    this->game_objects.push_back(new Runway(187, 1500, raylib::Vector2(0, 1500)));
+    // EGLC
+   this->game_objects.push_back(
+        new Runway(
+                Coordinates("N053.20.51.200", "W002.17.15.950"),
+                Coordinates("N053.21.40.750", "W002.15.33.410"),
+                Coordinates("N053.21.13.480", "W002.16.29.820")
+        )
+    );
+    this->game_objects.push_back(
+            new Runway(
+                    Coordinates("N053.19.55.110", "W002.18.38.380"),
+                    Coordinates("N053.20.53.350", "W002.16.37.950"),
+                    Coordinates("N053.21.13.480", "W002.16.29.820")
+            )
+    );
     this->window = window;
 }

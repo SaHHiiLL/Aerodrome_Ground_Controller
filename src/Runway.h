@@ -6,23 +6,24 @@
 #define AERODROME_GROUND_CONTROLLER_RUNWAY_H
 
 
-#include "raylib-cpp.hpp"
+#include "Coordinates.h"
 #include "GameObject.h"
 
 class Runway : public GameObject {
 public:
     Runway();
-    Runway(float runway_heading, int runway_length_meter, raylib::Vector2 runway_position);
+    Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref);
 
     void update() override;
 
     void draw() override;
+    void draw2();
 
 private:
     float runway_heading;
-    int runway_length_px;
-    int runway_lenght_meter;
-    raylib::Vector2 runway_position;
+
+    raylib::Vector2 runway_start_pos;
+    raylib::Vector2 runway_end_pos;
 };
 
 

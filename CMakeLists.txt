@@ -21,5 +21,6 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Runway.h
         src/Coordinates.cpp
         src/Coordinates.h
+        src/Utils.cpp
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp)
