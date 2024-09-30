@@ -4,7 +4,7 @@
 #include <string>
 #include <cmath>
 #include "Coordinates.h"
-#include "Vector2.hpp"
+#include "raylib.h"
 
 // Conveerts this messs 
 //      N053.49.49.450 W001.12.18.620
@@ -53,7 +53,7 @@ Coordinates::Coordinates(std::string lateral, std::string longitude) {
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-raylib::Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale, raylib::Vector2 screen_center) {
+Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale, Vector2 screen_center) {
     // Convert latitude and longitude to radians
     float x = (this->longitude - center_ref.lon()) * cos(center_ref.lat()* (M_PI / 180.0)) * EARTH_RADIUS_METERS;
     float y = (this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;

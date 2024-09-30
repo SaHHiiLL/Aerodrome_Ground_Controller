@@ -5,19 +5,20 @@
 #ifndef AERODROME_GROUND_CONTROLLER_GAME_H
 #define AERODROME_GROUND_CONTROLLER_GAME_H
 
-#include "raylib-cpp.hpp"
 #include "Runway.h"
+#include <vector>
+#include <raylib.h>
 
 class Game {
 private:
-    raylib::Window *window;
-    raylib::Camera2D *camera;
-    std::vector<GameObject*> game_objects;
+    Camera2D *camera;
+    std::vector<Runway*> runways;
 
 public:
-    Game(raylib::Camera2D *cam, raylib::Window *window);
+    Game(Camera2D *cam);
     void update();
     void draw();
+    void handle_input();
 };
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Vector2.hpp"
+#include <raylib.h>
 
 inline const float EARTH_RADIUS_METERS = 6378137.0f;
 
@@ -25,7 +25,7 @@ public:
         return res;
     }
 
-    raylib::Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale, raylib::Vector2 screen_center );
+    Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale, Vector2 screen_center );
     float lon() { return this->longitude; }
     float lat() { return this->lateral; }
 

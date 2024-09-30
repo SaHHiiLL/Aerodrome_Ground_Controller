@@ -7,23 +7,21 @@
 
 
 #include "Coordinates.h"
-#include "GameObject.h"
+#include "raylib.h"
 
-class Runway : public GameObject {
+class Runway {
 public:
     Runway();
     Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref);
+    void update() ;
 
-    void update() override;
-
-    void draw() override;
-    void draw2();
+    void draw() ;
 
 private:
     float runway_heading;
 
-    raylib::Vector2 runway_start_pos;
-    raylib::Vector2 runway_end_pos;
+    Vector2 runway_start_pos;
+    Vector2 runway_end_pos;
 };
 
 

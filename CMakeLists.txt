@@ -9,18 +9,16 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
 set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
 
 
-add_subdirectory(libs/raylib-cpp-5.0.2)
 add_subdirectory(libs/raylib)
 
 
 add_executable(${PROJECT_NAME} src/main.cpp
         src/Game.cpp
         src/Game.h
-        src/GameObject.h
         src/Runway.cpp
         src/Runway.h
         src/Coordinates.cpp
         src/Coordinates.h
         src/Utils.cpp
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib )

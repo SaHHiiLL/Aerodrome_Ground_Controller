@@ -1,37 +1,41 @@
-#include "Coordinates.h"
 #include "Game.h"
-#include <iostream>
+#include <raylib.h>
+#include <rlgl.h>
 
 int main(void) {
 
     float screenWidth = 1000;
     float screenHeight = 600;
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT);
-     SetConfigFlags(FLAG_FULLSCREEN_MODE);
 
-    raylib::Window window(screenWidth, screenHeight, "Aerodrome Ground Controller");
+    InitWindow(screenWidth, screenHeight, "Aerodrome Ground Controller");
     SetTargetFPS(60);
 
-    raylib::Camera2D camera = Camera2D();
+    Camera2D camera = { 0 };
+    camera.zoom = 1;
 
-    camera.SetZoom(1);
-    Game game = Game(&camera, &window);
+    Game game = Game(&camera);
 
-    while (!window.ShouldClose())
+    while (!WindowShouldClose())
     {
+        game.handle_input();
         ClearBackground(DARKGRAY);
-        DrawFPS(0, 0);
         game.update();
-
         BeginDrawing();
         {
-            camera.BeginMode();
+            BeginMode2D(camera);
+                rlPushMatrix();
+                    rlTranslatef(0, 25*50, 0);
+                    rlRotatef(90, 1, 0, 0);
+                    DrawGrid(100, 50);
+                rlPopMatrix();
             game.draw();
-            camera.EndMode();
+            EndMode2D();
         }
         EndDrawing();
     }
+
+    CloseWindow();
 
     return 0;
 }

@@ -5,6 +5,7 @@
 #include "Runway.h"
 #include "raylib.h"
 #include "rlgl.h"
+#include "raymath.h"
 
 //void Runway::draw() {
 //    // raylib::Rectangle rectangle( raylib::Vector2(this->runway_position.x, this->runway_position.y), raylib::Vector2(40, this->runway_length_px));
@@ -26,7 +27,7 @@
 
 void Runway::draw() {
     // Calculate the midpoint of the rectangle
-    raylib::Vector2 midpoint = {(this->runway_start_pos.x + this->runway_end_pos.x) / 2, (this->runway_start_pos.y + this->runway_end_pos.y) / 2};
+    Vector2 midpoint = {(this->runway_start_pos.x + this->runway_end_pos.x) / 2, (this->runway_start_pos.y + this->runway_end_pos.y) / 2};
 
     // Calculate the angle between the two points
     float angle = atan2(this->runway_end_pos.y - this->runway_start_pos.y, this->runway_end_pos.x - this->runway_start_pos.x) * (180.0f / M_PI);
@@ -37,7 +38,7 @@ void Runway::draw() {
     // Draw the rotated rectangle between the two points
     DrawRectanglePro(
         Rectangle{midpoint.x, midpoint.y, rectLength, rectWidth},  // Rectangle properties
-        raylib::Vector2{rectLength / 2, rectWidth / 2},            // Rotation origin (center of the rectangle)
+        Vector2{rectLength / 2, rectWidth / 2},            // Rotation origin (center of the rectangle)
         angle,                                                     // Rotation angle in degrees
         DARKGREEN                                                  // Color of the rectangle
     );
@@ -54,7 +55,7 @@ void Runway::update() {}
 Runway::Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref) {
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
-    raylib::Vector2 center = { sH / 2, sW / 2};
+    Vector2 center = { sH / 2, sW / 2};
     this->runway_start_pos = runway_start.GeoToScreenInRefrence(center_ref, 0.02, center);
     this->runway_end_pos = runway_end.GeoToScreenInRefrence(center_ref, 0.02, center);
 }
