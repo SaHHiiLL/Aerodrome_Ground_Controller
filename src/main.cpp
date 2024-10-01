@@ -4,11 +4,12 @@
 
 int main(void) {
 
-    float screenWidth = 1000;
-    float screenHeight = 600;
-
-
+    float screenWidth = GetScreenWidth();
+    float screenHeight = GetScreenHeight();
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE);
     InitWindow(screenWidth, screenHeight, "Aerodrome Ground Controller");
+
     SetTargetFPS(60);
 
     Camera2D camera = { 0 };

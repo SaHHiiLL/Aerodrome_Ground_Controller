@@ -29,6 +29,7 @@ void Game::handle_input() {
         camera->target = Vector2Add(camera->target, delta);
     }
 
+    // reset the view
     if (IsKeyPressed(KEY_R)) {
         this->camera->target = Vector2{0, 0};
         this->camera->zoom = 1;
@@ -43,7 +44,7 @@ void Game::handle_input() {
         this->camera->target = zoom_pos;
         float scaleFactor = 1.0f + (0.25f*fabsf(mouse_wheel.y));
         if (mouse_wheel.y < 0) scaleFactor = 1.0f/scaleFactor;
-        camera->zoom = Clamp(camera->zoom*scaleFactor, 0.125f, 64.0f);
+        camera->zoom = Clamp(camera->zoom*scaleFactor, 0.125f, 20.0f);
     }
 }
 
@@ -51,19 +52,21 @@ void Game::update() {
 }
 
 Game::Game(Camera2D *cam) : camera(cam){
-    // EGLC
-   this->runways.push_back(
+    // EGCC
+    this->runways.push_back(
         new Runway(
-                Coordinates("N053.20.51.200", "W002.17.15.950"),
-                Coordinates("N053.21.40.750", "W002.15.33.410"),
-                Coordinates("N053.21.13.480", "W002.16.29.820")
+            Coordinates("N053.20.51.200", "W002.17.15.950"),
+            Coordinates("N053.21.40.750", "W002.15.33.410"),
+            Coordinates("N053.21.13.480", "W002.16.29.820"),
+            100.0f
         )
     );
     this->runways.push_back(
-            new Runway(
-                    Coordinates("N053.19.55.110", "W002.18.38.380"),
-                    Coordinates("N053.20.53.350", "W002.16.37.950"),
-                    Coordinates("N053.21.13.480", "W002.16.29.820")
-            )
+        new Runway(
+            Coordinates("N053.19.55.110", "W002.18.38.380"),
+            Coordinates("N053.20.53.350", "W002.16.37.950"),
+            Coordinates("N053.21.13.480", "W002.16.29.820"),
+            100.0f
+        )
     );
 }
