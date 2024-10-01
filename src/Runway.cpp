@@ -7,24 +7,6 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-//void Runway::draw() {
-//    // raylib::Rectangle rectangle( raylib::Vector2(this->runway_position.x, this->runway_position.y), raylib::Vector2(40, this->runway_length_px));
-//    // DrawRectanglePro(rectangle, raylib::Vector2(20, this->runway_length_px / 2), this->runway_heading, BLUE);
-//
-//    // Calculate the top-left corner of the rectangle and its size
-//
-//    float rectX = std::min(this->runway_start_pos.x, this->runway_end_pos.x);          // X-coordinate of the rectangle
-//    float rectY = std::min(this->runway_start_pos.y, this->runway_end_pos.y);          // Y-coordinate of the rectangle
-//    float rectWidth = std::abs(this->runway_end_pos.x - this->runway_start_pos.x);     // Width of the rectangle
-//    float rectHeight = std::abs(this->runway_end_pos.y - this->runway_start_pos.y);    // Height of the rectangle
-//
-//    DrawRectangle(rectX, rectY, rectWidth, rectHeight, ColorAlpha(DARKGREEN, 0.5f)); // Semi-transparent green
-//    DrawCircleV(this->runway_start_pos, 5, RED);
-//    DrawCircleV(this->runway_end_pos, 5, BLUE);
-//
-//    draw2();
-//}
-
 void Runway::draw() {
     // Calculate the midpoint of the rectangle
     Vector2 midpoint = {(this->runway_start_pos.x + this->runway_end_pos.x) / 2, (this->runway_start_pos.y + this->runway_end_pos.y) / 2};
@@ -43,7 +25,8 @@ void Runway::draw() {
         DARKGREEN                                                  // Color of the rectangle
     );
 
-    // Optional: Draw the original points as small circles for reference
+    // DEBUG_INFO:
+    // draw shapes at the end of two side of the rectangle to indicate the center for the shape.
     DrawCircleV(this->runway_start_pos, 5, RED);
     DrawCircleV(this->runway_end_pos, 5, BLUE);
 }

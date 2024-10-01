@@ -19,6 +19,7 @@ public:
     void update();
     void draw();
     void handle_input();
+    float zoom_factor = 1;
 };
 
 

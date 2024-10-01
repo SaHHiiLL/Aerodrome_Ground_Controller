@@ -31,15 +31,26 @@ void Game::handle_input() {
 
     if (IsKeyPressed(KEY_R)) {
         this->camera->target = Vector2{0, 0};
-        camera->offset = (Vector2){ GetScreenWidth()/2.0f, GetScreenHeight()/2.0f };
         this->camera->zoom = 1;
+        this->camera->offset = Vector2{0, 0};
+    }
+
+    Vector2 mouse_wheel = GetMouseWheelMoveV();
+    if (mouse_wheel.y != 0) {
+        Vector2 mouse_pos = GetMousePosition();
+        Vector2 zoom_pos = GetScreenToWorld2D(mouse_pos, *this->camera);
+        this->camera->offset = mouse_pos;
+        this->camera->target = zoom_pos;
+        float scaleFactor = 1.0f + (0.25f*fabsf(mouse_wheel.y));
+        if (mouse_wheel.y < 0) scaleFactor = 1.0f/scaleFactor;
+        camera->zoom = Clamp(camera->zoom*scaleFactor, 0.125f, 64.0f);
     }
 }
 
 void Game::update() {
 }
 
-Game::Game(Camera2D *cam) : camera(cam) {
+Game::Game(Camera2D *cam) : camera(cam){
     // EGLC
    this->runways.push_back(
         new Runway(
