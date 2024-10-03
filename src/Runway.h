@@ -8,13 +8,14 @@
 
 #include "Coordinates.h"
 #include "raylib.h"
+#include "raymath.h"
 
 class Runway {
 public:
     Runway();
     Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref, float runway_width);
+    Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref, float runway_width, Color color);
     void update() ;
-
     void draw() ;
 
 private:
@@ -26,6 +27,8 @@ private:
     float runway_angle;
     Vector2 runway_start_pos;
     Vector2 runway_end_pos;
+    Color runway_color = {26, 26, 26, 0xFF};
+
 };
 
 

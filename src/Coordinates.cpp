@@ -1,10 +1,12 @@
 
+#include <iostream>
 #include <cassert>
 #include <cctype>
 #include <string>
 #include <cmath>
 #include "Coordinates.h"
 #include "raylib.h"
+#include "Utils.h"
 
 // Conveerts this messs 
 //      N053.49.49.450 W001.12.18.620
@@ -50,6 +52,16 @@ float parse(std::string s) {
 Coordinates::Coordinates(std::string lateral, std::string longitude) {
     this->lateral = parse(lateral);
     this->longitude = parse(longitude);
+}
+
+Coordinates::Coordinates(std::string coords) {
+    Utils::StringSplit split(coords, ' ');
+    auto s = split.collect();
+    if (s.size() != 2) {
+        throw std::invalid_argument( std::string("Invalid Coordinates: ").append(coords));
+    }
+    this->lateral = parse(s[0]);
+    this->longitude = parse(s[1]);
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates

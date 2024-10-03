@@ -69,4 +69,14 @@ Game::Game(Camera2D *cam) : camera(cam){
             100.0f
         )
     );
+
+    this->runways.push_back(
+        new Runway(
+            Coordinates("N053.20.13.123", "W002.18.00.137"),
+            Coordinates("N053.20.13.582", "W002.17.59.197"),
+            Coordinates("N053.21.13.480", "W002.16.29.820"),
+            10.0f,
+            RED
+        )
+    );
 }

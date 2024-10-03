@@ -11,6 +11,9 @@ public:
     Coordinates(std::string lateral, std::string longitude);
     Coordinates(float lateral, float longitude) : lateral(lateral), longitude(longitude) {};
 
+     /// expects a string in the format of: "N053.19.55.785 W002.18.38.871"
+    Coordinates(std::string);
+
     // Creates a coord for "0, 0" 
     Coordinates();
 

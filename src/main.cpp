@@ -1,9 +1,9 @@
 #include "Game.h"
 #include <raylib.h>
 #include <rlgl.h>
+#include <iostream>
 
 int main(void) {
-
     float screenWidth = GetScreenWidth();
     float screenHeight = GetScreenHeight();
     SetConfigFlags(FLAG_MSAA_4X_HINT);
