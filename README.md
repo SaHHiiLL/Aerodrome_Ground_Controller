@@ -2,3 +2,5 @@ it will be a simple game, where you must give instructions to the aircraft on th
 
 https://github.com/VATSIM-UK/UK-Sector-File/tree/main/Airports/EGLC
 https://pilotinstitute.com/runway-markings-explained/
+
+https://github.com/delfrrr/delaunator-cpp

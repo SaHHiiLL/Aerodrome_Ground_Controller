@@ -1,6 +1,5 @@
 cmake-build-*
 .idea
 .cache
-libs
 compile_commands.json
 build
