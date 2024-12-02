@@ -15,6 +15,7 @@ public:
     Runway();
     Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref, float runway_width);
     Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref, float runway_width, Color color);
+    Runway(std::array<Coordinates, 4> points, Coordinates center_ref, float runway_heading, Color color);
     void update() ;
     void draw() ;
 

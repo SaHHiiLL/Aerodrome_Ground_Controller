@@ -20,16 +20,16 @@ int main(void) {
     while (!WindowShouldClose())
     {
         game.handle_input();
-        ClearBackground(DARKGRAY);
         game.update();
+        ClearBackground(DARKGRAY);
         BeginDrawing();
         {
             BeginMode2D(camera);
-                rlPushMatrix();
-                    rlTranslatef(0, 25*50, 0);
-                    rlRotatef(90, 1, 0, 0);
-                    DrawGrid(100, 50);
-                rlPopMatrix();
+            rlPushMatrix();
+            rlTranslatef(0, 25*50, 0);
+            rlRotatef(90, 1, 0, 0);
+            DrawGrid(100, 50);
+            rlPopMatrix();
             game.draw();
             EndMode2D();
         }

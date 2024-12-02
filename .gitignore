@@ -3,3 +3,4 @@ cmake-build-*
 .cache
 libs
 compile_commands.json
+build

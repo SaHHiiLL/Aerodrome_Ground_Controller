@@ -18,6 +18,7 @@ void Game::draw() {
     for (auto& runway: this->runways) {
         runway->draw();
     }
+
 }
 
 void Game::handle_input() {
@@ -52,12 +53,16 @@ void Game::update() {
 }
 
 Game::Game(Camera2D *cam) : camera(cam){
+    // EGCC - Center Poiint
+
+    Coordinates center_coord = Coordinates("N053.21.13.480", "W002.16.29.820");
+        
     // EGCC
     this->runways.push_back(
         new Runway(
             Coordinates("N053.20.51.200", "W002.17.15.950"),
             Coordinates("N053.21.40.750", "W002.15.33.410"),
-            Coordinates("N053.21.13.480", "W002.16.29.820"),
+            center_coord,
             100.0f
         )
     );
@@ -65,18 +70,9 @@ Game::Game(Camera2D *cam) : camera(cam){
         new Runway(
             Coordinates("N053.19.55.110", "W002.18.38.380"),
             Coordinates("N053.20.53.350", "W002.16.37.950"),
-            Coordinates("N053.21.13.480", "W002.16.29.820"),
+            center_coord,
             100.0f
         )
     );
 
-    this->runways.push_back(
-        new Runway(
-            Coordinates("N053.20.13.123", "W002.18.00.137"),
-            Coordinates("N053.20.13.582", "W002.17.59.197"),
-            Coordinates("N053.21.13.480", "W002.16.29.820"),
-            10.0f,
-            RED
-        )
-    );
 }

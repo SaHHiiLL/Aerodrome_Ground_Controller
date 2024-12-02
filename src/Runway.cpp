@@ -16,12 +16,8 @@ void Runway::draw() {
         this->runway_angle,                                                                                      // Rotation angle in degrees
         this->runway_color                                                                 // Color of the rectangle
     );
-
-    // DEBUG_INFO:
-    // draw shapes at the end of two side of the rectangle to indicate the center for the shape.
-    // DrawCircleV(this->runway_start_pos, 5, RED);
-    // DrawCircleV(this->runway_end_pos, 5, BLUE);
 }
+
 
 Runway::Runway(Coordinates runway_start, Coordinates runway_end, Coordinates center_ref, float runway_width, Color color) : runway_width(runway_width), runway_color(color) {
     float sH = GetScreenHeight();
