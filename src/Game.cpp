@@ -67,18 +67,28 @@ Game::Game(Camera2D *cam) : camera(cam){
     // EGCC
     this->runways.push_back(
         new Runway(
-            Coordinates("N053.20.51.200", "W002.17.15.950"),
-            Coordinates("N053.21.40.750", "W002.15.33.410"),
+            {
+                Coordinates("N053.19.55.785", "W002.18.38.871"),
+                Coordinates("N053.19.54.700", "W002.18.37.396"),
+                Coordinates("N053.20.52.809", "W002.16.37.099"),
+                Coordinates("N053.20.53.945 W002.16.38.633"),
+            },
             center_coord,
-            100.0f
+            230,
+            RED
         )
     );
     this->runways.push_back(
         new Runway(
-            Coordinates("N053.19.55.110", "W002.18.38.380"),
-            Coordinates("N053.20.53.350", "W002.16.37.950"),
+            {
+                Coordinates("N053.21.41.336 W002.15.34.098"),
+                Coordinates("N053.20.51.775 W002.17.16.736"),
+                Coordinates("N053.20.50.647 W002.17.15.210"),
+                Coordinates("N053.21.40.177 W002.15.32.542")
+            },
             center_coord,
-            100.0f
+            230,
+            RED
         )
     );
 
