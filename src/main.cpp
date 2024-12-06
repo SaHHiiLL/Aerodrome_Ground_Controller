@@ -67,13 +67,14 @@ int main(void) {
         BeginDrawing();
         {
             BeginMode2D(camera);
-            rlPushMatrix();
-            rlTranslatef(0, 25*50, 0);
-            rlRotatef(90, 1, 0, 0);
-            DrawGrid(100, 50);
-            rlPopMatrix();
-            game.draw();
-            test();
+            {
+                rlPushMatrix();
+                rlTranslatef(0, 25*50, 0);
+                rlRotatef(90, 1, 0, 0);
+                DrawGrid(100, 50);
+                rlPopMatrix();
+                game.draw();
+            }
             EndMode2D();
         }
         EndDrawing();

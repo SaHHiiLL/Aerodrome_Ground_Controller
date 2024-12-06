@@ -1,7 +1,7 @@
-#include <optional>
 #include <string>
 #include <vector>
 
+inline static float DRAW_SCALE = 0.014;
 
 namespace Utils {
     class StringSplit {

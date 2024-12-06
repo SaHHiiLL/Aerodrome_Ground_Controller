@@ -29,7 +29,9 @@ public:
     }
 
     Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale, Vector2 screen_center );
+    // W/E
     float lon() { return this->longitude; }
+    //N/S
     float lat() { return this->lateral; }
 
 private:

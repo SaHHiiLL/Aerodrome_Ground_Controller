@@ -6,7 +6,7 @@
 #include "Runway.h"
 #include "raylib.h"
 #include "raymath.h"
-#include <iostream>
+#include "./Utils.h"
 
 void Game::draw() {
     DrawRectangle(0, 0, 100, 100, GREEN);
@@ -18,10 +18,17 @@ void Game::draw() {
     for (auto& runway: this->runways) {
         runway->draw();
     }
-
 }
 
 void Game::handle_input() {
+
+    if (IsKeyPressed(KEY_P)) {
+        DRAW_SCALE += 0.01;
+    }
+    if (IsKeyPressed(KEY_O)) {
+        DRAW_SCALE -= 0.01;
+    }
+
     // Translate based on mouse right click
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
