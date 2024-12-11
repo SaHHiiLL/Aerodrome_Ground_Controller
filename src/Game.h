@@ -6,13 +6,13 @@
 #define AERODROME_GROUND_CONTROLLER_GAME_H
 
 #include "Runway.h"
-#include <vector>
 #include <raylib.h>
+#include <vector>
 
 class Game {
 private:
     Camera2D *camera;
-    std::vector<Runway*> runways;
+    std::vector<Runway *> runways;
 
 public:
     Game(Camera2D *cam);
@@ -22,5 +22,4 @@ public:
     float zoom_factor = 1;
 };
 
-
-#endif //AERODROME_GROUND_CONTROLLER_GAME_H
+#endif // AERODROME_GROUND_CONTROLLER_GAME_H

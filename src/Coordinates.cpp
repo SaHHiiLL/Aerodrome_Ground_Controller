@@ -1,27 +1,27 @@
 
-#include <iostream>
+#include "Coordinates.h"
+#include "Utils.h"
+#include "raylib.h"
 #include <cassert>
 #include <cctype>
-#include <string>
 #include <cmath>
-#include "Coordinates.h"
-#include "raylib.h"
-#include "Utils.h"
+#include <iostream>
+#include <string>
 
-// Conveerts this messs 
+// Conveerts this messs
 //      N053.49.49.450 W001.12.18.620
-// into 
+// into
 //      53.8304, -1.2052
 
 float parse(std::string s) {
-     // 1. loop over the string
+    // 1. loop over the string
     // 2. push the number forward
     std::string y;
     float coords[4] = {};
     int idx = 0;
     int neg = 0;
 
-    for (char x: s) {
+    for (char x : s) {
         if (x == 'N' || x == 'E') {
             neg = 1;
             continue;
@@ -31,7 +31,7 @@ float parse(std::string s) {
         }
 
         if (x == '.') {
-            //marks the end
+            // marks the end
             float num = stof(y);
             coords[idx] = num;
             if (idx < 3) {
@@ -45,9 +45,9 @@ float parse(std::string s) {
     }
     // convert the last part
     coords[3] = stof(y);
-    return (float) neg * ( coords[0] + coords[1] / 60 + (coords[2] + (coords[3] / 1000)) / 3600);
+    return (float)neg * (coords[0] + coords[1] / 60 +
+                         (coords[2] + (coords[3] / 1000)) / 3600);
 }
-
 
 Coordinates::Coordinates(std::string lateral, std::string longitude) {
     this->lateral = parse(lateral);
@@ -58,21 +58,25 @@ Coordinates::Coordinates(std::string coords) {
     Utils::StringSplit split(coords, ' ');
     auto s = split.collect();
     if (s.size() != 2) {
-        throw std::invalid_argument( std::string("Invalid Coordinates: ").append(coords));
+        throw std::invalid_argument(
+            std::string("Invalid Coordinates: ").append(coords));
     }
     this->lateral = parse(s[0]);
     this->longitude = parse(s[1]);
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale, Vector2 screen_center) {
+Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale,
+                                           Vector2 screen_center) {
     // Convert latitude and longitude to radians
-    float x = (this->longitude - center_ref.lon()) * cos(center_ref.lat()* (M_PI / 180.0)) * EARTH_RADIUS_METERS;
+    float x = (this->longitude - center_ref.lon()) *
+              cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;
     float y = (this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
 
     // Apply scaling and offset to fit within screen space
     x = x * scale + screen_center.x;
-    y = -y * scale + screen_center.y;  // Inverting y because screen y is downwards
+    y = -y * scale +
+        screen_center.y; // Inverting y because screen y is downwards
 
     return {x, y};
 }

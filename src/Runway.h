@@ -5,7 +5,6 @@
 #include <array>
 #include <vector>
 
-
 class Runway {
     std::array<Coordinates, 4> coords;
     std::vector<Vector2> verties;
@@ -14,9 +13,11 @@ class Runway {
     Color color;
 
 public:
-    Runway(std::array<Coordinates, 4> coords, Coordinates center_ref, float runway_heading, Color color);
+    Runway(std::array<Coordinates, 4> coords, Coordinates center_ref,
+           float runway_heading, Color color);
 
     void draw();
+
 private:
 };
 

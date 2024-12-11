@@ -11,13 +11,12 @@ int main(void) {
 
     SetTargetFPS(60);
 
-    Camera2D camera = { 0 };
+    Camera2D camera = {0};
     camera.zoom = 1;
 
     Game game = Game(&camera);
 
-    while (!WindowShouldClose())
-    {
+    while (!WindowShouldClose()) {
         game.handle_input();
         game.update();
         ClearBackground(DARKGRAY);
@@ -26,7 +25,7 @@ int main(void) {
             BeginMode2D(camera);
             {
                 rlPushMatrix();
-                rlTranslatef(0, 25*50, 0);
+                rlTranslatef(0, 25 * 50, 0);
                 rlRotatef(90, 1, 0, 0);
                 DrawGrid(100, 50);
                 rlPopMatrix();
