@@ -1,6 +1,6 @@
 
-#include "Coordinates.h"
-#include "Utils.h"
+#include "Coordinates.hpp"
+#include "Utils.hpp"
 #include "raylib.h"
 #include <cassert>
 #include <cctype>

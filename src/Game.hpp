@@ -5,7 +5,7 @@
 #ifndef AERODROME_GROUND_CONTROLLER_GAME_H
 #define AERODROME_GROUND_CONTROLLER_GAME_H
 
-#include "Runway.h"
+#include "Runway.hpp"
 #include <raylib.h>
 #include <vector>
 

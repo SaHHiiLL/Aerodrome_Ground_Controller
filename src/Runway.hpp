@@ -1,7 +1,7 @@
 #ifndef AERODROME_GROUND_CONTROLLER_RUNWAY_H
 #define AERODROME_GROUND_CONTROLLER_RUNWAY_H
 
-#include "Coordinates.h"
+#include "./Coordinates.hpp"
 #include <array>
 #include <vector>
 

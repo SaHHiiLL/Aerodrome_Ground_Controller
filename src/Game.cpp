@@ -2,9 +2,9 @@
 // Created by Sahil on 9/18/24.
 //
 
-#include "Game.h"
-#include "./Utils.h"
-#include "Runway.h"
+#include "Game.hpp"
+#include "./Utils.hpp"
+#include "Runway.hpp"
 #include "raylib.h"
 #include "raymath.h"
 
