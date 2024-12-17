@@ -9,8 +9,8 @@ inline const float EARTH_RADIUS_METERS = 6378137.0f;
 class Coordinates {
 public:
     Coordinates(std::string lateral, std::string longitude);
-    Coordinates(float lateral, float longitude)
-        : lateral(lateral), longitude(longitude){};
+    Coordinates(float longitude, float lateral)
+        : lateral(lateral), longitude(longitude) {};
 
     /// expects a string in the format of: "N053.19.55.785 W002.18.38.871"
     Coordinates(std::string);
@@ -31,9 +31,9 @@ public:
 
     Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale,
                                   Vector2 screen_center);
-    // W/E
+    // W/E - X
     float lon() { return this->longitude; }
-    // N/S
+    // N/S - Y
     float lat() { return this->lateral; }
 
 private:

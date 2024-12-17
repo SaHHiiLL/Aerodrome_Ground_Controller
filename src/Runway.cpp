@@ -7,6 +7,7 @@ Runway::Runway(std::array<Coordinates, 4> coords, Coordinates center_ref,
     : coords(coords), center_ref(center_ref), runway_heading(runway_heading),
       color(color) {
     std::vector<double> cc;
+
     for (auto c : coords) {
         float sH = GetScreenHeight();
         float sW = GetScreenWidth();

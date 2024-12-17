@@ -73,5 +73,5 @@ Game::Game(Camera2D *cam) : camera(cam) {
                     Coordinates("N053.20.51.775 W002.17.16.736"),
                     Coordinates("N053.20.50.647 W002.17.15.210"),
                     Coordinates("N053.21.40.177 W002.15.32.542")},
-                   center_coord, 230, RED));
+                   center_coord, 230, BLUE));
 }
