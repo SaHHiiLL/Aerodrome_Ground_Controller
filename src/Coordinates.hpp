@@ -1,5 +1,8 @@
 #pragma once
 
+#include <algorithm>
+#include <array>
+#include <earcut.hpp>
 #include <raylib.h>
 #include <string>
 
@@ -35,6 +38,11 @@ public:
     float lon() { return this->longitude; }
     // N/S - Y
     float lat() { return this->lateral; }
+
+    std::array<double, 2> innerDouble() {
+        std::array<double, 2> d = {1.3, 2.3};
+        return d;
+    }
 
 private:
     float lateral;

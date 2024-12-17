@@ -2,21 +2,22 @@ CC=clang++
 TARGET=build
 SRC=src
 CPP_FILES=$(shell find src/ -name '*.cpp')
+LIBS=./libs
 
-RAYLIB_PATH=./libs/raylib-5.0_linux_amd64
+RAYLIB_PATH=$(LIBS)/raylib-5.0_linux_amd64
 RAYLIB_STATIC_FLAGS=-L$(RAYLIB_PATH)/lib -l:libraylib.a -lm
 RAYLIB_INCLUDE=-I$(RAYLIB_PATH)/include
 
-TRIANGLE_PATH=-L./libs/triangulation
-TRIANGLE_PATH_INCLUDE=-I./libs/triangulation
-TRIANGLE_CPP_FILE=./libs/triangulation/delaunator.cpp
+TRIANGLE_PATH=-L$(LIBS)/triangulation
+TRIANGLE_PATH_INCLUDE=-I$(LIBS)/triangulation
+TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
 
-BUILD_CMD=$(CC) -ggdb -o $(TARGET)/main $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
+EAR_CUT_INCLUDE=-I$(LIBS)/triangulation/earcut.hpp
 
 RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
 RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
-LIBS=./libs
 
+BUILD_CMD=$(CC) -ggdb -o $(TARGET)/main $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE) $(EAR_CUT_INCLUDE)
 
 all:
 	# Download dep if it does not exists -- Kind of a poor mans way of checking it
@@ -26,7 +27,6 @@ all:
 		$(MAKE) download_triangulation; 	\
 	fi										
 
-	$(MAKE) complie_command
 	$(MAKE) target
 	$(MAKE) main
 
@@ -55,8 +55,8 @@ download_triangulation:
 	wget -q -O $(LIBS)/triangulation/delaunator.hpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/include/delaunator.hpp
 
 # Dev setup
-setup: download_raylib download_triangulation complie_command
+setup: download_raylib download_triangulation compile_command
 
 # Sets up the compile_command.json file for clang lsp 
-complie_command:
+compile_command:
 	@(ls compile_commands.json >> /dev/null 2>&1 ) || bear -- $(BUILD_CMD) 

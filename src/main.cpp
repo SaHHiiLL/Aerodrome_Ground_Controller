@@ -10,6 +10,8 @@
 #include <sstream>
 #include <string>
 
+#include <earcut.hpp>
+
 std::string readFileToString(const std::string &filePath) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
@@ -21,6 +23,30 @@ std::string readFileToString(const std::string &filePath) {
     buffer << file.rdbuf();
 
     return buffer.str(); // Return the contents as a string
+}
+
+void TestEarcut() {
+    std::string test = readFileToString("./resource/RMA.txt");
+
+    Utils::StringSplit splitByNewLine(test, '\n');
+    std::vector<std::string> coordsAsString = splitByNewLine.collect();
+    std::vector<Coordinates> coords;
+
+    for (size_t i = 0; i < coordsAsString.size(); i += 2) {
+        std::string newStr =
+            coordsAsString[i].append(" ").append(coordsAsString[i + 1]);
+        coords.push_back(newStr);
+    }
+
+    std::vector<std::vector<std::array<double, 2>>> polygon;
+    polygon.push_back({});
+    for (auto c : coords) {
+        polygon[0].push_back(c.innerDouble());
+    }
+    std::vector<uint32_t> indices = mapbox::earcut(polygon);
+    for (auto i : indices) {
+        std::cout << i << std::endl;
+    }
 }
 
 void Test() {
@@ -83,6 +109,8 @@ void Test() {
 }
 
 int main(void) {
+    TestEarcut();
+    return 0;
     float screenWidth = GetScreenWidth();
     float screenHeight = GetScreenHeight();
     SetConfigFlags(FLAG_MSAA_4X_HINT);
