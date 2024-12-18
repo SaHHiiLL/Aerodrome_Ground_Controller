@@ -1,5 +1,4 @@
-#ifndef AERODROME_GROUND_CONTROLLER_RUNWAY_H
-#define AERODROME_GROUND_CONTROLLER_RUNWAY_H
+#pragma once
 
 #include "./Coordinates.hpp"
 #include <array>
@@ -20,5 +19,3 @@ public:
 
 private:
 };
-
-#endif

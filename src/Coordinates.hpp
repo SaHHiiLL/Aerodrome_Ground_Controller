@@ -1,8 +1,6 @@
 #pragma once
 
-#include <algorithm>
 #include <array>
-#include <earcut.hpp>
 #include <raylib.h>
 #include <string>
 
