@@ -2,6 +2,7 @@
 #include "Coordinates.hpp"
 #include "Game.hpp"
 #include "delaunator.hpp"
+#include "earcut.hpp"
 #include <iostream>
 #include <raylib.h>
 #include <rlgl.h>
@@ -21,6 +22,42 @@ std::string readFileToString(const std::string &filePath) {
     buffer << file.rdbuf();
 
     return buffer.str(); // Return the contents as a string
+}
+
+void Testss() {
+    std::string test = readFileToString("./resource/RMA.txt");
+
+    Utils::StringSplit splitByNewLine(test, '\n');
+    std::vector<std::string> coordsAsString = splitByNewLine.collect();
+    std::vector<Coordinates> coords;
+    std::vector<Vector2> polygon;
+
+    for (size_t i = 0; i < coordsAsString.size(); i += 2) {
+        std::string newStr =
+            coordsAsString[i].append(" ").append(coordsAsString[i + 1]);
+        coords.push_back(newStr);
+    }
+    Coordinates centerRef = Coordinates("N053.21.13.480", "W002.16.29.820");
+
+    std::vector<Vector2> cc;
+
+    for (auto c : coords) {
+        float sH = GetScreenHeight();
+        float sW = GetScreenWidth();
+        Vector2 scree_center = {sH / 2, sW / 2};
+        Vector2 xy =
+            c.GeoToScreenInRefrence(centerRef, DRAW_SCALE, scree_center);
+        cc.push_back(xy);
+    }
+
+    std::vector<Triangle> out;
+
+    Earcut ec;
+    ec.EarClipTriangulate(cc, out);
+
+    for (auto t : out) {
+        DrawTriangle(t.p1, t.p2, t.p3, BROWN);
+    }
 }
 
 void Test() {
@@ -49,7 +86,7 @@ void Test() {
 
     // Coordinates centerRef = Coordinates("N053.21.13.480", "W002.16.29.820");
 
-    std::vector<double> cc;
+    std::vector<Vector2> cc;
 
     for (auto c : coords) {
         float sH = GetScreenHeight();
@@ -57,28 +94,7 @@ void Test() {
         Vector2 scree_center = {sH / 2, sW / 2};
         Vector2 xy =
             c.GeoToScreenInRefrence(centerRef, DRAW_SCALE, scree_center);
-        cc.push_back(xy.x);
-        cc.push_back(xy.y);
-    }
-
-    // Convert the coordinates to double;
-    Delaunator d(cc);
-
-    for (size_t i = 0; i < d.triangles.size(); i += 3) {
-        Vector2 x1 = {
-            (float)d.coords[2 * d.triangles[i]],
-            /*tx0 */ (float)d.coords[2 * d.triangles[i] + 1]}; // ty0 };
-        Vector2 x2 = {
-            (float)d.coords[2 * d.triangles[i + 1]],
-            /*tx1 */ (float)d.coords[2 * d.triangles[i + 1] + 1]}; // ty1 }:
-        Vector2 x3 = {
-            (float)d.coords[2 * d.triangles[i + 2]],
-            /*tx2 */ (float)d.coords[2 * d.triangles[i + 2] + 1]}; // ty2 };
-
-        DrawTriangle(x1, x2, x3, GREEN);
-        DrawCircleV(x1, 5.0f, BLUE);
-        DrawCircleV(x2, 5.0f, BLUE);
-        DrawCircleV(x3, 5.0f, BLUE);
+        cc.push_back(xy);
     }
 }
 
@@ -104,6 +120,7 @@ int main(void) {
         {
             BeginMode2D(camera);
             {
+                Testss();
                 rlPushMatrix();
                 rlTranslatef(0, 25 * 50, 0);
                 rlRotatef(90, 1, 0, 0);

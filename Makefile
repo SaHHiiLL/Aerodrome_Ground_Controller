@@ -16,7 +16,9 @@ TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
 RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
 RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
 
-BUILD_CMD=$(CC) $(CPP_VERSION) -ggdb -o $(TARGET)/main $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
+C_FLAGS=-ggdb $(CPP_VERSION) -Wall
+
+BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/main $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
 
 all:
 	# Download dep if it does not exists -- Kind of a poor mans way of checking it

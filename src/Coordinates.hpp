@@ -1,6 +1,5 @@
 #pragma once
 
-#include <array>
 #include <raylib.h>
 #include <string>
 
@@ -10,7 +9,7 @@ inline const float EARTH_RADIUS_METERS = 6378137.0f;
 class Coordinates {
 public:
     Coordinates(std::string lateral, std::string longitude);
-    Coordinates(float longitude, float lateral)
+    Coordinates(double longitude, double lateral)
         : lateral(lateral), longitude(longitude) {};
 
     /// expects a string in the format of: "N053.19.55.785 W002.18.38.871"
@@ -33,16 +32,11 @@ public:
     Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale,
                                   Vector2 screen_center);
     // W/E - X
-    float lon() { return this->longitude; }
+    double lon() { return this->longitude; }
     // N/S - Y
-    float lat() { return this->lateral; }
-
-    std::array<double, 2> innerDouble() {
-        std::array<double, 2> d = {1.3, 2.3};
-        return d;
-    }
+    double lat() { return this->lateral; }
 
 private:
-    float lateral;
-    float longitude;
+    double lateral;
+    double longitude;
 };

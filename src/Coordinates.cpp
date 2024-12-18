@@ -13,11 +13,11 @@
 // into
 //      53.8304, -1.2052
 
-float parse(std::string s) {
+double parse(std::string s) {
     // 1. loop over the string
     // 2. push the number forward
     std::string y;
-    float coords[4] = {};
+    double coords[4] = {};
     int idx = 0;
     int neg = 0;
 
@@ -32,7 +32,7 @@ float parse(std::string s) {
 
         if (x == '.') {
             // marks the end
-            float num = stof(y);
+            double num = stof(y);
             coords[idx] = num;
             if (idx < 3) {
                 idx++;
@@ -45,8 +45,8 @@ float parse(std::string s) {
     }
     // convert the last part
     coords[3] = stof(y);
-    return (float)neg * (coords[0] + coords[1] / 60 +
-                         (coords[2] + (coords[3] / 1000)) / 3600);
+    return (double)neg * (coords[0] + coords[1] / 60 +
+                          (coords[2] + (coords[3] / 1000)) / 3600);
 }
 
 Coordinates::Coordinates(std::string lateral, std::string longitude) {
@@ -69,9 +69,9 @@ Coordinates::Coordinates(std::string coords) {
 Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale,
                                            Vector2 screen_center) {
     // Convert latitude and longitude to radians
-    float x = (this->longitude - center_ref.lon()) *
+    float x = (float)(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;
-    float y = (this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
+    float y = (float)(this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
 
     // Apply scaling and offset to fit within screen space
     x = x * scale + screen_center.x;
