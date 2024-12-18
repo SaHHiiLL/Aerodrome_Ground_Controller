@@ -10,8 +10,6 @@
 #include <sstream>
 #include <string>
 
-#include <earcut.hpp>
-
 std::string readFileToString(const std::string &filePath) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
@@ -23,30 +21,6 @@ std::string readFileToString(const std::string &filePath) {
     buffer << file.rdbuf();
 
     return buffer.str(); // Return the contents as a string
-}
-
-void TestEarcut() {
-    std::string test = readFileToString("./resource/RMA.txt");
-
-    Utils::StringSplit splitByNewLine(test, '\n');
-    std::vector<std::string> coordsAsString = splitByNewLine.collect();
-    std::vector<Coordinates> coords;
-
-    for (size_t i = 0; i < coordsAsString.size(); i += 2) {
-        std::string newStr =
-            coordsAsString[i].append(" ").append(coordsAsString[i + 1]);
-        coords.push_back(newStr);
-    }
-
-    std::vector<std::vector<std::array<double, 2>>> polygon;
-    polygon.push_back({});
-    for (auto c : coords) {
-        polygon[0].push_back(c.innerDouble());
-    }
-    std::vector<uint32_t> indices = mapbox::earcut(polygon);
-    for (auto i : indices) {
-        std::cout << i << std::endl;
-    }
 }
 
 void Test() {
@@ -87,30 +61,28 @@ void Test() {
         cc.push_back(xy.y);
     }
 
-    // // Convert the coordinates to double;
-    // Delaunator d(cc);
-    //
-    // for (size_t i = 0; i < d.triangles.size(); i += 3) {
-    //     Vector2 x1 = {
-    //         (float)d.coords[2 * d.triangles[i]],
-    //         /*tx0 */ (float)d.coords[2 * d.triangles[i] + 1]}; // ty0 };
-    //     Vector2 x2 = {
-    //         (float)d.coords[2 * d.triangles[i + 1]],
-    //         /*tx1 */ (float)d.coords[2 * d.triangles[i + 1] + 1]}; // ty1 }:
-    //     Vector2 x3 = {
-    //         (float)d.coords[2 * d.triangles[i + 2]],
-    //         /*tx2 */ (float)d.coords[2 * d.triangles[i + 2] + 1]}; // ty2 };
-    //
-    //     DrawTriangle(x1, x2, x3, GREEN);
-    //     DrawCircleV(x1, 5.0f, BLUE);
-    //     DrawCircleV(x2, 5.0f, BLUE);
-    //     DrawCircleV(x3, 5.0f, BLUE);
-    // }
+    // Convert the coordinates to double;
+    Delaunator d(cc);
+
+    for (size_t i = 0; i < d.triangles.size(); i += 3) {
+        Vector2 x1 = {
+            (float)d.coords[2 * d.triangles[i]],
+            /*tx0 */ (float)d.coords[2 * d.triangles[i] + 1]}; // ty0 };
+        Vector2 x2 = {
+            (float)d.coords[2 * d.triangles[i + 1]],
+            /*tx1 */ (float)d.coords[2 * d.triangles[i + 1] + 1]}; // ty1 }:
+        Vector2 x3 = {
+            (float)d.coords[2 * d.triangles[i + 2]],
+            /*tx2 */ (float)d.coords[2 * d.triangles[i + 2] + 1]}; // ty2 };
+
+        DrawTriangle(x1, x2, x3, GREEN);
+        DrawCircleV(x1, 5.0f, BLUE);
+        DrawCircleV(x2, 5.0f, BLUE);
+        DrawCircleV(x3, 5.0f, BLUE);
+    }
 }
 
 int main(void) {
-    TestEarcut();
-    return 0;
     float screenWidth = GetScreenWidth();
     float screenHeight = GetScreenHeight();
     SetConfigFlags(FLAG_MSAA_4X_HINT);
@@ -138,7 +110,6 @@ int main(void) {
                 DrawGrid(100, 50);
                 rlPopMatrix();
                 game.draw();
-                Test();
             }
             EndMode2D();
         }
