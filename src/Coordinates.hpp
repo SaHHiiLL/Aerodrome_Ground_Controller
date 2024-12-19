@@ -5,6 +5,8 @@
 
 inline const float EARTH_RADIUS_METERS = 6378137.0f;
 
+inline const float DRAW_SCALE = 0.013;
+
 // Represents Coordinates from the real world
 class Coordinates {
 public:
@@ -29,6 +31,8 @@ public:
         return res;
     }
 
+    Vector2 GeoToScreenInRefrence(Coordinates center_ref,
+                                  Vector2 screen_center);
     Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale,
                                   Vector2 screen_center);
     // W/E - X

@@ -19,7 +19,9 @@ RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
 
 C_FLAGS=-ggdb $(CPP_VERSION) -Wall
 
-BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/main $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
+BIN=AGCS
+
+BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/AGCS $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
 
 all:
 	# Download dep if it does not exists -- Kind of a poor mans way of checking it
@@ -33,7 +35,7 @@ all:
 	$(MAKE) main
 
 main: $(CPP_FILES)
-	@$(BUILD_CMD)
+	$(BUILD_CMD)
 
 target:
 	@mkdir -p $(TARGET)

@@ -18,12 +18,6 @@ void Game::draw() {
     }
 }
 void Game::handle_input() {
-    if (IsKeyPressed(KEY_P)) {
-        DRAW_SCALE += 0.01;
-    }
-    if (IsKeyPressed(KEY_O)) {
-        DRAW_SCALE -= 0.01;
-    }
 
     // Translate based on mouse right click
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {

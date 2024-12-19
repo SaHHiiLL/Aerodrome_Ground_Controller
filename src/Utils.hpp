@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 
-inline static float DRAW_SCALE = 0.013;
-
 namespace Utils {
 class StringSplit {
 public:

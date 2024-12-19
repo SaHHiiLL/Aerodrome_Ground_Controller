@@ -2,14 +2,13 @@
 
 #include <filesystem>
 #include <string>
-#include <vector>
 
 // Singleton class
 class ResourceManager {
 
 public:
-    std::vector<std::string> readFile(std::filesystem::path path);
-    void setResourceDirPath(std::filesystem::path path);
+    std::string read_file(std::filesystem::path path);
+    void set_resource_dir_path(std::filesystem::path path);
 
 private:
     std::filesystem::path resourceDir = "../resource";
