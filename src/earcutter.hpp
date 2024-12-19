@@ -8,6 +8,8 @@ struct Triangle {
     Vector2 x1, x2, x3;
 
 public:
+    //
+    // https://www.youtube.com/watch?v=HYAgJN3x4GA&t=224s
     bool is_point_inside(Vector2 p) {
         Vector2 a = this->x1;
         Vector2 b = this->x2;

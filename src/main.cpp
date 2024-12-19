@@ -51,10 +51,8 @@ void Testss() {
     }
 
     EarCut ec;
-    std::cout << "noooo???" << std::endl;
     std::vector<Triangle> out = ec.earcut(cc);
 
-    std::cout << "Hello???" << std::endl;
     for (auto t : out) {
         t.draw();
     }
