@@ -1,8 +1,8 @@
 #include "./Utils.hpp"
+#include "./earcutter.hpp"
 #include "Coordinates.hpp"
 #include "Game.hpp"
 #include "delaunator.hpp"
-#include "earcut.hpp"
 #include <iostream>
 #include <raylib.h>
 #include <rlgl.h>
@@ -50,13 +50,13 @@ void Testss() {
         cc.push_back(xy);
     }
 
-    std::vector<Triangle> out;
+    EarCut ec;
+    std::cout << "noooo???" << std::endl;
+    std::vector<Triangle> out = ec.earcut(cc);
 
-    Earcut ec;
-    ec.EarClipTriangulate(cc, out);
-
+    std::cout << "Hello???" << std::endl;
     for (auto t : out) {
-        DrawTriangle(t.p1, t.p2, t.p3, BROWN);
+        t.draw();
     }
 }
 
