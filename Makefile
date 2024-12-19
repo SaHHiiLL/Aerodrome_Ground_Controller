@@ -63,9 +63,6 @@ dev_setup: download_raylib download_triangulation compile_command
 compile_command:
 	@(ls compile_commands.json >> /dev/null 2>&1 ) || bear -- $(BUILD_CMD) 
 
+
 clang_tidy:
-	if [[ !$(git -C ~/dotfile/ diff-index --quiet HEAD --) ]]; then \
-		notify-send "Uncommited files in \"~/dotfile/ \"" \
-	else
-		clang-tidy $(CPP_FILES) $(HPP_FILES)
-	fi \
+		clang-tidy $(CPP_FILES) $(HPP_FILES)								\
