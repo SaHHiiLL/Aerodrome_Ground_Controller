@@ -31,7 +31,11 @@ public:
         : x1(prev), x2(curr), x3(next) {}
     void draw() { DrawTriangle(x1, x2, x3, GREEN); }
     void draw(Color color) { DrawTriangle(x1, x2, x3, color); }
-    void draw_outline();
+    void draw_outline() {
+        DrawLineV(this->x1, this->x2, RAYWHITE); 
+        DrawLineV(this->x2, this->x3, RAYWHITE); 
+        DrawLineV(this->x3, this->x1, RAYWHITE); 
+    }
 };
 
 class EarCut {
