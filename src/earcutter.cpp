@@ -2,23 +2,6 @@
 #include <raymath.h>
 #include <stdexcept>
 
-//
-// https://www.youtube.com/watch?v=HYAgJN3x4GA&t=224s
-bool EarCut::is_point_inside(Triangle triangle, Vector2 p) {
-    Vector2 a = triangle.x1;
-    Vector2 b = triangle.x2;
-    Vector2 c = triangle.x3;
-
-    float area = 0.5f * (-b.y * c.x + a.y * (-b.x + c.x) + a.x * (b.y - c.y) +
-                         b.x * c.y);
-    float s = 1.f / (2.f * area) *
-              (a.y * c.x - a.x * c.y + (c.y - a.y) * p.x + (a.x - c.x) * p.y);
-    float t = 1.f / (2.f * area) *
-              (a.x * b.y - a.y * b.x + (a.y - b.y) * p.x + (b.x - a.x) * p.y);
-
-    return s > 0.f && t > 0.f && (s + t) < 1.f;
-}
-
 // Retuns true if a given angle `curr` is convex releative to `next` and `prev`
 bool EarCut::is_convex(Vector2 prev, Vector2 curr, Vector2 next) {
     Vector2 curr_to_prev = Vector2Subtract(prev, curr);

@@ -2,6 +2,7 @@ CC=g++
 TARGET=build
 SRC=src
 CPP_FILES=$(shell find src/ -name '*.cpp')
+HPP_FILES=$(shell find src/ -name '*.hpp')
 LIBS=./libs
 CPP_VERSION=-std=c++17
 
@@ -61,3 +62,10 @@ dev_setup: download_raylib download_triangulation compile_command
 # Sets up the compile_command.json file for clang lsp 
 compile_command:
 	@(ls compile_commands.json >> /dev/null 2>&1 ) || bear -- $(BUILD_CMD) 
+
+clang_tidy:
+	if [[ !$(git -C ~/dotfile/ diff-index --quiet HEAD --) ]]; then \
+		notify-send "Uncommited files in \"~/dotfile/ \"" \
+	else
+		clang-tidy $(CPP_FILES) $(HPP_FILES)
+	fi \

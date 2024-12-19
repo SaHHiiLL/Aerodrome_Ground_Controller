@@ -1,8 +1,9 @@
 #pragma once
 
 #include "raylib.h"
-#include <array>
 #include <vector>
+
+// WATCH: https://youtu.be/QAdfkylpYwc?si=kLimEaWqmi67CX6l
 
 struct Triangle {
     Vector2 x1, x2, x3;
