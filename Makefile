@@ -1,14 +1,14 @@
 CC=g++
 TARGET=build
 SRC=src
-CPP_FILES=$(shell find src/ -name '*.cpp')
-HPP_FILES=$(shell find src/ -name '*.hpp')
+CPP_FILES=$(shell find src/ -mindepth 1 -name '*.cpp')
+HPP_FILES=$(shell find src/ -mindepth 1 -name '*.hpp')
 LIBS=./libs
 CPP_VERSION=-std=c++17
 
-RAYLIB_PATH=$(LIBS)/raylib-5.0_linux_amd64
-RAYLIB_STATIC_FLAGS=-L$(RAYLIB_PATH)/lib -l:libraylib.a -lm
-RAYLIB_INCLUDE=-I$(RAYLIB_PATH)/include
+RAYLIB_PATH				?=$(LIBS)/raylib-5.0_linux_amd64
+RAYLIB_STATIC_FLAGS		?=-L$(RAYLIB_PATH)/lib -l:libraylib.a -lm
+RAYLIB_INCLUDE			?=-I$(RAYLIB_PATH)/include
 
 TRIANGLE_PATH=-L$(LIBS)/triangulation
 TRIANGLE_PATH_INCLUDE=-I$(LIBS)/triangulation
@@ -17,9 +17,9 @@ TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
 RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
 RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
 
-C_FLAGS=-ggdb $(CPP_VERSION) -Wall
+C_FLAGS=$(CPP_VERSION) -Wall -O3
 
-BIN=AGCS
+BIN ?=AGCS
 
 BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/AGCS $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
 

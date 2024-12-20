@@ -31,10 +31,10 @@ public:
         return res;
     }
 
-    Vector2 GeoToScreenInRefrence(Coordinates center_ref,
-                                  Vector2 screen_center);
-    Vector2 GeoToScreenInRefrence(Coordinates center_ref, float scale,
-                                  Vector2 screen_center);
+    Vector2 geo_to_screen_by_refrence(Coordinates center_ref,
+                                      Vector2 screen_center);
+    Vector2 geo_to_screen_by_refrence(Coordinates center_ref, float scale,
+                                      Vector2 screen_center);
     // W/E - X
     double lon() { return this->longitude; }
     // N/S - Y

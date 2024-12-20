@@ -13,7 +13,7 @@ Runway::Runway(std::array<Coordinates, 4> coords, Coordinates center_ref,
         float sW = GetScreenWidth();
         Vector2 scree_center = {sH / 2, sW / 2};
         Vector2 xy =
-            c.GeoToScreenInRefrence(center_ref, DRAW_SCALE, scree_center);
+            c.geo_to_screen_by_refrence(center_ref, DRAW_SCALE, scree_center);
         cc.push_back(xy.x);
         cc.push_back(xy.y);
     }

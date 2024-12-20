@@ -66,14 +66,15 @@ Coordinates::Coordinates(std::string coords) {
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref,
-                                           Vector2 screen_center) {
-    return GeoToScreenInRefrence(center_ref, DRAW_SCALE, screen_center);
+Vector2 Coordinates::geo_to_screen_by_refrence(Coordinates center_ref,
+                                               Vector2 screen_center) {
+    return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, screen_center);
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinates::GeoToScreenInRefrence(Coordinates center_ref, float scale,
-                                           Vector2 screen_center) {
+Vector2 Coordinates::geo_to_screen_by_refrence(Coordinates center_ref,
+                                               float scale,
+                                               Vector2 screen_center) {
     // Convert latitude and longitude to radians
     float x = (float)(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;

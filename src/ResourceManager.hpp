@@ -11,7 +11,7 @@ public:
     void set_resource_dir_path(std::filesystem::path path);
 
 private:
-    std::filesystem::path resourceDir = "../resource";
+    std::filesystem::path resource_dir = "../resource";
 
     static ResourceManager &Instance() {
         static ResourceManager Instance;

@@ -13,7 +13,8 @@ Polygon::Polygon(std::vector<Coordinates> coords, Coordinates center_ref,
                  Vector2 screen_center) {
     vertices.reserve(coords.size());
     for (auto c : coords) {
-        vertices.push_back(c.GeoToScreenInRefrence(center_ref, screen_center));
+        vertices.push_back(
+            c.geo_to_screen_by_refrence(center_ref, screen_center));
     }
 
     this->triangulate();

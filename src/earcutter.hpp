@@ -29,12 +29,14 @@ public:
 
     Triangle(Vector2 prev, Vector2 curr, Vector2 next)
         : x1(prev), x2(curr), x3(next) {}
+    // TODO: this works for current set of points - However, some might present
+    // themselves as clockwise - I must sort them aswell
     void draw() { DrawTriangle(x1, x2, x3, GREEN); }
     void draw(Color color) { DrawTriangle(x1, x2, x3, color); }
     void draw_outline() {
-        DrawLineV(this->x1, this->x2, RAYWHITE); 
-        DrawLineV(this->x2, this->x3, RAYWHITE); 
-        DrawLineV(this->x3, this->x1, RAYWHITE); 
+        DrawLineV(this->x1, this->x2, RAYWHITE);
+        DrawLineV(this->x2, this->x3, RAYWHITE);
+        DrawLineV(this->x3, this->x1, RAYWHITE);
     }
 };
 
