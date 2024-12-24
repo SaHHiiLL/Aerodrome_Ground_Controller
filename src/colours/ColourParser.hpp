@@ -3,7 +3,6 @@
 #include <cctype>
 #include <cstdint>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 // Lazy Colour file Parser

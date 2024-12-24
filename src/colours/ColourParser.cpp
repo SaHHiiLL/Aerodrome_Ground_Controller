@@ -1,5 +1,6 @@
 #include "./ColourParser.hpp"
 #include "../AGCException.hpp"
+#include <cctype>
 #include <format>
 #include <iostream>
 #include <ostream>
@@ -16,7 +17,7 @@ void ColourParser::read_char() {
 }
 
 void ColourParser::skip_whitespaces() {
-    while (this->lexer.curr_char == ' ' || this->lexer.curr_char == '\n') {
+    while (std::isspace(this->lexer.curr_char)) {
         this->read_char();
     }
 }
