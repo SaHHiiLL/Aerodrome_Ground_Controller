@@ -17,7 +17,7 @@ TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
 RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
 RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
 
-C_FLAGS=$(CPP_VERSION) -Wall -O3
+C_FLAGS=$(CPP_VERSION) -Wall
 
 BIN ?=AGCS
 
