@@ -1,10 +1,10 @@
-CC=g++
+CC=clang++
 TARGET=build
 SRC=src
 CPP_FILES=$(shell find src/ -mindepth 1 -name '*.cpp')
 HPP_FILES=$(shell find src/ -mindepth 1 -name '*.hpp')
 LIBS=./libs
-CPP_VERSION=-std=c++17
+CPP_VERSION=-std=c++23
 
 RAYLIB_PATH				?=$(LIBS)/raylib-5.0_linux_amd64
 RAYLIB_STATIC_FLAGS		?=-L$(RAYLIB_PATH)/lib -l:libraylib.a -lm

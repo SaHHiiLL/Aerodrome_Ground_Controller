@@ -5,10 +5,19 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+// Lazy Colour file Parser
 class ColourParser {
 
 public:
-    enum TokenType { Comment = 0, Eof, Define, Identifier, Value };
+    enum TokenType {
+        Eof = 0,
+        Comment,
+        Define,
+        Identifier,
+        Value,
+        InValid = -1
+    };
 
     struct Token {
         char *literal;
@@ -22,6 +31,9 @@ public:
         char curr_char;
     };
     Token next_token();
+    size_t position() { return this->lexer.position; }
+    bool is_eof() { return this->lexer.curr_char == 0; }
+
     ColourParser(std::string input) {
         this->lexer.input = std::vector<char>(input.begin(), input.end());
         this->lexer.position = 0;
@@ -31,7 +43,6 @@ public:
 
 private:
     Lexer lexer;
-    std::unordered_map<std::string, std::uint64_t> colours;
 
     std::string input;
 

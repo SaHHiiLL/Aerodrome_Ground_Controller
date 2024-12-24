@@ -1,5 +1,9 @@
 #include "./ColourParser.hpp"
-#include <stdexcept>
+#include "../AGCException.hpp"
+#include <format>
+#include <iostream>
+#include <ostream>
+#include <string>
 
 void ColourParser::read_char() {
     if (this->lexer.read_position >= this->lexer.input.size()) {
@@ -37,7 +41,7 @@ uint64_t ColourParser::read_number() {
 
 std::string ColourParser::read_identifer() {
     std::string res;
-    while (this->is_letter()) {
+    while (this->is_letter() || this->is_digit()) {
         res.push_back(this->lexer.curr_char);
         this->read_char();
     }
@@ -47,27 +51,30 @@ std::string ColourParser::read_identifer() {
 ColourParser::Token ColourParser::next_token() {
     this->skip_whitespaces();
     Token current;
+    char curr_char = this->lexer.curr_char;
 
-    switch (this->lexer.curr_char) {
-    case '#': {
-        this->read_char();
+    if (curr_char == '#') {
         // the #defind literal
+        this->read_char();
         this->read_identifer();
-        std::string key = this->read_identifer();
-        std::uint64_t val = this->read_number();
-        this->colours.at(key) = val;
-        current.type = Comment;
-    }
-    case ';': { // Comments
+        current.type = Define;
+    } else if (curr_char == ';') {
         this->skip_curr_line();
         current.type = Comment;
+    } else if (is_letter()) {
+        current.literal = (char *)this->read_identifer().c_str();
+        current.type = Identifier;
+    } else if (is_digit()) {
+        current.literal = (char *)this->read_identifer().c_str();
+        current.type = Value;
+    } else if (is_eof()) {
+        current.type = Eof;
+    } else {
+        std::string msg =
+            std::format("Invalid input: {},", this->lexer.position);
+        std::cout << curr_char << std::endl;
+        throw AGCException(msg);
     }
-    default: {
-        std::string err_msg("Invalid char: %c, at position: %d",
-                            this->lexer.curr_char, this->lexer.position);
-        throw std::invalid_argument(err_msg);
-    }
-    };
 
     this->read_char();
     return current;

@@ -1,14 +1,8 @@
-#include "./Utils.hpp"
-#include "./earcutter.hpp"
-#include "Coordinates.hpp"
 #include "Game.hpp"
-#include <iostream>
+#include "colours/Colours.hpp"
+#include <filesystem>
 #include <raylib.h>
 #include <rlgl.h>
-
-#include <fstream>
-#include <sstream>
-#include <string>
 
 int main(void) {
     float screenWidth = GetScreenWidth();
@@ -19,11 +13,13 @@ int main(void) {
 
     SetTargetFPS(60);
 
-    Camera2D camera = {0};
+    Camera2D camera{};
     camera.zoom = 1;
 
-    Game game = Game(&camera);
+    Colours *colours =
+        new Colours(std::filesystem::path("./resource/Colours.txt"));
 
+    Game game = Game(&camera, *colours);
     while (!WindowShouldClose()) {
         game.handle_input();
         game.update();
@@ -45,6 +41,7 @@ int main(void) {
     }
 
     CloseWindow();
+    delete colours;
 
     return 0;
 }

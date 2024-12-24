@@ -5,11 +5,11 @@
 #include "Game.hpp"
 #include "./Utils.hpp"
 #include "Runway.hpp"
+#include "colours/Colours.hpp"
 #include "raylib.h"
 #include "raymath.h"
 
 void Game::draw() {
-    DrawRectangle(0, 0, 100, 100, GREEN);
     if (IsKeyDown(KEY_C)) {
         DrawRectangleV({0, 0}, {100, 100}, BLUE);
     } // Drawing runways
@@ -48,7 +48,7 @@ void Game::handle_input() {
 
 void Game::update() {}
 
-Game::Game(Camera2D *cam) : camera(cam) {
+Game::Game(Camera2D *cam, Colours &colours) : camera(cam), colours(colours) {
     // EGCC - Center Poiint
 
     Coordinates center_coord = Coordinates("N053.21.13.480", "W002.16.29.820");
