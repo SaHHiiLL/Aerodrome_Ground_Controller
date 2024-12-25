@@ -19,8 +19,10 @@ void Game::draw() {
     if (IsKeyDown(KEY_C)) {
         DrawRectangleV({0, 0}, {100, 100}, BLUE);
     } // Drawing runways
-    for (auto &runway : this->runways) {
-        runway->draw();
+
+    for (auto t : this->polygons) {
+        std::cout << "Draing " << std::endl;
+        t.draw();
     }
 }
 void Game::handle_input() {

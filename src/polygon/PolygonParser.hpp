@@ -2,6 +2,7 @@
 #include "../Coordinates.hpp"
 #include "../Utils.hpp"
 #include <algorithm>
+#include <iostream>
 
 class PolygonParser {
 private:
@@ -29,6 +30,8 @@ public:
             this->lines.begin(), this->lines.end(),
             [](const std::string x) { return x == "Manchester"; });
         this->lines.erase(no_man, this->lines.end());
+
+        std::cout << lines.size() << std::endl;
     }
 
     std::vector<std::pair<std::string, std::vector<Coordinates>>> parse_all();

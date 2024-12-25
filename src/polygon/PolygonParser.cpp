@@ -1,4 +1,5 @@
 #include "./PolygonParser.hpp"
+#include <iostream>
 #include <optional>
 #include <regex>
 #include <utility>
@@ -14,6 +15,7 @@ PolygonParser::parse_all() {
     std::pair<std::string, std::vector<Coordinates>> curr;
     std::string coords[2];
 
+    std::cout << lines.size() << std::endl;
     for (size_t i = 0; i < this->lines.size(); i++) {
         if (std::regex_match(lines[i], coord_regex_ns)) {
             coords[0] = lines[i];
@@ -21,6 +23,7 @@ PolygonParser::parse_all() {
             coords[1] = lines[i];
             curr.second.push_back(Coordinates(coords[0], coords[1]));
         } else {
+            std::cout << lines[i] << std::endl;
             curr = std::make_pair(lines[i], std::vector<Coordinates>());
         }
     }
