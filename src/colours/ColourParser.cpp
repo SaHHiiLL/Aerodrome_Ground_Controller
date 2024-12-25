@@ -16,17 +16,19 @@ ColourParser::Token ColourParser::next_token() {
         this->read_char();
         this->read_identifer();
         current.type = Define;
+        current.literal = this->read_identifer();
     } else if (curr_char == ';') {
         this->skip_curr_line();
         current.type = Comment;
     } else if (is_letter()) {
-        current.literal = (char *)this->read_identifer().c_str();
         current.type = Identifier;
+        current.literal = this->read_identifer();
     } else if (is_digit()) {
-        current.literal = (char *)this->read_identifer().c_str();
         current.type = Value;
+        current.literal = this->read_identifer();
     } else if (is_eof()) {
         current.type = Eof;
+        current.literal = "";
     } else {
         std::string msg =
             std::format("Invalid input: {},", this->lexer.position);

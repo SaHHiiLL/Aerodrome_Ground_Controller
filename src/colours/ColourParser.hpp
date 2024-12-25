@@ -2,6 +2,7 @@
 
 #include "../Parser.hpp"
 #include <cctype>
+#include <string>
 
 // Lazy Colour file Parser
 class ColourParser {
@@ -15,6 +16,5 @@ public:
         Value,
         InValid = -1
     };
-
     LEXER_IMPL(ColourParser)
 };

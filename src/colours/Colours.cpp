@@ -2,7 +2,9 @@
 #include "../AGCException.hpp"
 #include "../ResourceManager.hpp"
 #include "./ColourParser.hpp"
+#include <iostream>
 #include <string>
+#include <utility>
 
 Colours::Colours(std::filesystem::path path) {
     ResourceManager &rm = ResourceManager::Instance();
@@ -24,8 +26,12 @@ Colours::Colours(std::filesystem::path path) {
                     parser.position());
                 throw AGCException(msg);
             } else {
+                std::cout << "TokenLiteral is `" << toke.literal << "`"
+                          << std::endl;
+                std::cout << "TokenIdent is `" << last_ident << "`"
+                          << std::endl;
                 this->colours[last_ident] =
-                    std::stoul(std::string(toke.literal));
+                    std::stoull(std::string(toke.literal));
             }
         }
         last_ident.clear();

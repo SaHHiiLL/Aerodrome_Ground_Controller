@@ -17,15 +17,15 @@ TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
 RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
 RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
 
-C_FLAGS=$(CPP_VERSION) -Wall
+C_FLAGS=$(CPP_VERSION) -ggdb
 
 BIN ?=AGCS
 
 BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/AGCS $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
 
 all:
-	# Download dep if it does not exists -- Kind of a poor mans way of checking it
-	# TODO: introduce sha1 hash and check if it's correct
+	@# Download dep if it does not exists -- Kind of a poor mans way of checking it
+	@# TODO: introduce sha1 hash and check if it's correct
 	@if [ ! -d "$(LIBS)" ]; then			\
 		$(MAKE) download_raylib; 			\
 		$(MAKE) download_triangulation; 	\

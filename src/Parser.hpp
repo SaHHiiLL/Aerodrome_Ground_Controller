@@ -6,7 +6,7 @@
 #define LEXER_IMPL(X)                                                          \
 public:                                                                        \
     struct Token {                                                             \
-        char *literal;                                                         \
+        std::string literal;                                                   \
         TokenType type;                                                        \
     };                                                                         \
     struct Lexer {                                                             \
@@ -24,9 +24,7 @@ public:                                                                        \
         this->lexer.curr_char = this->lexer.input[0];                          \
     }                                                                          \
                                                                                \
-private:                                                                       \
     Lexer lexer;                                                               \
-    std::string input;                                                         \
     bool is_eof() { return this->lexer.curr_char == 0; }                       \
     void read_char() {                                                         \
         if (this->lexer.read_position >= this->lexer.input.size()) {           \

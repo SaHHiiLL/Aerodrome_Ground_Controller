@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "colours/Colours.hpp"
 #include <filesystem>
+#include <iostream>
 #include <raylib.h>
 #include <rlgl.h>
 

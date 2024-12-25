@@ -15,22 +15,22 @@ PolygonParser::Token PolygonParser::next_token() {
         std::string ident = this->read_identifer();
         if (ident == "REGIONNAME") {
             current.type = RegionName;
-            current.literal = (char *)ident.c_str();
+            current.literal = ident;
             this->last_token_type = RegionName;
 
         } else if (this->last_token_type == RegionName) {
             current.type = RegionNameValue;
-            current.literal = (char *)ident.c_str();
+            current.literal = ident;
             this->last_token_type = RegionNameValue;
 
         } else if (this->last_token_type == RegionNameValue) {
             current.type = ColourKey;
-            current.literal = (char *)ident.c_str();
+            current.literal = ident;
             this->last_token_type = ColourKey;
 
         } else if (this->last_token_type == ColourKey) {
             current.type = SingleCoordinate;
-            current.literal = (char *)ident.c_str();
+            current.literal = ident;
             this->last_token_type = SingleCoordinate;
 
         } else {
