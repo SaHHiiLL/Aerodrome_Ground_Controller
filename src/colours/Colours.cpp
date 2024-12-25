@@ -20,20 +20,16 @@ Colours::Colours(std::filesystem::path path) {
         }
 
         if (toke.type == ColourParser::TokenType::Value) {
-            if (!last_ident.empty()) {
+            if (last_ident.empty()) {
                 std::string msg = std::format(
                     "Invalid identifer for colour parsing at line: {}",
                     parser.position());
                 throw AGCException(msg);
             } else {
-                std::cout << "TokenLiteral is `" << toke.literal << "`"
-                          << std::endl;
-                std::cout << "TokenIdent is `" << last_ident << "`"
-                          << std::endl;
                 this->colours[last_ident] =
                     std::stoull(std::string(toke.literal));
+                last_ident.clear();
             }
         }
-        last_ident.clear();
     }
 }

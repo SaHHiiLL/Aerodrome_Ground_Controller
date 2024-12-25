@@ -29,12 +29,12 @@ public:                                                                        \
     void read_char() {                                                         \
         if (this->lexer.read_position >= this->lexer.input.size()) {           \
             this->lexer.curr_char = 0;                                         \
-        } else {                                                               \
+        } else [[likely]] {                                                    \
             this->lexer.curr_char =                                            \
                 this->lexer.input[this->lexer.read_position];                  \
-            this->lexer.position = this->lexer.read_position;                  \
-            this->lexer.read_position++;                                       \
         }                                                                      \
+        this->lexer.position = this->lexer.read_position;                      \
+        this->lexer.read_position++;                                           \
     }                                                                          \
     void skip_whitespaces() {                                                  \
         while (std::isspace(this->lexer.curr_char)) {                          \
@@ -58,7 +58,7 @@ public:                                                                        \
     }                                                                          \
     std::string read_identifer() {                                             \
         std::string res;                                                       \
-        while (this->is_letter() || this->is_digit()) {                        \
+        while (!std::isspace(this->lexer.curr_char)) {                         \
             res.push_back(this->lexer.curr_char);                              \
             this->read_char();                                                 \
         }                                                                      \

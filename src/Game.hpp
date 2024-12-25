@@ -6,6 +6,7 @@
 
 #include "Runway.hpp"
 #include "colours/Colours.hpp"
+#include "polygon/Polygon.hpp"
 #include <raylib.h>
 #include <vector>
 
@@ -14,6 +15,8 @@ private:
     Camera2D *camera;
     std::vector<Runway *> runways;
     Colours &colours;
+
+    std::vector<Polygon> polygons;
 
 public:
     Game(Camera2D *cam, Colours &colours);

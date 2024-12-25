@@ -9,5 +9,6 @@ private:
 
 public:
     Colours(std::filesystem::path resource_path);
-    Color to_raylib(std::string key) { return *(Color *)colours.at(key); }
+    Color to_raylib(std::string key) { return GetColor(colours.at(key)); }
+    bool is_valid(std::string key) { return this->colours.contains(key); }
 };

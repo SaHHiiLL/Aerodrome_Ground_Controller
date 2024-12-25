@@ -1,48 +1,29 @@
 #include "./PolygonParser.hpp"
-#include "../AGCException.hpp"
-#include <format>
+#include <optional>
+#include <regex>
+#include <utility>
 
-PolygonParser::Token PolygonParser::next_token() {
-    this->skip_whitespaces();
-    Token current;
-    char curr_char = this->lexer.curr_char;
+std::vector<std::pair<std::string, std::vector<Coordinates>>>
+PolygonParser::parse_all() {
+    // Moves the unwanted stuff to the back
 
-    if (curr_char == ';') {
-        this->skip_curr_line();
-        current.type = Comment;
+    std::regex coord_regex_ns("[N|S]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
+    std::regex coord_regex_we("[W|E]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
 
-    } else if (is_letter()) {
-        std::string ident = this->read_identifer();
-        if (ident == "REGIONNAME") {
-            current.type = RegionName;
-            current.literal = ident;
-            this->last_token_type = RegionName;
+    std::vector<std::pair<std::string, std::vector<Coordinates>>> res;
+    std::pair<std::string, std::vector<Coordinates>> curr;
+    std::string coords[2];
 
-        } else if (this->last_token_type == RegionName) {
-            current.type = RegionNameValue;
-            current.literal = ident;
-            this->last_token_type = RegionNameValue;
-
-        } else if (this->last_token_type == RegionNameValue) {
-            current.type = ColourKey;
-            current.literal = ident;
-            this->last_token_type = ColourKey;
-
-        } else if (this->last_token_type == ColourKey) {
-            current.type = SingleCoordinate;
-            current.literal = ident;
-            this->last_token_type = SingleCoordinate;
-
+    for (size_t i = 0; i < this->lines.size(); i++) {
+        if (std::regex_match(lines[i], coord_regex_ns)) {
+            coords[0] = lines[i];
+        } else if (std::regex_match(lines[i], coord_regex_we)) {
+            coords[1] = lines[i];
+            curr.second.push_back(Coordinates(coords[0], coords[1]));
         } else {
-            std::string msg =
-                std::format("Invalid input: {},", this->lexer.position);
-            throw AGCException(msg);
+            curr = std::make_pair(lines[i], std::vector<Coordinates>());
         }
-    } else {
-        std::string msg =
-            std::format("Invalid input: {},", this->lexer.position);
-        throw AGCException(msg);
     }
-    this->read_char();
-    return current;
+
+    return res;
 }

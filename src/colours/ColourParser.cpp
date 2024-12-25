@@ -31,8 +31,7 @@ ColourParser::Token ColourParser::next_token() {
         current.literal = "";
     } else {
         std::string msg =
-            std::format("Invalid input: {},", this->lexer.position);
-        std::cout << curr_char << std::endl;
+            std::format("Invalid Position {}", this->lexer.position);
         throw AGCException(msg);
     }
 

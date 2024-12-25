@@ -4,10 +4,16 @@
 
 #include "Game.hpp"
 #include "./Utils.hpp"
+#include "ResourceManager.hpp"
 #include "Runway.hpp"
 #include "colours/Colours.hpp"
-#include "raylib.h"
-#include "raymath.h"
+#include "polygon/Polygon.hpp"
+#include "polygon/PolygonParser.hpp"
+#include <filesystem>
+#include <iostream>
+#include <raylib.h>
+#include <raymath.h>
+#include <vector>
 
 void Game::draw() {
     if (IsKeyDown(KEY_C)) {
@@ -46,26 +52,26 @@ void Game::handle_input() {
     }
 }
 
+void add_polygons(std::vector<Polygon> &polygons, std::filesystem::path path) {}
+
 void Game::update() {}
 
-Game::Game(Camera2D *cam, Colours &colours) : camera(cam), colours(colours) {
+Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     // EGCC - Center Poiint
+    // TODO: will be replaced
+    this->camera = cam;
+    Coordinates center_ref("N053.21.13.480", "W002.16.29.820");
+    float sH = GetScreenHeight();
+    float sW = GetScreenWidth();
+    Vector2 screen_center = {sH / 2, sW / 2};
 
-    Coordinates center_coord = Coordinates("N053.21.13.480", "W002.16.29.820");
+    ResourceManager &rm = ResourceManager::Instance();
+    std::string res = rm.read_file_abs("./resource/Regions.txt");
+    PolygonParser pp(res);
 
-    // EGCC
-    this->runways.push_back(new Runway(
-        {
-            Coordinates("N053.19.55.785", "W002.18.38.871"),
-            Coordinates("N053.19.54.700", "W002.18.37.396"),
-            Coordinates("N053.20.52.809", "W002.16.37.099"),
-            Coordinates("N053.20.53.945 W002.16.38.633"),
-        },
-        center_coord, 230, RED));
-    this->runways.push_back(
-        new Runway({Coordinates("N053.21.41.336 W002.15.34.098"),
-                    Coordinates("N053.20.51.775 W002.17.16.736"),
-                    Coordinates("N053.20.50.647 W002.17.15.210"),
-                    Coordinates("N053.21.40.177 W002.15.32.542")},
-                   center_coord, 230, BLUE));
+    for (std::pair<std::string, std::vector<Coordinates>> p : pp.parse_all()) {
+        Color c = this->colours.to_raylib(p.first);
+        this->polygons.push_back(
+            Polygon(p.second, center_ref, screen_center, c));
+    }
 }
