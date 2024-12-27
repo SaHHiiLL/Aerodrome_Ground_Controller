@@ -71,10 +71,14 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     std::cout << "Parsing complete, total of : " << this->polygons.size()
               << std::endl;
     for (auto p : this->polygons) {
-        // if (p.size() < 5)
-        //     continue;
-        std::cout << "Triangulating with coordsnates: " << p.size()
-                  << std::endl;
+        if (p.size() < 5) {
+            std::cout << "Triangulating with coordsnates: " << p.size()
+                      << std::endl;
+            for (auto c : p.coords()) {
+                std::cout << c.to_string() << std::endl;
+            }
+            continue;
+        }
         p.triangulate(center_ref, screen_center);
     }
 }

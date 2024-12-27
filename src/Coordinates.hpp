@@ -21,14 +21,8 @@ public:
     Coordinates() {}
 
     std::string to_string() {
-        std::string res;
-        res.push_back(' ');
-        res.append(std::to_string(this->lateral));
-        res.push_back(',');
-        res.push_back(' ');
-        res.append(std::to_string(this->longitude));
-        res.push_back(' ');
-        return res;
+        return "Coordinates(" + std::to_string(lateral) + ", " +
+               std::to_string(longitude) + ")";
     }
 
     Vector2 geo_to_screen_by_refrence(Coordinates center_ref,
