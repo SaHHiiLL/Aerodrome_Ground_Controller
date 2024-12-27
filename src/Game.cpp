@@ -20,8 +20,9 @@ void Game::draw() {
         DrawRectangleV({0, 0}, {100, 100}, BLUE);
     } // Drawing runways
 
-    for (auto t : this->polygons) {
-        t.draw();
+    for (size_t i = 0; i < this->polygons.size(); i++) {
+        DrawTriangle({1, 0}, {0, -1}, {0, 0}, RED);
+        this->polygons[i].draw();
     }
 }
 void Game::handle_input() {
@@ -70,15 +71,16 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     this->polygons = pp.parse(colours.colours);
     std::cout << "Parsing complete, total of : " << this->polygons.size()
               << std::endl;
-    for (auto p : this->polygons) {
-        if (p.size() < 5) {
-            std::cout << "Triangulating with coordsnates: " << p.size()
-                      << std::endl;
-            for (auto c : p.coords()) {
+
+    std::erase_if(this->polygons, [&](Polygon &p) { return p.size() < 5;});
+    for (size_t i = 0; i < this->polygons.size(); i++) {
+        if (this->polygons[i].size() < 5) {
+            std::cout << "Triangulating with coordsnates: " << this->polygons[i].size()
+                    << std::endl;
+            for (auto &c: this->polygons[i].coords())
                 std::cout << c.to_string() << std::endl;
-            }
             continue;
         }
-        p.triangulate(center_ref, screen_center);
+        this->polygons[i].triangulate(center_ref, screen_center);
     }
 }

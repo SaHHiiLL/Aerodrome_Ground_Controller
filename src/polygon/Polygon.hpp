@@ -28,4 +28,5 @@ public:
     void triangulate(Coordinates center_ref, Vector2 screen_center);
     void draw(Color color);
     void draw();
+    void draw_outline();
 };

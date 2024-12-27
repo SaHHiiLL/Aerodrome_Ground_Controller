@@ -45,7 +45,7 @@ public:
 
         std::regex coord_regex_ns("[N|S]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
         std::regex coord_regex_we("[W|E]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
-        for (auto word : words_split) {
+        for (auto &word : words_split) {
             if (word == "REGIONNAME") {
                 // start of a new polygon
                 // add the last polygon to the list if it's not empty

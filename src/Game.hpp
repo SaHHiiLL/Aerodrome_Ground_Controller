@@ -22,6 +22,7 @@ public:
     Game(Camera2D *cam, Colours &colours);
     void update();
     void draw();
+    void draw_outline();
     void handle_input();
     float zoom_factor = 1;
 };

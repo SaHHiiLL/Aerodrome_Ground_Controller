@@ -21,7 +21,7 @@ double Coordinates::parse(std::string s) {
     int idx = 0;
     int neg = 0;
 
-    for (char x : s) {
+    for (char &x : s) {
         if (x == 'N' || x == 'E') {
             neg = 1;
             continue;

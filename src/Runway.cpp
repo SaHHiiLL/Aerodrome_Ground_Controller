@@ -8,7 +8,7 @@ Runway::Runway(std::array<Coordinates, 4> coords, Coordinates center_ref,
       color(color) {
     std::vector<double> cc;
 
-    for (auto c : coords) {
+    for (auto &c : coords) {
         float sH = GetScreenHeight();
         float sW = GetScreenWidth();
         Vector2 scree_center = {sH / 2, sW / 2};
