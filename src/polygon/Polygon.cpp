@@ -5,41 +5,17 @@
 #include "raylib.h"
 #include <vector>
 
-void Polygon::triangulate() {
-    EarCut earcut;
-    this->triangles = earcut.earcut(vertices);
-}
+Polygon::Polygon(std::vector<Coordinates> coords, Color color)
+    : coords(coords), color(color) {}
 
-Polygon::Polygon(std::vector<Coordinates> coords, Coordinates center_ref,
-                 Vector2 screen_center, Color color) {
-    this->vertices.reserve(coords.size());
-    for (auto c : coords) {
+void Polygon::triangulate(Coordinates center_ref, Vector2 screen_center) {
+    for (auto c : this->coords) {
         this->vertices.push_back(
             c.geo_to_screen_by_refrence(center_ref, screen_center));
     }
-    this->color = color;
-    this->triangulate();
+    EarCut earcut;
+    this->triangles = earcut.earcut(this->vertices);
 }
-
-// Polygon::Polygon(std::filesystem::path path, Coordinates center_ref,
-//                  Vector2 screen_center) {
-//
-//     ResourceManager &rm = ResourceManager::Instance();
-//     std::string res = rm.read_file_abs(path);
-//     PolygonParser parser = PolygonParser(res);
-//
-//     for (PolygonParser::Token toke = parser.next_token(); toke.type > 0;
-//          toke = parser.next_token()) {
-//
-//         // TODO: make a new class that can create multiple polygons
-//         // using the parser since, the `Regions.txt` files contains more than
-//         // one polygon
-//         if (toke.type == PolygonParser::TokenType::ColourKey) {
-//         }
-//     }
-//
-//     // this->vertices.reserve(coords.size());
-// }
 
 void Polygon::draw(Color color) {
     for (size_t i = 0; i < this->triangles.size(); i++)

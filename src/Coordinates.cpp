@@ -13,7 +13,7 @@
 // into
 //      53.8304, -1.2052
 
-double parse(std::string s) {
+double Coordinates::parse(std::string s) {
     // 1. loop over the string
     // 2. push the number forward
     std::string y;

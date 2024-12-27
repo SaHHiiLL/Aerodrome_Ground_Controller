@@ -1,20 +1,18 @@
 #pragma once
 
-#include "../Parser.hpp"
 #include <cctype>
+#include <cstdint>
 #include <string>
+#include <unordered_map>
 
 // Lazy Colour file Parser
 class ColourParser {
+private:
+    std::string input;
+    std::unordered_map<std::string, uint64_t> &map_to_fill;
 
 public:
-    enum TokenType {
-        Eof = 0,
-        Comment,
-        Define,
-        Identifier,
-        Value,
-        InValid = -1
-    };
-    LEXER_IMPL(ColourParser)
+    ColourParser(std::string input,
+                 std::unordered_map<std::string, uint64_t> &map_to_fill);
+    void parse();
 };

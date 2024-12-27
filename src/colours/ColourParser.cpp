@@ -1,40 +1,26 @@
 #include "./ColourParser.hpp"
-#include "../AGCException.hpp"
+#include "../Utils.hpp"
 #include <cctype>
-#include <format>
-#include <iostream>
-#include <ostream>
+#include <cstdint>
 #include <string>
+#include <vector>
 
-ColourParser::Token ColourParser::next_token() {
-    this->skip_whitespaces();
-    Token current;
-    char curr_char = this->lexer.curr_char;
+ColourParser::ColourParser(
+    std::string input, std::unordered_map<std::string, uint64_t> &map_to_fill)
+    : input(input), map_to_fill(map_to_fill) {}
 
-    if (curr_char == '#') {
-        // the #defind literal
-        this->read_char();
-        this->read_identifer();
-        current.type = Define;
-        current.literal = this->read_identifer();
-    } else if (curr_char == ';') {
-        this->skip_curr_line();
-        current.type = Comment;
-    } else if (is_letter()) {
-        current.type = Identifier;
-        current.literal = this->read_identifer();
-    } else if (is_digit()) {
-        current.type = Value;
-        current.literal = this->read_identifer();
-    } else if (is_eof()) {
-        current.type = Eof;
-        current.literal = "";
-    } else {
-        std::string msg =
-            std::format("Invalid Position {}", this->lexer.position);
-        throw AGCException(msg);
+void ColourParser::parse() {
+    Utils::StringSplit spliter(input, '\n');
+    std::vector<std::string> lines = spliter.collect();
+    // filter comments from lines;
+    std::erase_if(lines,
+                  [](const std::string line) { return line.starts_with(';'); });
+
+    for (auto s : lines) {
+        Utils::StringSplit spliter(s, ' ');
+        spliter.next(); // #define
+        std::string key{spliter.next()};
+        uint64_t colour = std::stoull(spliter.next());
+        this->map_to_fill.insert(std::make_pair(key, colour));
     }
-
-    this->read_char();
-    return current;
 }

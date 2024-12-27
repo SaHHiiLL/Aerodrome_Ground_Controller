@@ -16,6 +16,7 @@ float EarCut::crossproduct(Vector2 a, Vector2 b) {
     return (a.x * b.y) - (a.y * b.x);
 }
 
+// TODO: do all the checks
 std::vector<Triangle> EarCut::earcut(std::vector<Vector2> &polygon) {
 
     if (polygon.size() < 3) {

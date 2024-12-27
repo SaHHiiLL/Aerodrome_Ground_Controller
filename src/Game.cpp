@@ -21,7 +21,6 @@ void Game::draw() {
     } // Drawing runways
 
     for (auto t : this->polygons) {
-        std::cout << "Draing " << std::endl;
         t.draw();
     }
 }
@@ -54,14 +53,12 @@ void Game::handle_input() {
     }
 }
 
-void add_polygons(std::vector<Polygon> &polygons, std::filesystem::path path) {}
-
 void Game::update() {}
 
 Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
+    this->camera = cam;
     // EGCC - Center Poiint
     // TODO: will be replaced
-    this->camera = cam;
     Coordinates center_ref("N053.21.13.480", "W002.16.29.820");
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
@@ -70,10 +67,14 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     ResourceManager &rm = ResourceManager::Instance();
     std::string res = rm.read_file_abs("./resource/Regions.txt");
     PolygonParser pp(res);
-
-    for (std::pair<std::string, std::vector<Coordinates>> p : pp.parse_all()) {
-        Color c = this->colours.to_raylib(p.first);
-        this->polygons.push_back(
-            Polygon(p.second, center_ref, screen_center, c));
+    this->polygons = pp.parse(colours.colours);
+    std::cout << "Parsing complete, total of : " << this->polygons.size()
+              << std::endl;
+    for (auto p : this->polygons) {
+        // if (p.size() < 5)
+        //     continue;
+        std::cout << "Triangulating with coordsnates: " << p.size()
+                  << std::endl;
+        p.triangulate(center_ref, screen_center);
     }
 }

@@ -1,39 +1,70 @@
 #pragma once
-#include "../Coordinates.hpp"
 #include "../Utils.hpp"
-#include <algorithm>
+#include "../polygon/Polygon.hpp"
+#include <cstdint>
 #include <iostream>
+#include <numeric>
+#include <ranges>
+#include <regex>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 class PolygonParser {
 private:
-    std::vector<std::string> lines;
-    size_t curr = 0;
+    std::string input;
 
 public:
-    PolygonParser(std::string input) {
-        Utils::StringSplit spliter(input, '\n');
-        this->lines = spliter.collect();
-        auto new_lines = std::remove_if(
-            this->lines.begin(), this->lines.end(),
-            [](const std::string x) { return x.starts_with(';'); });
-        this->lines.erase(new_lines, this->lines.end());
+    PolygonParser(std::string input) { this->input = input; }
 
-        Utils::StringSplit xx(input, ' ');
-        this->lines = xx.collect();
+    std::vector<Polygon>
+    parse(std::unordered_map<std::string, uint64_t> &color_map) {
 
-        auto no_regionname = std::remove_if(
-            this->lines.begin(), this->lines.end(),
-            [](const std::string x) { return x == "REGIONNAME"; });
-        this->lines.erase(no_regionname, this->lines.end());
+        std::vector<Polygon> polygons{};
+        // split by newlines
+        std::vector<std::string> lines =
+            this->input | std::ranges::views::split('\n') |
+            std::ranges::to<std::vector<std::string>>();
 
-        auto no_man = std::remove_if(
-            this->lines.begin(), this->lines.end(),
-            [](const std::string x) { return x == "Manchester"; });
-        this->lines.erase(no_man, this->lines.end());
+        // remove empty lines and comments
+        lines.erase(std::remove_if(lines.begin(), lines.end(),
+                                   [](const std::string line) {
+                                       return line.empty() ||
+                                              line.starts_with(';');
+                                   }),
+                    lines.end());
 
-        std::cout << lines.size() << std::endl;
+        std::string words = std::accumulate(
+            lines.begin(), lines.end(), std::string(),
+            [](std::string l, std::string const &r) { return l += " " + r; });
+
+        std::vector<std::string> words_split = Utils::split_whitespace(words);
+
+        Polygon curr_polygon;
+        std::string curr_lateral;
+
+        std::regex coord_regex_ns("[N|S]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
+        std::regex coord_regex_we("[W|E]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
+        for (auto word : words_split) {
+            if (word == "REGIONNAME") {
+                // start of a new polygon
+                // add the last polygon to the list if it's not empty
+                if (!curr_polygon.is_empty()) {
+                    polygons.push_back(curr_polygon);
+                }
+                curr_polygon = Polygon();
+            } else if (std::regex_match(word, coord_regex_ns)) {
+                curr_lateral = word;
+            } else if (std::regex_match(word, coord_regex_we)) {
+                Coordinates coords(curr_lateral, word);
+                curr_polygon.add_coordinate(coords);
+            } else if (color_map.contains(word)) {
+                curr_polygon.set_color(GetColor(color_map.at(word)));
+            } else {
+                std::cout << word << std::endl;
+            }
+        }
+
+        return polygons;
     }
-
-    std::vector<std::pair<std::string, std::vector<Coordinates>>> parse_all();
-    std::string get_current_line() { return this->lines[curr]; }
 };

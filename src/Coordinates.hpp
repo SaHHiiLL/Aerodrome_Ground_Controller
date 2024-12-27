@@ -18,7 +18,7 @@ public:
     Coordinates(std::string);
 
     // Creates a coord for "0, 0"
-    Coordinates();
+    Coordinates() {}
 
     std::string to_string() {
         std::string res;
@@ -39,6 +39,13 @@ public:
     double lon() { return this->longitude; }
     // N/S - Y
     double lat() { return this->lateral; }
+
+    void lat(double lat) { this->lateral = lat; }
+    void lat(std::string lat) { this->lateral = parse(lat); }
+    void lon(double log) { this->longitude = log; }
+    void lon(std::string log) { this->longitude = parse(log); }
+
+    double parse(std::string s);
 
 private:
     double lateral;
