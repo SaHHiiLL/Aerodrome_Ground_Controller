@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "Runway.hpp"
 #include "colours/Colours.hpp"
 #include "polygon/Polygon.hpp"
 #include <raylib.h>
@@ -13,7 +12,6 @@
 class Game {
 private:
     Camera2D *camera;
-    std::vector<Runway *> runways;
     Colours &colours;
 
     std::vector<Polygon> polygons;

@@ -5,7 +5,6 @@
 #include "Game.hpp"
 #include "./Utils.hpp"
 #include "ResourceManager.hpp"
-#include "Runway.hpp"
 #include "colours/Colours.hpp"
 #include "polygon/Polygon.hpp"
 #include "polygon/PolygonParser.hpp"
@@ -72,15 +71,8 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     std::cout << "Parsing complete, total of : " << this->polygons.size()
               << std::endl;
 
-    std::erase_if(this->polygons, [&](Polygon &p) { return p.size() < 5;});
+    std::erase_if(this->polygons, [&](Polygon &p) { return p.size() < 5; });
     for (size_t i = 0; i < this->polygons.size(); i++) {
-        if (this->polygons[i].size() < 5) {
-            std::cout << "Triangulating with coordsnates: " << this->polygons[i].size()
-                    << std::endl;
-            for (auto &c: this->polygons[i].coords())
-                std::cout << c.to_string() << std::endl;
-            continue;
-        }
         this->polygons[i].triangulate(center_ref, screen_center);
     }
 }
