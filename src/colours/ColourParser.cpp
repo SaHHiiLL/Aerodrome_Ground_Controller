@@ -35,8 +35,10 @@ void ColourParser::parse() {
 
     for (size_t i = 0; i < words_split.size(); i += 3) {
         if (words_split[i] == "#define") {
+            uint32_t color_bgr = std::stoull(words_split[i + 2]);
             this->map_to_fill.insert(
-                {words_split[i + 1], std::stoull(words_split[i + 2])});
+                {words_split[i + 1],
+                 __builtin_bswap32(color_bgr | 0xff000000)});
         } else {
             std::cout << "Invalid entry for colour parsing at index: " << i
                       << std::endl;
