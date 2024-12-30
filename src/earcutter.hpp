@@ -47,5 +47,5 @@ private:
     bool is_point_inside(Triangle triangle, Vector2 point);
 
 public:
-    std::vector<Triangle> earcut(std::vector<Vector2> &polygon);
+    std::vector<Triangle> earcut(const std::vector<Vector2> &polygon);
 };

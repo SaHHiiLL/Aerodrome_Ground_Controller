@@ -12,14 +12,15 @@ include_directories(src/polygon)
 
 # setting raylib path
 set(RAYLIB_DIR "./libs/raylib-5.0/")
+set(DELAUNATOR "./libs/delaunator/")
 
 find_library(RAYLIB_LIBRARY NAMES raylib HINTS ${RAYLIB_DIR}/lib)
 include_directories(${RAYLIB_DIR}/include)
+include_directories(${DELAUNATOR})
 
 # Add the executable
 add_executable(Aerodrome_Ground_Controller
         libs/triangulation/delaunator.cpp
-        libs/triangulation/delaunator.hpp
         src/colours/ColourParser.cpp
         src/colours/ColourParser.hpp
         src/colours/Colours.cpp
@@ -29,8 +30,8 @@ add_executable(Aerodrome_Ground_Controller
         src/polygon/PolygonParser.cpp
         src/polygon/PolygonParser.hpp
         src/AGCException.hpp
-        src/Coordinates.cpp
-        src/Coordinates.hpp
+        src/Coordinate.cpp
+        src/Coordinate.hpp
         src/earcutter.cpp
         src/earcutter.hpp
         src/Game.cpp
@@ -38,8 +39,8 @@ add_executable(Aerodrome_Ground_Controller
         src/main.cpp
         src/ResourceManager.cpp
         src/ResourceManager.hpp
-        src/Runway.cpp
-        src/Runway.hpp
+        src/Quadrilateral.cpp
+        src/Quadrilateral.hpp
         src/Utils.cpp
         src/Utils.hpp)
 

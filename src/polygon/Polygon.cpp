@@ -1,15 +1,15 @@
 
 #include "./Polygon.hpp"
-#include "../Coordinates.hpp"
+#include "../Coordinate.hpp"
 #include "../Quadrilateral.hpp"
 #include "../earcutter.hpp"
 #include "raylib.h"
 #include <vector>
 
-Polygon::Polygon(std::vector<Coordinates> coords, Color color)
+Polygon::Polygon(std::vector<Coordinate> coords, Color color)
     : coordinates(coords), color(color) {}
 
-void Polygon::triangulate(Coordinates center_ref, Vector2 screen_center) {
+void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
     for (size_t i = 0; i < coordinates.size(); i++) {
         this->vertices.push_back(coordinates[i].geo_to_screen_by_refrence(
             center_ref, screen_center));

@@ -15,13 +15,11 @@ PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
         std::ranges::to<std::vector<std::string>>();
 
     // remove empty lines and comments
-    lines.erase(std::remove_if(lines.begin(), lines.end(),
-                               [](const std::string line) {
-                                   return line.empty() || line.starts_with(';');
-                               }),
-                lines.end());
+    std::erase_if(lines, [](const std::string line) {
+        return line.empty() || line.starts_with(';');
+    });
 
-    std::string words = std::accumulate(
+    const std::string words = std::accumulate(
         lines.begin(), lines.end(), std::string(),
         [](std::string l, std::string const &r) { return l += " " + r; });
 
@@ -30,8 +28,8 @@ PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
     Polygon curr_polygon;
     std::string curr_lateral;
 
-    std::regex coord_regex_ns("[N|S]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
-    std::regex coord_regex_we("[W|E]\\d{3}.\\d{2}.\\d{2}.\\d{3}");
+    const std::regex coord_regex_ns(R"([N|S]\d{3}.\d{2}.\d{2}.\d{3})");
+    const std::regex coord_regex_we(R"([W|E]\d{3}.\d{2}.\d{2}.\d{3})");
     for (auto &word : words_split) {
         if (word == "REGIONNAME") {
             // start of a new polygon
@@ -43,7 +41,7 @@ PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
         } else if (std::regex_match(word, coord_regex_ns)) {
             curr_lateral = word;
         } else if (std::regex_match(word, coord_regex_we)) {
-            Coordinates coords(curr_lateral, word);
+            const Coordinate coords(curr_lateral, word);
             curr_polygon.add_coordinate(coords);
         } else if (color_map.contains(word)) {
             curr_polygon.set_color(GetColor(color_map.at(word)));

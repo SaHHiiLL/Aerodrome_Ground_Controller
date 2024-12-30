@@ -17,7 +17,7 @@ float EarCut::crossproduct(Vector2 a, Vector2 b) {
 }
 
 // TODO: do all the checks
-std::vector<Triangle> EarCut::earcut(std::vector<Vector2> &polygon) {
+std::vector<Triangle> EarCut::earcut(const std::vector<Vector2> &polygon) {
 
     if (polygon.size() < 3) {
         throw std::invalid_argument("Polygon must have atleast 3 sizes!");

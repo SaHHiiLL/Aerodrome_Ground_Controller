@@ -1,5 +1,5 @@
 
-#include "Coordinates.hpp"
+#include "Coordinate.hpp"
 #include "Utils.hpp"
 #include "raylib.h"
 #include <cassert>
@@ -13,7 +13,7 @@
 // into
 //      53.8304, -1.2052
 
-double Coordinates::parse(std::string s) {
+double Coordinate::parse(std::string s) {
     // 1. loop over the string
     // 2. push the number forward
     std::string y;
@@ -49,12 +49,12 @@ double Coordinates::parse(std::string s) {
                           (coords[2] + (coords[3] / 1000)) / 3600);
 }
 
-Coordinates::Coordinates(std::string lateral, std::string longitude) {
+Coordinate::Coordinate(std::string lateral, std::string longitude) {
     this->lateral = parse(lateral);
     this->longitude = parse(longitude);
 }
 
-Coordinates::Coordinates(std::string coords) {
+Coordinate::Coordinate(std::string coords) {
     Utils::StringSplit split(coords, ' ');
     auto s = split.collect();
     if (s.size() != 2) {
@@ -66,15 +66,15 @@ Coordinates::Coordinates(std::string coords) {
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinates::geo_to_screen_by_refrence(Coordinates center_ref,
-                                               Vector2 screen_center) {
+Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
+                                              Vector2 screen_center) {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, screen_center);
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinates::geo_to_screen_by_refrence(Coordinates center_ref,
-                                               float scale,
-                                               Vector2 screen_center) {
+Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
+                                              float scale,
+                                              Vector2 screen_center) {
     // Convert latitude and longitude to radians
     float x = (float)(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;

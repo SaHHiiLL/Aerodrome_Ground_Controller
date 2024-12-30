@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Coordinates.hpp"
+#include "../Coordinate.hpp"
 #include "../earcutter.hpp"
 #include "raylib.h"
 #include <vector>
@@ -11,21 +11,21 @@ private:
     std::vector<Triangle> triangles;
 
     Color color = RED;
-    std::vector<Coordinates> coordinates;
+    std::vector<Coordinate> coordinates;
 
 public:
-    Polygon(std::vector<Coordinates> coords, Color color);
-    Polygon() {};
+    Polygon(std::vector<Coordinate> coords, Color color);
+    Polygon() = default;
 
-    void add_coordinate(Coordinates coord) {
+    void add_coordinate(const Coordinate coord) {
         this->coordinates.push_back(coord);
     }
-    void set_color(Color color) { this->color = color; }
-    bool is_empty() { return this->coordinates.empty(); }
-    size_t size() { return this->coordinates.size(); }
-    std::vector<Coordinates> &coords() { return this->coordinates; };
+    void set_color(const Color color) { this->color = color; }
+    [[nodiscard]] bool is_empty() const { return this->coordinates.empty(); }
+    [[nodiscard]] size_t size() const { return this->coordinates.size(); }
+    std::vector<Coordinate> &coords() { return this->coordinates; };
 
-    void triangulate(Coordinates center_ref, Vector2 screen_center);
+    void triangulate(Coordinate center_ref, Vector2 screen_center);
     void draw(Color color);
     void draw();
     void draw_outline();

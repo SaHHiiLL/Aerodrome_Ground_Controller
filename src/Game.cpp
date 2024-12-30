@@ -59,7 +59,7 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     this->camera = cam;
     // EGCC - Center Poiint
     // TODO: will be replaced
-    Coordinates center_ref("N053.21.13.480", "W002.16.29.820");
+    Coordinate center_ref("N053.21.13.480", "W002.16.29.820");
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
     Vector2 screen_center = {sH / 2, sW / 2};
@@ -71,7 +71,6 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     std::cout << "Parsing complete, total of : " << this->polygons.size()
               << std::endl;
 
-    std::erase_if(this->polygons, [&](Polygon &p) { return p.size() < 5; });
     for (size_t i = 0; i < this->polygons.size(); i++) {
         this->polygons[i].triangulate(center_ref, screen_center);
     }

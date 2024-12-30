@@ -42,16 +42,11 @@ int main(void) {
     while (!WindowShouldClose()) {
         game.handle_input();
         game.update();
-        ClearBackground(DARKGRAY);
+        ClearBackground(BLACK);
         BeginDrawing();
         {
             BeginMode2D(camera);
             {
-                rlPushMatrix();
-                rlTranslatef(0, 25 * 50, 0);
-                rlRotatef(90, 1, 0, 0);
-                DrawGrid(100, 50);
-                rlPopMatrix();
                 game.draw();
             }
             EndMode2D();

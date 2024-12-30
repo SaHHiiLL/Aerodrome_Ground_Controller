@@ -4,7 +4,7 @@
 #include <delaunator.hpp>
 
 Quadrilateral::Quadrilateral(std::vector<Vector2> vertices,
-                             Coordinates center_ref, Color color) {
+                             Coordinate center_ref, Color color) {
     std::vector<double> cc;
 
     for (auto &c : vertices) {
@@ -29,8 +29,8 @@ Quadrilateral::Quadrilateral(std::vector<Vector2> vertices,
     }
 }
 
-Quadrilateral::Quadrilateral(std::array<Coordinates, 4> coords,
-                             Coordinates center_ref, Color color)
+Quadrilateral::Quadrilateral(std::array<Coordinate, 4> coords,
+                             Coordinate center_ref, Color color)
     : coords(coords), center_ref(center_ref), color(color) {
     std::vector<double> cc;
 
