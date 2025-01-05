@@ -16,18 +16,46 @@ float EarCut::crossproduct(Vector2 a, Vector2 b) {
     return (a.x * b.y) - (a.y * b.x);
 }
 
-// TODO: do all the checks
-std::vector<Triangle> EarCut::earcut(const std::vector<Vector2> &polygon) {
+bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
+    float a = q.x;
+    float b = q.y;
 
-    if (polygon.size() < 3) {
+    float m = w.x;
+    float n = w.y;
+
+    float x = e.x;
+    float y = e.y;
+
+    return (n - b) * (x - m) == (y - n) * (m - a);
+}
+#include <iostream>
+
+// TODO: do all the checks
+std::vector<Triangle>
+EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
+
+    if (polygon_vertices.size() < 3) {
         throw std::invalid_argument("Polygon must have atleast 3 sizes!");
     }
 
-    std::vector<Vector2> ver = polygon;
+    // check no co linear points exists
+    size_t j = 0;
+    size_t k = 1;
+
+    for (size_t i = 2; i < polygon_vertices.size(); i++) {
+        if (check_colinearpoints(polygon_vertices[j], polygon_vertices[k],
+                                 polygon_vertices[i])) {
+            std::invalid_argument("Polygon must not have co linear vertices");
+        }
+        j++;
+        k++;
+    }
+
+    std::vector<Vector2> ver = polygon_vertices;
 
     std::vector<Triangle> out;
-    out.reserve(polygon.size() - 2);
-    size_t indexCount = polygon.size();
+    out.reserve(polygon_vertices.size() - 2);
+    size_t indexCount = polygon_vertices.size();
 
     // Do this process until we have the last three index
     while (indexCount > 3) {

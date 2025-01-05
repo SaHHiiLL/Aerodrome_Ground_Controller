@@ -46,7 +46,6 @@ PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
         } else if (color_map.contains(word)) {
             curr_polygon.set_color(GetColor(color_map.at(word)));
         } else {
-            std::cout << word << std::endl;
         }
     }
 

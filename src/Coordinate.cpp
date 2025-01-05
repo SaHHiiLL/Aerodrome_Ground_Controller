@@ -54,17 +54,6 @@ Coordinate::Coordinate(std::string lateral, std::string longitude) {
     this->longitude = parse(longitude);
 }
 
-Coordinate::Coordinate(std::string coords) {
-    Utils::StringSplit split(coords, ' ');
-    auto s = split.collect();
-    if (s.size() != 2) {
-        throw std::invalid_argument(
-            std::string("Invalid Coordinates: ").append(coords));
-    }
-    this->lateral = parse(s[0]);
-    this->longitude = parse(s[1]);
-}
-
 // Function to convert latitude and longitude to 2D screen coordinates
 Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
                                               Vector2 screen_center) {

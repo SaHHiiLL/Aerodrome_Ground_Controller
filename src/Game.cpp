@@ -3,10 +3,8 @@
 //
 
 #include "Game.hpp"
-#include "./Utils.hpp"
 #include "ResourceManager.hpp"
 #include "colours/Colours.hpp"
-#include "polygon/Polygon.hpp"
 #include "polygon/PolygonParser.hpp"
 #include <filesystem>
 #include <iostream>
@@ -59,7 +57,7 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     this->camera = cam;
     // EGCC - Center Poiint
     // TODO: will be replaced
-    Coordinate center_ref("N053.21.13.480", "W002.16.29.820");
+    Coordinate center_ref("N051.28.39.000", "W000.27.41.000");
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
     Vector2 screen_center = {sH / 2, sW / 2};

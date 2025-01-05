@@ -1,27 +1,17 @@
 CC=clang++
-TARGET=build
-SRC=src
-CPP_FILES=$(shell find src/ -mindepth 1 -name '*.cpp')
-HPP_FILES=$(shell find src/ -mindepth 1 -name '*.hpp')
-LIBS=./libs
-CPP_VERSION=-std=c++23
+PROJECT_ROOT_DIR		=$(shell pwd)
+TARGET					=$(PROJECT_ROOT_DIR)/build
+SRC						=$(PROJECT_ROOT_DIR)/src
+CPP_FILES				=$(shell find src/ -mindepth 1 -name '*.cpp')
+HPP_FILES				=$(shell find src/ -mindepth 1 -name '*.hpp')
+LIBS					=$(PROJECT_ROOT_DIR)/libs
 
-RAYLIB_PATH				?=$(LIBS)/raylib-5.0_linux_amd64
-RAYLIB_STATIC_FLAGS		?=-L$(RAYLIB_PATH)/lib -l:libraylib.a -lm
-RAYLIB_INCLUDE			?=-I$(RAYLIB_PATH)/include
+RAYLIB_VERSION			?=5.0
 
-TRIANGLE_PATH=-L$(LIBS)/triangulation
-TRIANGLE_PATH_INCLUDE=-I$(LIBS)/triangulation
-TRIANGLE_CPP_FILE=$(LIBS)/triangulation/delaunator.cpp
+RAYLIB_PATH				?=$(LIBS)/raylib-$(RAYLIB_VERSION)_linux_amd64
 
-RAYLIB_DOWNLOAD_PATH=https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz
-RAYLIB_TAR_NAME=raylib-5.0_linux_amd64.tar.gz
-
-C_FLAGS=$(CPP_VERSION) -ggdb -rdynamic
-
-BIN ?=AGCS
-
-BUILD_CMD=$(CC) $(C_FLAGS) -o $(TARGET)/AGCS $(CPP_FILES) $(RAYLIB_STATIC_FLAGS) $(RAYLIB_INCLUDE) $(TRIANGLE_PATH) $(TRIANGLE_PATH_INCLUDE) $(TRIANGLE_CPP_FILE)
+RAYLIB_DOWNLOAD_PATH	=https://github.com/raysan5/raylib/releases/download/$(RAYLIB_VERSION)/raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
+RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
 
 all:
 	@# Download dep if it does not exists -- Kind of a poor mans way of checking it
@@ -32,7 +22,14 @@ all:
 	fi										
 
 	$(MAKE) target
-	$(MAKE) main
+	cmake -S $(PROJECT_ROOT_DIR) -B $(TARGET)
+	cmake --build $(TARGET)
+
+debug:
+	$(MAKE) target_debug
+	cmake -S $(PROJECT_ROOT_DIR) -B debug
+	cmake -DCMAKE_BUILD_TYPE=Debug debug
+
 
 main: $(CPP_FILES)
 	$(BUILD_CMD)
@@ -40,10 +37,12 @@ main: $(CPP_FILES)
 target:
 	@mkdir -p $(TARGET)
 
+target_debug:
+	@mkdir -p debug
+
 clean:
-	rm -rf build
-	rm -rf libs
-	rm compile_commands.json
+	rm -rf $(TARGET)
+	rm -rf $(LIBS)
 
 download_raylib:
 	@echo "[+]INFO: Downloading Raylib..."
@@ -58,13 +57,10 @@ download_triangulation:
 	wget -q -O $(LIBS)/triangulation/delaunator.cpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/src/delaunator.cpp
 	wget -q -O $(LIBS)/triangulation/delaunator.hpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/include/delaunator.hpp
 
-# Dev setup
-dev_setup: download_raylib download_triangulation compile_command
+dev_setup: download_raylib download_triangulation compile_commands
 
-# Sets up the compile_command.json file for clang lsp 
-compile_command:
-	@(ls compile_commands.json >> /dev/null 2>&1 ) || bear -- $(BUILD_CMD) 
-
+compile_commands:
+	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)
 
 clang_tidy:
-		clang-tidy $(CPP_FILES) $(HPP_FILES)								\
+		clang-tidy $(CPP_FILES) $(HPP_FILES)
