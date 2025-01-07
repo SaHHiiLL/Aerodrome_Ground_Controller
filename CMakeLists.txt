@@ -11,8 +11,8 @@ include_directories(src/colours)
 include_directories(src/polygon)
 
 # setting raylib path
-set(RAYLIB_DIR "./libs/raylib-5.0/")
-set(DELAUNATOR "./libs/delaunator/")
+set(RAYLIB_DIR WORKING_DIRECTORY"/libs/raylib-5.0/")
+set(DELAUNATOR WORKING_DIRECTORY"/libs/delaunator/")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
 
