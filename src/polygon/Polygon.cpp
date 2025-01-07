@@ -24,9 +24,25 @@ void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
     }
 }
 
-void Polygon::draw_outline() {
+void Polygon::draw_triangle_outlines() {
     for (size_t i = 0; i < this->triangles.size(); i++) {
         this->triangles[i].draw_outline();
+    }
+}
+
+void Polygon::draw_outline() {
+    for (size_t i = 1; i < this->vertices.size(); i++) {
+        DrawLineV(this->vertices[i - 1], this->vertices[i], WHITE);
+    }
+    DrawLineV(this->vertices[0], this->vertices[this->vertices.size() - 1],
+              WHITE);
+}
+
+void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref,
+                                              Vector2 screen_center) {
+    for (auto &coords : this->coordinates) {
+        this->vertices.push_back(
+            coords.geo_to_screen_by_refrence(centre_ref, screen_center));
     }
 }
 

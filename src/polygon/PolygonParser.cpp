@@ -5,6 +5,7 @@
 #include <ranges>
 #include <regex>
 
+// TODO: change this is `Lexer.cpp` implementation
 std::vector<Polygon>
 PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
 

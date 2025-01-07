@@ -57,7 +57,7 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
     this->camera = cam;
     // EGCC - Center Poiint
     // TODO: will be replaced
-    Coordinate center_ref("N051.28.39.000", "W000.27.41.000");
+    Coordinate center_ref("N051.08.53.000", "W000.11.25.000");
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
     Vector2 screen_center = {sH / 2, sW / 2};
@@ -71,5 +71,8 @@ Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
 
     for (size_t i = 0; i < this->polygons.size(); i++) {
         this->polygons[i].triangulate(center_ref, screen_center);
+        // this->polygons[i].convert_coordinates_to_vertices(center_ref,
+        //                                                   screen_center);
     }
+    std::cout << "Triangulation complete" << std::endl;
 }

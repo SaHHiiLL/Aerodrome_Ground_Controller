@@ -14,8 +14,8 @@ RAYLIB_DOWNLOAD_PATH	=https://github.com/raysan5/raylib/releases/download/$(RAYL
 RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
 
 all:
-	@# Download dep if it does not exists -- Kind of a poor mans way of checking it
-	@# TODO: introduce sha1 hash and check if it's correct
+	## Download dep if it does not exists -- Kind of a poor mans way of checking it
+	## TODO: introduce sha1 hash and check if it's correct
 	@if [ ! -d "$(LIBS)" ]; then			\
 		$(MAKE) download_raylib; 			\
 		$(MAKE) download_triangulation; 	\
@@ -23,7 +23,8 @@ all:
 
 	$(MAKE) target
 	cmake -S $(PROJECT_ROOT_DIR) -B $(TARGET)
-	cmake --build $(TARGET)
+	## Call the make file inside 
+	make -C $(TARGET) -j8
 
 debug:
 	$(MAKE) target_debug
@@ -59,7 +60,7 @@ download_triangulation:
 
 dev_setup: download_raylib download_triangulation compile_commands
 
-compile_commands:
+compile_commands: all
 	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)
 
 clang_tidy:

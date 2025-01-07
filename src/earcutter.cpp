@@ -28,8 +28,6 @@ bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
 
     return (n - b) * (x - m) == (y - n) * (m - a);
 }
-#include <iostream>
-
 // TODO: do all the checks
 std::vector<Triangle>
 EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
