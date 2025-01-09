@@ -3,17 +3,9 @@ project(Aerodrome_Ground_Controller)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# Include directories
-include_directories(libs/raylib-5.0_linux_amd64/include)
-include_directories(libs/triangulation)
-include_directories(src)
-include_directories(src/colours)
-include_directories(src/polygon)
-
 # setting raylib path
-set(RAYLIB_DIR "${PROJECT_SOURCE_DIR}/libs/raylib-5.0/")
+set(RAYLIB_DIR "${PROJECT_SOURCE_DIR}/libs/raylib/")
 set(DELAUNATOR "${PROJECT_SOURCE_DIR}/libs/delaunator/")
-message("${RAYLIB_DIR}")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
@@ -22,8 +14,12 @@ find_library(
   RAYLIB_LIBRARY
   NAMES raylib
   HINTS ${RAYLIB_DIR}/lib)
+
+# Include directories
 include_directories(${RAYLIB_DIR}/include)
 include_directories(${DELAUNATOR})
+include_directories(libs/raylib/include)
+include_directories(libs/triangulation)
 
 # Add the executable
 add_executable(

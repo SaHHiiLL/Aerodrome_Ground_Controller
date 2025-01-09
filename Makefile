@@ -12,6 +12,7 @@ RAYLIB_PATH				?=$(LIBS)/raylib-$(RAYLIB_VERSION)_linux_amd64
 
 RAYLIB_DOWNLOAD_PATH	=https://github.com/raysan5/raylib/releases/download/$(RAYLIB_VERSION)/raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
 RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
+RAYLIB_DIR_PATH 		=$(LIBS)/raylib-5.0_linux_amd64
 
 all:
 	## Download dep if it does not exists -- Kind of a poor mans way of checking it
@@ -50,6 +51,8 @@ download_raylib:
 	@mkdir -p $(LIBS)
 	wget -q -O $(LIBS)/$(RAYLIB_TAR_NAME) $(RAYLIB_DOWNLOAD_PATH)
 	tar -xvf $(LIBS)/$(RAYLIB_TAR_NAME) --directory=$(LIBS)/
+	mv $(RAYLIB_DIR_PATH) $(LIBS)/raylib
+
 
 download_triangulation:
 	@echo "[+]INFO: Downlaoding Triangulation Library..."
@@ -64,4 +67,4 @@ compile_commands: all
 	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)
 
 clang_tidy:
-		clang-tidy $(CPP_FILES) $(HPP_FILES)
+	clang-tidy $(CPP_FILES) $(HPP_FILES)
