@@ -11,7 +11,6 @@
 //      N053.49.49.450 W001.12.18.620
 // into
 //      53.8304, -1.2052
-
 double Coordinate::parse(std::string s) {
     // 1. loop over the string
     // 2. push the number forward

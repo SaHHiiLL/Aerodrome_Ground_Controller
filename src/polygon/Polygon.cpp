@@ -10,10 +10,7 @@ Polygon::Polygon(std::vector<Coordinate> coords, Color color)
     : coordinates(coords), color(color) {}
 
 void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
-    for (size_t i = 0; i < coordinates.size(); i++) {
-        this->vertices.push_back(coordinates[i].geo_to_screen_by_refrence(
-            center_ref, screen_center));
-    }
+    this->convert_coordinates_to_vertices(center_ref, screen_center);
     if (this->vertices.size() > 4) {
         EarCut earcut;
         this->triangles = earcut.earcut(this->vertices);
@@ -40,6 +37,7 @@ void Polygon::draw_outline() {
 
 void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref,
                                               Vector2 screen_center) {
+    this->vertices.reserve(this->coords().size());
     for (auto &coords : this->coordinates) {
         this->vertices.push_back(
             coords.geo_to_screen_by_refrence(centre_ref, screen_center));

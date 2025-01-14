@@ -53,26 +53,29 @@ void Game::handle_input() {
 
 void Game::update() {}
 
-Game::Game(Camera2D *cam, Colours &colours) : colours(colours) {
+Game::~Game() { delete this->colours; }
+
+Game::Game(Camera2D *cam) {
     this->camera = cam;
+    this->colours =
+        new Colours(std::filesystem::path("./resource/Colours.txt"));
     // EGCC - Center Poiint
     // TODO: will be replaced
-    Coordinate center_ref("N051.08.53.000", "W000.11.25.000");
+    Coordinate center_ref("N055.57.09.000", "W003.21.41.000");
     float sH = GetScreenHeight();
     float sW = GetScreenWidth();
     Vector2 screen_center = {sH / 2, sW / 2};
 
     ResourceManager &rm = ResourceManager::Instance();
-    std::string res = rm.read_file_abs("./resource/Regions.txt");
+    std::string res = rm.read_file_abs(
+        "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
+        "UK-Sector-File-2024-13/Airports/EGPH/SMR/Regions.txt");
     PolygonParser pp(res);
-    this->polygons = pp.parse(colours.colours);
-    std::cout << "Parsing complete, total of : " << this->polygons.size()
-              << std::endl;
+    this->polygons = pp.parse(colours->colours);
+    TraceLog(LOG_DEBUG, "Parsing complete, total of : ", this->polygons.size());
 
     for (size_t i = 0; i < this->polygons.size(); i++) {
         this->polygons[i].triangulate(center_ref, screen_center);
-        // this->polygons[i].convert_coordinates_to_vertices(center_ref,
-        //                                                   screen_center);
     }
-    std::cout << "Triangulation complete" << std::endl;
+    TraceLog(LOG_DEBUG, "Triangulation complete");
 }

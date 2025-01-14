@@ -1,7 +1,5 @@
 #include "Game.hpp"
-#include "colours/Colours.hpp"
 #include <execinfo.h>
-#include <filesystem>
 #include <raylib.h>
 #include <rlgl.h>
 #include <stdlib.h>
@@ -19,10 +17,7 @@ int main(void) {
     Camera2D camera{};
     camera.zoom = 1;
 
-    Colours *colours =
-        new Colours(std::filesystem::path("./resource/Colours.txt"));
-
-    Game game = Game(&camera, *colours);
+    Game game = Game(&camera);
     while (!WindowShouldClose()) {
         game.handle_input();
         game.update();
@@ -39,7 +34,6 @@ int main(void) {
     }
 
     CloseWindow();
-    delete colours;
 
     return 0;
 }

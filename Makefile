@@ -14,12 +14,13 @@ RAYLIB_DOWNLOAD_PATH	=https://github.com/raysan5/raylib/releases/download/$(RAYL
 RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
 RAYLIB_DIR_PATH 		=$(LIBS)/raylib-5.0_linux_amd64
 
-all:
+all: $(CPP_FILES) $(HPP_FILES)
 	## Download dep if it does not exists -- Kind of a poor mans way of checking it
 	## TODO: introduce sha1 hash and check if it's correct
 	@if [ ! -d "$(LIBS)" ]; then			\
 		$(MAKE) download_raylib; 			\
 		$(MAKE) download_triangulation; 	\
+		$(MAKE) download_lexer.h;			\
 	fi										
 
 	$(MAKE) target
@@ -27,10 +28,12 @@ all:
 	## Call the make file inside 
 	make -C $(TARGET) -j8
 
-debug:
+debug: $(CPP_FILES) $(HPP_FILES)
 	$(MAKE) target_debug
 	cmake -S $(PROJECT_ROOT_DIR) -B debug
 	cmake -DCMAKE_BUILD_TYPE=Debug debug
+	## Call the make file inside 
+	make -C $(TARGET) -j8
 
 
 main: $(CPP_FILES)
@@ -61,7 +64,11 @@ download_triangulation:
 	wget -q -O $(LIBS)/triangulation/delaunator.cpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/src/delaunator.cpp
 	wget -q -O $(LIBS)/triangulation/delaunator.hpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/include/delaunator.hpp
 
-dev_setup: download_raylib download_triangulation compile_commands
+download_lexer.h:
+	git clone git@github.com:SaHHiiLL/Lexer.cpp.git
+	mv Lexer.cpp $(LIBS)/lexer
+
+dev_setup: download_raylib download_triangulation download_lexer.h compile_commands
 
 compile_commands: all
 	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)

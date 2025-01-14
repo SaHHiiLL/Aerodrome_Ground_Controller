@@ -20,6 +20,7 @@ include_directories(${RAYLIB_DIR}/include)
 include_directories(${DELAUNATOR})
 include_directories(libs/raylib/include)
 include_directories(libs/triangulation)
+include_directories(libs/lexer)
 
 # Add the executable
 add_executable(
@@ -46,6 +47,8 @@ add_executable(
   src/Quadrilateral.cpp
   src/Quadrilateral.hpp
   src/Utils.cpp
-  src/Utils.hpp)
+  src/Utils.hpp
+  src/labels/LabelParser.hpp
+  src/labels/LabelParser.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${RAYLIB_LIBRARY})

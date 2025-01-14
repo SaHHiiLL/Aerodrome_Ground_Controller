@@ -12,12 +12,13 @@
 class Game {
 private:
     Camera2D *camera;
-    Colours &colours;
-
+    // Heap allocated colours;
+    Colours *colours;
     std::vector<Polygon> polygons;
 
 public:
-    Game(Camera2D *cam, Colours &colours);
+    Game(Camera2D *cam);
+    ~Game();
     void update();
     void draw();
     void draw_outline();
