@@ -6,4 +6,5 @@ https://pilotinstitute.com/runway-markings-explained/
 https://github.com/delfrrr/delaunator-cpp
 
 ### TODO:
-parse Regions.txt files
+Link rlImgui with raylib
+-- it's not time to have a single .so file for both the game and rlImgui

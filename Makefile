@@ -21,6 +21,7 @@ all: $(CPP_FILES) $(HPP_FILES)
 		$(MAKE) download_raylib; 			\
 		$(MAKE) download_triangulation; 	\
 		$(MAKE) download_lexer.h;			\
+		$(MAKE) download_rlImGuiBridge; 	\
 	fi										
 
 	$(MAKE) target
@@ -67,6 +68,11 @@ download_triangulation:
 download_lexer.h:
 	git clone git@github.com:SaHHiiLL/Lexer.cpp.git
 	mv Lexer.cpp $(LIBS)/lexer
+
+download_rlImGuiBridge:
+	git clone https://github.com/SaHHiiLL/rlImGuiBridge.git
+	mv rlImGuiBridge $(LIBS)/imgui
+	make -C $(LIBS)/imgui
 
 dev_setup: download_raylib download_triangulation download_lexer.h compile_commands
 

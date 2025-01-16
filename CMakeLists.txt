@@ -4,28 +4,39 @@ set(CMAKE_CXX_STANDARD 23)
 project(Aerodrome_Ground_Controller)
 
 # setting raylib path
-set(RAYLIB_DIR "${PROJECT_SOURCE_DIR}/libs/raylib/")
-set(DELAUNATOR "${PROJECT_SOURCE_DIR}/libs/delaunator/")
+set(RAYLIB_DIR libs/raylib/)
+set(DELAUNATOR libs/delaunator/)
+set(IMGUI_DIR libs/imgui/)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wextra")
 
 find_library(
   RAYLIB_LIBRARY
   NAMES raylib
-  HINTS ${RAYLIB_DIR}/lib)
+  PATHS ${RAYLIB_DIR}/lib REQUIRED)
+
+find_library(
+  IMGUI_LIBRARY
+  NAMES imgui
+  PATHS ${IMGUI_DIR}/build/lib)
+
+message(STATUS "Found library: ${IMGUI_LIBRARY}")
 
 # Include directories
-include_directories(${RAYLIB_DIR}/include)
-include_directories(${DELAUNATOR})
 include_directories(libs/raylib/include)
 include_directories(libs/triangulation)
 include_directories(libs/lexer)
+include_directories(libs/imgui/include)
+
+file(GLOB TRI_CXX_SRC "${PROJECT_SOURCE_DIR}/libs/triangulation/*.cpp")
 
 # Add the executable
 add_executable(
   Aerodrome_Ground_Controller
-  libs/triangulation/delaunator.cpp
+  # external Libs #
+  ${TRI_CXX_SRC}
   src/colours/ColourParser.cpp
   src/colours/ColourParser.hpp
   src/colours/Colours.cpp
@@ -51,4 +62,4 @@ add_executable(
   src/labels/LabelParser.hpp
   src/labels/LabelParser.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${RAYLIB_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${RAYLIB_LIBRARY} ${IMGUI_LIBRARY})
