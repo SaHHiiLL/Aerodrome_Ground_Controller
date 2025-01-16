@@ -66,7 +66,7 @@ download_triangulation:
 	wget -q -O $(LIBS)/triangulation/delaunator.hpp https://raw.githubusercontent.com/SaHHiiLL/delaunator-cpp/refs/heads/master/include/delaunator.hpp
 
 download_lexer.h:
-	git clone git@github.com:SaHHiiLL/Lexer.cpp.git
+	git clone https://github.com/SaHHiiLL/Lexer.cpp.git
 	mv Lexer.cpp $(LIBS)/lexer
 
 download_rlImGuiBridge:
