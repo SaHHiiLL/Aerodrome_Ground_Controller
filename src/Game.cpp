@@ -74,8 +74,8 @@ Game::Game(Camera2D *cam) {
     this->polygons = pp.parse(colours->colours);
     TraceLog(LOG_DEBUG, "Parsing complete, total of : ", this->polygons.size());
 
-    for (size_t i = 0; i < this->polygons.size(); i++) {
-        this->polygons[i].triangulate(center_ref, screen_center);
+    for (auto & polygon : this->polygons) {
+        polygon.triangulate(center_ref, screen_center);
     }
     TraceLog(LOG_DEBUG, "Triangulation complete");
 }

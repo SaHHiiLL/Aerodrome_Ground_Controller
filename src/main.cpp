@@ -11,7 +11,6 @@
 int main(void) {
     float screenWidth = GetScreenWidth();
     float screenHeight = GetScreenHeight();
-    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_FULLSCREEN_MODE);
     InitWindow(screenWidth, screenHeight, "Aerodrome Ground Controller");
 
     SetTargetFPS(60);
@@ -20,6 +19,14 @@ int main(void) {
     camera.zoom = 1;
 
     rlImGuiSetup(true);
+
+#ifdef IMGUI_HAS_DOCK
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    TraceLog(LOG_INFO, "ImGui with Docking Loaded");
+#else
+    TraceLog(LOG_ERROR, "This application requires imgui with docking....");
+    return -1;
+#endif
 
     Game game = Game(&camera);
     while (!WindowShouldClose()) {
@@ -35,7 +42,8 @@ int main(void) {
                 {
                     // show ImGui Content
                     bool open = true;
-                    ImGui::ShowDemoWindow(&open);
+                    ImGui::Begin("HEllo ??");
+                    ImGui::End();
                 }
             }
             EndMode2D();
