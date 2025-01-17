@@ -57,6 +57,8 @@ add_executable(
   src/ResourceManager.hpp
   src/Quadrilateral.cpp
   src/Quadrilateral.hpp
+  src/Application.cpp
+  src/Application.hpp
   src/Utils.cpp
   src/Utils.hpp
   src/labels/LabelParser.hpp

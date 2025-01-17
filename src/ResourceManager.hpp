@@ -1,7 +1,9 @@
 #pragma once
 
+#include "raylib.h"
 #include <filesystem>
 #include <string>
+#include <sys/types.h>
 
 // Singleton class
 class ResourceManager {
@@ -15,8 +17,10 @@ public:
         return Instance;
     }
 
+    Image get_airplane();
+
 private:
-    std::filesystem::path resource_dir = "../resource";
+    std::filesystem::path resource_dir = "./resource";
 
     ResourceManager(ResourceManager const &) = delete;
     void operator=(ResourceManager const &) = delete;

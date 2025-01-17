@@ -1,10 +1,7 @@
-it will be a simple game, where you must give instructions to the aircraft on the ground, on what taxiway to follow, where to hold short, give way to another aircraft, hold position, assing a SID/Sqwack/Assign gates to incoming traffic.
+https://github.com/VATSIM-UK/UK-Sector-File/
 
-https://github.com/VATSIM-UK/UK-Sector-File/tree/main/Airports/EGLC
 https://pilotinstitute.com/runway-markings-explained/
 
 https://github.com/delfrrr/delaunator-cpp
 
-### TODO:
-Link rlImgui with raylib
--- it's not time to have a single .so file for both the game and rlImgui
+https://seeklogo.com/free-vector-logos/airplane
