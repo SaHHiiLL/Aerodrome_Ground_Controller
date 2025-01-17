@@ -1,7 +1,9 @@
 #pragma once
 #include "../colours/Colours.hpp"
+#include "AirportLabel.hpp"
 #include "Parser.hpp"
 #include <cstdint>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -15,11 +17,15 @@ class LabelParser {
     };
 
 public:
-    LabelParser();
+    LabelParser(std::string input, Colours &colors, Coordinate &center_ref)
+        : input(input), colors(colors), center_ref(center_ref) {
+        lexer = Lexer(input);
+    };
     LEXER_IMPL(TokenType)
+    std::string input;
     Lexer lexer;
     Lexer::Token *next_token();
     Colours &colors;
-
-    LabelParser(Colours &colors) : colors(colors) {};
+    Coordinate &center_ref;
+    std::vector<AirportLabel> parse_all();
 };

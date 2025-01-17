@@ -16,18 +16,6 @@ RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
 RAYLIB_DIR_PATH 		=$(LIBS)/raylib-5.0_linux_amd64
 
 
-debug: $(CPP_FILES) $(HPP_FILES)
-	@if [ ! -d "$(LIBS)" ]; then			\
-		$(MAKE) download_raylib; 			\
-		$(MAKE) download_triangulation; 	\
-		$(MAKE) download_lexer.h;			\
-		$(MAKE) download_rlImGuiBridge; 	\
-	fi										
-	$(MAKE) target_debug
-	cmake -S $(PROJECT_ROOT_DIR) -B debug
-	cmake -DCMAKE_BUILD_TYPE=Debug debug
-	## Call the make file inside 
-	make -C $(TARGET_DEBUG) -j8
 
 all: $(CPP_FILES) $(HPP_FILES)
 	## Download dep if it does not exists -- Kind of a poor mans way of checking it
@@ -44,6 +32,18 @@ all: $(CPP_FILES) $(HPP_FILES)
 	## Call the make file inside 
 	make -C $(TARGET) -j8
 
+debug: $(CPP_FILES) $(HPP_FILES)
+	@if [ ! -d "$(LIBS)" ]; then			\
+		$(MAKE) download_raylib; 			\
+		$(MAKE) download_triangulation; 	\
+		$(MAKE) download_lexer.h;			\
+		$(MAKE) download_rlImGuiBridge; 	\
+	fi										
+	$(MAKE) target_debug
+	cmake -S $(PROJECT_ROOT_DIR) -B debug
+	cmake -DCMAKE_BUILD_TYPE=Debug debug
+	## Call the make file inside 
+	make -C $(TARGET_DEBUG) -j8
 
 main: $(CPP_FILES)
 	$(BUILD_CMD)

@@ -5,9 +5,9 @@
 #include "Game.hpp"
 #include "ResourceManager.hpp"
 #include "colours/Colours.hpp"
+#include "labels/LabelParser.hpp"
 #include "polygon/PolygonParser.hpp"
 #include <filesystem>
-#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
@@ -15,11 +15,15 @@
 void Game::draw() {
     if (IsKeyDown(KEY_C)) {
         DrawRectangleV({0, 0}, {100, 100}, BLUE);
-    } // Drawing runways
+    }
 
     for (size_t i = 0; i < this->polygons.size(); i++) {
         DrawTriangle({1, 0}, {0, -1}, {0, 0}, RED);
         this->polygons[i].draw();
+    }
+
+    for (auto &l : this->labels) {
+        l.draw();
     }
 }
 void Game::handle_input() {
@@ -74,8 +78,15 @@ Game::Game(Camera2D *cam) {
     this->polygons = pp.parse(colours->colours);
     TraceLog(LOG_DEBUG, "Parsing complete, total of : ", this->polygons.size());
 
-    for (auto & polygon : this->polygons) {
+    for (auto &polygon : this->polygons) {
         polygon.triangulate(center_ref, screen_center);
     }
     TraceLog(LOG_DEBUG, "Triangulation complete");
+
+    std::string lable_res = rm.read_file_abs(
+        "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
+        "UK-Sector-File-2024-13/Airports/EGPH/SMR/Labels.txt");
+
+    LabelParser l_parser(lable_res, *this->colours, center_ref);
+    this->labels = l_parser.parse_all();
 }

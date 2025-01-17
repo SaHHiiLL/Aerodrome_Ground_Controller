@@ -5,6 +5,7 @@
 #pragma once
 
 #include "colours/Colours.hpp"
+#include "labels/AirportLabel.hpp"
 #include "polygon/Polygon.hpp"
 #include <raylib.h>
 #include <vector>
@@ -15,6 +16,7 @@ private:
     // Heap allocated colours;
     Colours *colours;
     std::vector<Polygon> polygons;
+    std::vector<AirportLabel> labels;
 
 public:
     Game(Camera2D *cam);
