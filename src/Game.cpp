@@ -67,17 +67,15 @@ Game::Game(Camera2D *cam)
     const auto sW = static_cast<float>(GetScreenWidth());
     const Vector2 screen_center = {sH / 2, sW / 2};
 
+    // Parsing polygons
     const std::string res = ResourceManager::read_file(
         "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
         "UK-Sector-File/Airports/EGPH/SMR/Regions.txt");
     PolygonParser pp(res);
     this->polygons = pp.parse(colours.colours);
-    TraceLog(LOG_DEBUG, "Parsing complete, total of : ", this->polygons.size());
-
     for (auto &polygon : this->polygons) {
         polygon.triangulate(center_ref, screen_center);
     }
-    TraceLog(LOG_DEBUG, "Triangulation complete");
 
     const std::string label_res = ResourceManager::read_file(
         "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"

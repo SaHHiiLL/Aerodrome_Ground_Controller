@@ -1,4 +1,5 @@
 #pragma once
+#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "raylib.h"
 #include <iterator>
@@ -22,8 +23,11 @@ public:
         this->position =
             coords.geo_to_screen_by_refrence(world_center_ref, screen_center);
     }
-    void draw() {
-        DrawText(this->data.c_str(), this->position.x, this->position.y, 12,
-                 this->color);
+    void draw() const {
+        // DrawText(this->data.c_str(), this->position.x, this->position.y, 12,
+        //          this->color);
+        Font* font = Get_Font();
+        DrawTextEx(*font, this->data.c_str(), this->position, 12, 0,
+                   WHITE);
     }
 };

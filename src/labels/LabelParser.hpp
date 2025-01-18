@@ -25,7 +25,9 @@ public:
     std::string input;
     Lexer lexer;
     Lexer::Token *next_token();
+    std::vector<AirportLabel> parse_all();
+
+private:
     Colours &colors;
     Coordinate &center_ref;
-    std::vector<AirportLabel> parse_all();
 };
