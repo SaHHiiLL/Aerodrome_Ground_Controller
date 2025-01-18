@@ -3,13 +3,12 @@
 #include "raylib.h"
 #include <filesystem>
 #include <string>
-#include <sys/types.h>
 
 // Singleton class
 class ResourceManager {
 
 public:
-    std::string read_file_abs(std::filesystem::path path);
+    static std::string read_file(std::filesystem::path path);
     void set_resource_dir_path(std::filesystem::path path);
 
     static ResourceManager &Instance() {
@@ -17,7 +16,7 @@ public:
         return Instance;
     }
 
-    Image get_airplane();
+    Image get_airplane() const;
 
 private:
     std::filesystem::path resource_dir = "./resource";
@@ -25,5 +24,5 @@ private:
     ResourceManager(ResourceManager const &) = delete;
     void operator=(ResourceManager const &) = delete;
 
-    ResourceManager() {}
+    ResourceManager() = default;
 };

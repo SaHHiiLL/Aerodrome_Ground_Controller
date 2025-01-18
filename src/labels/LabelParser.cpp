@@ -35,6 +35,7 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
             std::string ident = this->lexer.read_to_space();
             const std::regex coord_regex(R"([N|S|W|E]\d{3}.\d{2}.\d{2}.\d{3})");
             if (std::regex_match(ident, coord_regex)) {
+
                 tok = new LabelParser::Lexer::Token();
                 tok->literal = ident;
                 tok->type = TokenType::SingleCoordinate;

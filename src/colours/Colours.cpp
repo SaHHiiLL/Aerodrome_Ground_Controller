@@ -5,7 +5,9 @@
 
 Colours::Colours(std::filesystem::path path) {
     ResourceManager &rm = ResourceManager::Instance();
-    std::string res = rm.read_file_abs(path);
+    std::string res = rm.read_file(path);
     ColourParser parser = ColourParser(res, this->colours);
     parser.parse();
 }
+
+Colours::~Colours() {}

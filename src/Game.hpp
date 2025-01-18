@@ -14,14 +14,14 @@ class Game {
 private:
     Camera2D *camera;
     // Heap allocated colours;
-    Colours *colours;
+    Colours colours;
     std::vector<Polygon> polygons;
     std::vector<AirportLabel> labels;
 
 public:
     Game(Camera2D *cam);
     Game() {};
-    ~Game();
+
     void update();
     void draw();
     void draw_outline();

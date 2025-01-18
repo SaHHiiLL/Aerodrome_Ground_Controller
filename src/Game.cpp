@@ -49,33 +49,29 @@ void Game::handle_input() {
         this->camera->offset = mouse_pos;
         this->camera->target = zoom_pos;
         float scaleFactor = 1.0f + (0.25f * fabsf(mouse_wheel.y));
-        if (mouse_wheel.y < 0)
+        if (mouse_wheel.y < 0) {
             scaleFactor = 1.0f / scaleFactor;
+        }
         camera->zoom = Clamp(camera->zoom * scaleFactor, 0.125f, 20.0f);
     }
 }
 
 void Game::update() {}
 
-Game::~Game() { delete this->colours; }
+Game::Game(Camera2D *cam)
+    : camera(cam), colours(Colours(std::filesystem::path(
+                       "./resource/UK-Sector-File/Colours.txt"))) {
 
-Game::Game(Camera2D *cam) {
-    this->camera = cam;
-    this->colours =
-        new Colours(std::filesystem::path("./resource/Colours.txt"));
-    // EGCC - Center Poiint
-    // TODO: will be replaced
     Coordinate center_ref("N055.57.09.000", "W003.21.41.000");
-    float sH = GetScreenHeight();
-    float sW = GetScreenWidth();
-    Vector2 screen_center = {sH / 2, sW / 2};
+    const auto sH = static_cast<float>(GetScreenHeight());
+    const auto sW = static_cast<float>(GetScreenWidth());
+    const Vector2 screen_center = {sH / 2, sW / 2};
 
-    ResourceManager &rm = ResourceManager::Instance();
-    std::string res = rm.read_file_abs(
+    const std::string res = ResourceManager::read_file(
         "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
-        "UK-Sector-File-2024-13/Airports/EGPH/SMR/Regions.txt");
+        "UK-Sector-File/Airports/EGPH/SMR/Regions.txt");
     PolygonParser pp(res);
-    this->polygons = pp.parse(colours->colours);
+    this->polygons = pp.parse(colours.colours);
     TraceLog(LOG_DEBUG, "Parsing complete, total of : ", this->polygons.size());
 
     for (auto &polygon : this->polygons) {
@@ -83,10 +79,10 @@ Game::Game(Camera2D *cam) {
     }
     TraceLog(LOG_DEBUG, "Triangulation complete");
 
-    std::string lable_res = rm.read_file_abs(
+    const std::string label_res = ResourceManager::read_file(
         "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
-        "UK-Sector-File-2024-13/Airports/EGPH/SMR/Labels.txt");
+        "UK-Sector-File/Airports/EGPH/SMR/Labels.txt");
 
-    LabelParser l_parser(lable_res, *this->colours, center_ref);
+    LabelParser l_parser(label_res, this->colours, center_ref);
     this->labels = l_parser.parse_all();
 }
