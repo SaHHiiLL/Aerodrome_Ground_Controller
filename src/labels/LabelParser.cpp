@@ -1,8 +1,7 @@
 #include "./LabelParser.hpp"
 #include "raylib.h"
-#include <cstddef>
-#include <iostream>
 #include <regex>
+#include <stdexcept>
 
 LabelParser::Lexer::Token *LabelParser::next_token() {
     LabelParser::Lexer::Token *tok = nullptr;
@@ -13,17 +12,18 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
     switch (this->lexer.curr_char) {
     case '"':
         tok = new LabelParser::Lexer::Token();
-        this->lexer.read_next();
-        if (this->lexer.is_letter() || this->lexer.is_number() ||
-            std::isspace(this->lexer.curr_char)) {
+        {
+            this->lexer.read_next();
             std::string label = this->lexer.read_until('\"');
+            if (this->lexer.curr_char != '"') {
+                // we reached EOF, invalid file
+                throw std::invalid_argument(
+                    "Expected quotation, got EOF :skull:");
+            }
             tok->type = TokenType::Label;
             tok->literal = label;
             // Read leading "
             this->lexer.read_next();
-        } else {
-            TraceLog(LOG_WARNING, "Invalid char `%s` at position %s",
-                     this->lexer.curr_char, this->lexer.position);
         }
         break;
     case ';':
