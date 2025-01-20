@@ -14,17 +14,17 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
     case '"':
         tok = new LabelParser::Lexer::Token();
         this->lexer.read_next();
-        if (this->lexer.is_letter() || this->lexer.is_number()) {
+        if (this->lexer.is_letter() || this->lexer.is_number() ||
+            std::isspace(this->lexer.curr_char)) {
             std::string label = this->lexer.read_until('\"');
             tok->type = TokenType::Label;
             tok->literal = label;
             // Read leading "
             this->lexer.read_next();
         } else {
-            TraceLog(LOG_WARNING, "Invalid char `%s` at positon %s",
+            TraceLog(LOG_WARNING, "Invalid char `%s` at position %s",
                      this->lexer.curr_char, this->lexer.position);
         }
-        // this->lexer.read_next();
         break;
     case ';':
         tok = new LabelParser::Lexer::Token();

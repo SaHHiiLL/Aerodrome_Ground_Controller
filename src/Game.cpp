@@ -12,9 +12,7 @@
 #include <raymath.h>
 #include <vector>
 
-void Game::draw() {
-    this->airport->draw();
-}
+void Game::draw() { this->airport->draw(); }
 void Game::handle_input() {
 
     // Translate based on mouse right click
@@ -50,5 +48,5 @@ void Game::update() {}
 Game::Game(Camera2D *cam)
     : camera(cam), colours(Colours(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
-    this->airport = new Airport("EGPH", this->colours);
+    this->airport = new Airport("EGLL", this->colours);
 }

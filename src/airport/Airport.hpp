@@ -14,6 +14,7 @@ private:
     Colours &colors;
     std::string airport_icao_code;
     std::string airport_name = "";
+    void parse_basic_file(std::string input);
 
 public:
     void draw() const;
