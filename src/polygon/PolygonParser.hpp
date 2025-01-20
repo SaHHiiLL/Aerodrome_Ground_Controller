@@ -1,8 +1,7 @@
 #pragma once
+#include "../colours/Colours.hpp"
 #include "../polygon/Polygon.hpp"
-#include <cstdint>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 class PolygonParser {
@@ -12,6 +11,5 @@ private:
 public:
     PolygonParser(std::string input) { this->input = input; }
 
-    std::vector<Polygon>
-    parse(std::unordered_map<std::string, uint64_t> &color_map);
+    [[nodiscard]] std::vector<Polygon> parse(Colours &colors);
 };

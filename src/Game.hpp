@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "airport/Airport.hpp"
 #include "colours/Colours.hpp"
 #include "labels/AirportLabel.hpp"
 #include "polygon/Polygon.hpp"
@@ -17,6 +18,7 @@ private:
     Colours colours;
     std::vector<Polygon> polygons;
     std::vector<AirportLabel> labels;
+    Airport *airport;
 
 public:
     Game(Camera2D *cam);

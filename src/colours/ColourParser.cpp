@@ -1,5 +1,6 @@
 #include "./ColourParser.hpp"
 #include "../Utils.hpp"
+#include "raylib.h"
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
@@ -45,4 +46,6 @@ void ColourParser::parse() {
             // invalid
         }
     }
+
+    TraceLog(LOG_INFO, "Parsed :%d", this->map_to_fill.size());
 }

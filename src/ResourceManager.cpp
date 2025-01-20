@@ -2,9 +2,14 @@
 #include "raylib.h"
 #include <string>
 
-std::string ResourceManager::read_file(std::filesystem::path path) {
+std::string ResourceManager::read_file_abs(std::filesystem::path path) {
     return LoadFileText(path.c_str());
 }
+
+std::string ResourceManager::read_file(std::filesystem::path path) {
+    return LoadFileText((this->resource_dir / path).c_str());
+}
+
 void ResourceManager::set_resource_dir_path(std::filesystem::path path) {
     this->resource_dir = path;
 }

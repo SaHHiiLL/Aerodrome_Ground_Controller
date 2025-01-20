@@ -13,13 +13,14 @@
 #include <vector>
 
 void Game::draw() {
-    for (size_t i = 0; i < this->polygons.size(); i++) {
-        this->polygons[i].draw();
-    }
-
-    for (auto &l : this->labels) {
-        l.draw();
-    }
+    this->airport->draw();
+    // for (size_t i = 0; i < this->polygons.size(); i++) {
+    //     this->polygons[i].draw();
+    // }
+    //
+    // for (auto &l : this->labels) {
+    //     l.draw();
+    // }
 }
 void Game::handle_input() {
 
@@ -56,26 +57,5 @@ void Game::update() {}
 Game::Game(Camera2D *cam)
     : camera(cam), colours(Colours(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
-
-    Coordinate center_ref("N055.57.09.000", "W003.21.41.000");
-    const auto sH = static_cast<float>(GetScreenHeight());
-    const auto sW = static_cast<float>(GetScreenWidth());
-    const Vector2 screen_center = {sH / 2, sW / 2};
-
-    // Parsing polygons
-    const std::string res = ResourceManager::read_file(
-        "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
-        "UK-Sector-File/Airports/EGPH/SMR/Regions.txt");
-    PolygonParser pp(res);
-    this->polygons = pp.parse(colours.colours);
-    for (auto &polygon : this->polygons) {
-        polygon.triangulate(center_ref, screen_center);
-    }
-
-    const std::string label_res = ResourceManager::read_file(
-        "/home/Sahil/programing/cpp/Aerodrome_Ground_Controller/resource/"
-        "UK-Sector-File/Airports/EGPH/SMR/Labels.txt");
-
-    LabelParser l_parser(label_res, this->colours, center_ref);
-    this->labels = l_parser.parse_all();
+    this->airport = new Airport("EGPH", this->colours);
 }

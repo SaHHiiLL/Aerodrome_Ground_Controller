@@ -8,7 +8,11 @@
 class ResourceManager {
 
 public:
-    static std::string read_file(std::filesystem::path path);
+    // Reads a file from absolute path
+    [[nodiscard]] static std::string read_file_abs(std::filesystem::path path);
+
+    // Reads a file relative to [`ResourceManager::resource_dir`]
+    [[nodiscard]] std::string read_file(std::filesystem::path path);
     void set_resource_dir_path(std::filesystem::path path);
 
     static ResourceManager &Instance() {

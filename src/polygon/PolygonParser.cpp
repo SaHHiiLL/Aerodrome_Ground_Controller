@@ -6,8 +6,7 @@
 #include <regex>
 
 // TODO: change this is `Lexer.cpp` implementation
-std::vector<Polygon>
-PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
+std::vector<Polygon> PolygonParser::parse(Colours &colors) {
 
     std::vector<Polygon> polygons{};
     // split by newlines
@@ -31,21 +30,21 @@ PolygonParser::parse(std::unordered_map<std::string, uint64_t> &color_map) {
 
     const std::regex coord_regex_ns(R"([N|S]\d{3}.\d{2}.\d{2}.\d{3})");
     const std::regex coord_regex_we(R"([W|E]\d{3}.\d{2}.\d{2}.\d{3})");
-    for (auto &word : words_split) {
-        if (word == "REGIONNAME") {
+    for (auto &w : words_split) {
+        if (w == "REGIONNAME") {
             // start of a new polygon
             // add the last polygon to the list if it's not empty
             if (!curr_polygon.is_empty()) {
                 polygons.push_back(curr_polygon);
             }
             curr_polygon = Polygon();
-        } else if (std::regex_match(word, coord_regex_ns)) {
-            curr_lateral = word;
-        } else if (std::regex_match(word, coord_regex_we)) {
-            const Coordinate coords(curr_lateral, word);
+        } else if (std::regex_match(w, coord_regex_ns)) {
+            curr_lateral = w;
+        } else if (std::regex_match(w, coord_regex_we)) {
+            const Coordinate coords(curr_lateral, w);
             curr_polygon.add_coordinate(coords);
-        } else if (color_map.contains(word)) {
-            curr_polygon.set_color(GetColor(color_map.at(word)));
+        } else if (colors.is_valid(w)) {
+            curr_polygon.set_color(colors.to_raylib(w));
         } else {
         }
     }
