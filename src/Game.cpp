@@ -13,12 +13,7 @@
 #include <vector>
 
 void Game::draw() {
-    if (IsKeyDown(KEY_C)) {
-        DrawRectangleV({0, 0}, {100, 100}, BLUE);
-    }
-
     for (size_t i = 0; i < this->polygons.size(); i++) {
-        DrawTriangle({1, 0}, {0, -1}, {0, 0}, RED);
         this->polygons[i].draw();
     }
 
