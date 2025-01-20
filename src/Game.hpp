@@ -6,18 +6,13 @@
 
 #include "airport/Airport.hpp"
 #include "colours/Colours.hpp"
-#include "labels/AirportLabel.hpp"
-#include "polygon/Polygon.hpp"
 #include <raylib.h>
-#include <vector>
 
 class Game {
 private:
     Camera2D *camera;
     // Heap allocated colours;
     Colours colours;
-    std::vector<Polygon> polygons;
-    std::vector<AirportLabel> labels;
     Airport *airport;
 
 public:
