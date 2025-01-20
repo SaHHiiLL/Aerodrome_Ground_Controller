@@ -8,11 +8,12 @@
 #include <numeric>
 #include <ranges>
 #include <string>
+#include <utility>
 #include <vector>
 
 ColourParser::ColourParser(
     std::string input, std::unordered_map<std::string, uint64_t> &map_to_fill)
-    : input(input), map_to_fill(map_to_fill) {}
+    : input(std::move(input)), map_to_fill(map_to_fill) {}
 
 void ColourParser::parse() {
 
@@ -22,11 +23,10 @@ void ColourParser::parse() {
         std::ranges::to<std::vector<std::string>>();
 
     // remove empty lines and comments
-    lines.erase(std::remove_if(lines.begin(), lines.end(),
-                               [](const std::string line) {
-                                   return line.empty() || line.starts_with(';');
-                               }),
-                lines.end());
+    std::erase_if(lines,
+                  [](const std::string &line) {
+                      return line.empty() || line.starts_with(';');
+                  });
 
     std::string words = std::accumulate(
         lines.begin(), lines.end(), std::string(),
@@ -47,5 +47,6 @@ void ColourParser::parse() {
         }
     }
 
-    TraceLog(LOG_INFO, "Parsed :%d", this->map_to_fill.size());
+    TraceLog(LOG_INFO, "Color Parsed found %d unique colors ",
+             this->map_to_fill.size());
 }

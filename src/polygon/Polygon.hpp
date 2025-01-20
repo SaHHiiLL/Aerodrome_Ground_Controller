@@ -43,9 +43,9 @@ public:
 
     // Draws the triangle in solid color
     void draw(Color color);
-    void draw();
+    void draw() const;
     // Draws each triangle's border
-    void draw_triangle_outlines();
+    void draw_triangle_outlines() const;
     // Draws the perimeter of the polygon
-    void draw_outline();
+    void draw_outline() const;
 };

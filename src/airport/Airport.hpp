@@ -16,7 +16,7 @@ private:
     std::string airport_name = "";
 
 public:
-    void draw();
+    void draw() const;
 
     Airport(std::string airport_icao_code, Colours &colors);
     ~Airport() {}

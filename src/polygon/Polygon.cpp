@@ -21,13 +21,13 @@ void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
     }
 }
 
-void Polygon::draw_triangle_outlines() {
-    for (size_t i = 0; i < this->triangles.size(); i++) {
-        this->triangles[i].draw_outline();
+void Polygon::draw_triangle_outlines() const {
+    for (auto & triangle : this->triangles) {
+        triangle.draw_outline();
     }
 }
 
-void Polygon::draw_outline() {
+void Polygon::draw_outline() const {
     for (size_t i = 1; i < this->vertices.size(); i++) {
         DrawLineV(this->vertices[i - 1], this->vertices[i], WHITE);
     }
@@ -45,14 +45,14 @@ void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref,
 }
 
 void Polygon::draw(Color color) {
-    for (size_t i = 0; i < this->triangles.size(); i++)
-        DrawTriangle(this->triangles[i].x1, this->triangles[i].x2,
-                     this->triangles[i].x3, color);
+    for (auto & triangle : this->triangles)
+        DrawTriangle(triangle.x1, triangle.x2,
+                     triangle.x3, color);
 }
 
-void Polygon::draw() {
-    for (size_t i = 0; i < this->triangles.size(); i++) {
-        DrawTriangle(this->triangles[i].x1, this->triangles[i].x2,
-                     this->triangles[i].x3, this->color);
+void Polygon::draw() const {
+    for (const auto & triangle : this->triangles) {
+        DrawTriangle(triangle.x1, triangle.x2,
+                     triangle.x3, this->color);
     }
 }

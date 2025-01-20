@@ -4,8 +4,9 @@
 #include "../labels/LabelParser.hpp"
 #include "../polygon/PolygonParser.hpp"
 #include <filesystem>
+#include <utility>
 
-void Airport::draw() {
+void Airport::draw() const {
     for (auto &polygon : this->polygons) {
         polygon.draw();
     }
@@ -16,7 +17,7 @@ void Airport::draw() {
 }
 
 Airport::Airport(std::string airport_icao_code, Colours &colors)
-    : colors(colors), airport_icao_code(airport_icao_code) {
+    : colors(colors), airport_icao_code(std::move(airport_icao_code)) {
     // Read region file;
 
     this->airport_center_ref = Coordinate("N055.57.09.000", "W003.21.41.000");

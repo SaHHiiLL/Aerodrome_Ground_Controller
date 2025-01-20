@@ -1,6 +1,7 @@
 #include "./LabelParser.hpp"
 #include "raylib.h"
 #include <cstddef>
+#include <iostream>
 #include <regex>
 
 LabelParser::Lexer::Token *LabelParser::next_token() {
@@ -63,8 +64,8 @@ std::vector<AirportLabel> LabelParser::parse_all() {
     std::string current_ns_coords;
     std::string current_we_coords;
 
-    for (const LabelParser::Lexer::Token *tok = this->next_token(); tok != nullptr;
-         tok = this->next_token()) {
+    for (const LabelParser::Lexer::Token *tok = this->next_token();
+         tok != nullptr; tok = this->next_token()) {
         switch (tok->type) {
         case TokenType::Comment: {
             // Ignore comments
@@ -92,15 +93,19 @@ std::vector<AirportLabel> LabelParser::parse_all() {
             if (!current_label.empty() && !current_ns_coords.empty() &&
                 !current_we_coords.empty() && !current_color.empty()) {
 
-                Coordinate coords =
-                    Coordinate(current_ns_coords, current_we_coords);
-                AirportLabel l(current_label, coords, this->center_ref);
-                labels.push_back(l);
+                if (this->colors.is_valid(current_color)) {
+                    Coordinate coords =
+                        Coordinate(current_ns_coords, current_we_coords);
+                    auto color = this->colors.to_raylib(current_color);
+                    AirportLabel l(current_label, coords, this->center_ref,
+                                   color);
+                    labels.push_back(l);
 
-                current_label.clear();
-                current_ns_coords.clear();
-                current_we_coords.clear();
-                current_color.clear();
+                    current_label.clear();
+                    current_ns_coords.clear();
+                    current_we_coords.clear();
+                    current_color.clear();
+                }
             } else {
                 TraceLog(LOG_WARNING, "Invalid file");
             }

@@ -11,7 +11,7 @@ struct Triangle {
 public:
     //
     // https://www.youtube.com/watch?v=HYAgJN3x4GA&t=224s
-    bool is_point_inside(Vector2 p) {
+    bool is_point_inside(Vector2 p) const {
         Vector2 a = this->x1;
         Vector2 b = this->x2;
         Vector2 c = this->x3;
@@ -31,9 +31,9 @@ public:
         : x1(prev), x2(curr), x3(next) {}
     // TODO: this works for current set of points - However, some might present
     // themselves as clockwise - I must sort them aswell
-    void draw() { DrawTriangle(x1, x2, x3, GREEN); }
-    void draw(Color color) { DrawTriangle(x1, x2, x3, color); }
-    void draw_outline() {
+    void draw() const { DrawTriangle(x1, x2, x3, GREEN); }
+    void draw(Color color) const { DrawTriangle(x1, x2, x3, color); }
+    void draw_outline() const {
         DrawLineV(this->x1, this->x2, RAYWHITE);
         DrawLineV(this->x2, this->x3, RAYWHITE);
         DrawLineV(this->x3, this->x1, RAYWHITE);

@@ -14,13 +14,6 @@
 
 void Game::draw() {
     this->airport->draw();
-    // for (size_t i = 0; i < this->polygons.size(); i++) {
-    //     this->polygons[i].draw();
-    // }
-    //
-    // for (auto &l : this->labels) {
-    //     l.draw();
-    // }
 }
 void Game::handle_input() {
 
