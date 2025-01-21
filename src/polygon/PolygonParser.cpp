@@ -6,7 +6,7 @@
 #include <regex>
 
 // TODO: change this is `Lexer.cpp` implementation
-std::vector<Polygon> PolygonParser::parse(Colours &colors) {
+std::vector<Polygon> PolygonParser::parse(ColourManager &colors) {
 
     std::vector<Polygon> polygons{};
     // split by newlines

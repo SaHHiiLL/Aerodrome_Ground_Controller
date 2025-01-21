@@ -32,7 +32,7 @@ void Airport::draw() const {
     }
 }
 
-Airport::Airport(std::string airport_icao_code, Colours &colors)
+Airport::Airport(std::string airport_icao_code, ColourManager &colors)
     : colors(colors), airport_icao_code(std::move(airport_icao_code)) {
     // Read region file;
 

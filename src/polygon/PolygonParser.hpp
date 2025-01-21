@@ -1,5 +1,5 @@
 #pragma once
-#include "../colours/Colours.hpp"
+#include "../colours/ColourManager.hpp"
 #include "../polygon/Polygon.hpp"
 #include <string>
 #include <vector>
@@ -11,5 +11,5 @@ private:
 public:
     PolygonParser(std::string input) { this->input = input; }
 
-    [[nodiscard]] std::vector<Polygon> parse(Colours &colors);
+    [[nodiscard]] std::vector<Polygon> parse(ColourManager &colors);
 };

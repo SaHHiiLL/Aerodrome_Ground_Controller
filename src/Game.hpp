@@ -5,14 +5,14 @@
 #pragma once
 
 #include "airport/Airport.hpp"
-#include "colours/Colours.hpp"
+#include "colours/ColourManager.hpp"
 #include <raylib.h>
 
 class Game {
 private:
     Camera2D *camera;
     // Heap allocated colours;
-    Colours colours;
+    ColourManager colours;
     Airport *airport;
 
 public:

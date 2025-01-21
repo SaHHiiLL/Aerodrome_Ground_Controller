@@ -3,14 +3,9 @@
 //
 
 #include "Game.hpp"
-#include "ResourceManager.hpp"
-#include "colours/Colours.hpp"
-#include "labels/LabelParser.hpp"
-#include "polygon/PolygonParser.hpp"
 #include <filesystem>
 #include <raylib.h>
 #include <raymath.h>
-#include <vector>
 
 void Game::draw() { this->airport->draw(); }
 void Game::handle_input() {
@@ -46,7 +41,7 @@ void Game::handle_input() {
 void Game::update() {}
 
 Game::Game(Camera2D *cam)
-    : camera(cam), colours(Colours(std::filesystem::path(
+    : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
     this->airport = new Airport("EGLL", this->colours);
 }

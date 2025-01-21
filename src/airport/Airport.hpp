@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Coordinate.hpp"
-#include "../colours/Colours.hpp"
+#include "../colours/ColourManager.hpp"
 #include "../labels/AirportLabel.hpp"
 #include "../polygon/Polygon.hpp"
 #include <vector>
@@ -11,7 +11,7 @@ private:
     std::vector<Polygon> polygons;
     std::vector<AirportLabel> airport_label;
     Coordinate airport_center_ref;
-    Colours &colors;
+    ColourManager &colors;
     std::string airport_icao_code;
     std::string airport_name = "";
     void parse_basic_file(std::string input);
@@ -19,6 +19,6 @@ private:
 public:
     void draw() const;
 
-    Airport(std::string airport_icao_code, Colours &colors);
+    Airport(std::string airport_icao_code, ColourManager &colors);
     ~Airport() {}
 };
