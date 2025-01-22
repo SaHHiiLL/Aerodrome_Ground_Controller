@@ -79,7 +79,7 @@ download_rlImGuiBridge: lib_dir
 	mv rlImGuiBridge $(LIBS)/imgui
 	make -C $(LIBS)/imgui
 
-dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_rlImGuiBridge compile_commands
+dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_rlImGuiBridge
 
 compile_commands: all
 	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)
