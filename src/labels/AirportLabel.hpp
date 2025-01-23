@@ -27,7 +27,7 @@ public:
     }
     void draw() const {
         const Font *font = get_font();
-        DrawTextEx(*font, this->data.c_str(), this->position, 12, 0,
-                   this->color);
+        DrawTextEx(*font, this->data.c_str(), this->position, 12 * FONT_SCALE,
+                   0, this->color);
     }
 };

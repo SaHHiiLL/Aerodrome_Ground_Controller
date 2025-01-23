@@ -3,10 +3,6 @@
 #include <raylib.h>
 #include <string>
 
-inline const float EARTH_RADIUS_METERS = 6378137.0f;
-
-inline const float DRAW_SCALE = 0.013;
-
 // Represents Coordinates from the real world
 class Coordinate {
 public:

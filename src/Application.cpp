@@ -1,9 +1,11 @@
 
 #include "Application.hpp"
+#include "./Constants.hpp"
 #include "ResourceManager.hpp"
 #include "imgui.h"
 #include "raylib.h"
 #include "rlImGui.h"
+
 Applicaiton::Applicaiton() {
     InitWindow(this->screen_width, this->screen_height, this->title);
     SetTargetFPS(this->fps);
@@ -23,8 +25,12 @@ Applicaiton::Applicaiton() {
     TraceLog(LOG_INFO, "ImGui with Docking Loaded");
 };
 
+static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC"};
+
 void Applicaiton::run() {
     TraceLog(LOG_INFO, "Entering Main Game Loop");
+    // char airport_buffer[1024];
+    std::string airport_buffer{};
     while (!WindowShouldClose() && !this->quit) {
         game.handle_input();
         game.update();
@@ -36,6 +42,23 @@ void Applicaiton::run() {
             game.draw();
             {
                 // Imgui goes here
+                ImGui::Begin("HEllo world");
+                ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("Apply")) {
+                    this->game = Game(&this->camera);
+                }
+
+                ImGui::SliderFloat("Font Scale", &FONT_SCALE, 0.1, 50.0f);
+
+                for (const auto &airport : ALL_AIRPORTS) {
+                    if (ImGui::Button(airport.data())) {
+                        this->game.set_airport(airport);
+                    }
+                    ImGui::SameLine();
+                }
+
+                ImGui::End();
             }
         }
 

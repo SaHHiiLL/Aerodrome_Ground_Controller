@@ -3,6 +3,7 @@
 //
 
 #include "Game.hpp"
+#include "airport/Airport.hpp"
 #include <filesystem>
 #include <raylib.h>
 #include <raymath.h>
@@ -44,4 +45,9 @@ Game::Game(Camera2D *cam)
     : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
     this->airport = new Airport("EGPH", this->colours);
+}
+
+void Game::set_airport(std::string airport_name) {
+    delete this->airport;
+    this->airport = new Airport(airport_name, this->colours);
 }

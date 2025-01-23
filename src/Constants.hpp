@@ -13,6 +13,10 @@ inline const std::filesystem::path REGIONS_FILE(SMR_DIR / "Regions.txt");
 inline const std::filesystem::path LABELS_FILE(SMR_DIR / "Labels.txt");
 inline const std::filesystem::path GEO_FILE(SMR_DIR / "Geo.txt");
 
+inline const float EARTH_RADIUS_METERS = 6378137.0f;
+inline float DRAW_SCALE = 0.013;
+inline float FONT_SCALE = 1;
+
 inline Font *RAYLIB_FONT = nullptr;
 
 inline void load_font() {

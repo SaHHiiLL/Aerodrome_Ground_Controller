@@ -1,6 +1,5 @@
 #include "./PolygonParser.hpp"
 #include "../Utils.hpp"
-#include <iostream>
 #include <numeric>
 #include <ranges>
 #include <regex>

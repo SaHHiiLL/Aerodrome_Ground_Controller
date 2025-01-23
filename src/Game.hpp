@@ -24,4 +24,5 @@ public:
     void draw_outline();
     void handle_input() const;
     float zoom_factor = 1;
+    void set_airport(std::string airport_name);
 };
