@@ -17,7 +17,7 @@ private:
 
 public:
     Game(Camera2D *cam);
-    Game() {};
+    Game() = default;
 
     void update();
     void draw();

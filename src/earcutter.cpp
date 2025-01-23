@@ -16,7 +16,7 @@ float EarCut::crossproduct(Vector2 a, Vector2 b) {
     return (a.x * b.y) - (a.y * b.x);
 }
 
-bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
+static bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
     float a = q.x;
     float b = q.y;
 
@@ -43,7 +43,8 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
     for (size_t i = 2; i < polygon_vertices.size(); i++) {
         if (check_colinearpoints(polygon_vertices[j], polygon_vertices[k],
                                  polygon_vertices[i])) {
-            std::invalid_argument("Polygon must not have co linear vertices");
+            throw std::invalid_argument(
+                "Polygon must not have co linear vertices");
         }
         j++;
         k++;
@@ -86,13 +87,13 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
                 }
             }
             if (!is_inside) {
-                out.push_back({prev, curr, next});
+                out.emplace_back(prev, curr, next);
                 ver.erase(ver.begin() + i);
                 indexCount--;
                 break;
             }
         }
     }
-    out.push_back({ver.at(0), ver.at(1), ver.at(2)});
+    out.emplace_back(ver.at(0), ver.at(1), ver.at(2));
     return out;
 }

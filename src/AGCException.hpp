@@ -7,5 +7,5 @@ class AGCException : public std::exception {
 
 public:
     AGCException(std::string inner) : inner(inner) {}
-    const char *what() const throw() { return inner.c_str(); }
+    const char *what() const noexcept { return inner.c_str(); }
 };

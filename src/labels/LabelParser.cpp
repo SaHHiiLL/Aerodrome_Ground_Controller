@@ -20,7 +20,7 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
                 throw std::invalid_argument(
                     "Expected quotation, got EOF :skull:");
             }
-            tok->type = TokenType::Label;
+            tok->type = TokenType::LABEL;
             tok->literal = label;
             // Read leading "
             this->lexer.read_next();
@@ -29,7 +29,7 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
     case ';':
         tok = new LabelParser::Lexer::Token();
         lexer.skip_line();
-        tok->type = TokenType::Comment;
+        tok->type = TokenType::COMMENT;
         break;
     default:
         if (this->lexer.is_letter()) {
@@ -39,10 +39,10 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
 
                 tok = new LabelParser::Lexer::Token();
                 tok->literal = ident;
-                tok->type = TokenType::SingleCoordinate;
+                tok->type = TokenType::SINGLE_COORDINATE;
             } else if (this->colors.is_valid(ident)) {
                 tok = new LabelParser::Lexer::Token();
-                tok->type = TokenType::ColorKey;
+                tok->type = TokenType::COLOR_KEY;
                 tok->literal = ident;
             } else {
                 // Invalid
@@ -67,18 +67,18 @@ std::vector<AirportLabel> LabelParser::parse_all() {
     for (const LabelParser::Lexer::Token *tok = this->next_token();
          tok != nullptr; tok = this->next_token()) {
         switch (tok->type) {
-        case TokenType::Comment: {
+        case TokenType::COMMENT: {
             // Ignore comments
             break;
         }
-        case TokenType::Label: {
+        case TokenType::LABEL: {
             current_label = tok->literal;
             break;
         }
-        case TokenType::Quotation: {
+        case TokenType::QUOTATION: {
             break;
         }
-        case TokenType::SingleCoordinate: {
+        case TokenType::SINGLE_COORDINATE: {
             if (current_ns_coords.empty()) {
                 current_ns_coords = tok->literal;
             } else {
@@ -86,7 +86,7 @@ std::vector<AirportLabel> LabelParser::parse_all() {
             }
             break;
         }
-        case TokenType::ColorKey: {
+        case TokenType::COLOR_KEY: {
             std::string current_color = tok->literal;
             // Every option should be filled
             // NOTE: color is currently ignore - I am just lazy

@@ -1,6 +1,6 @@
 #include "Application.hpp"
 
-int main(void) {
+int main() {
     Applicaiton app;
     app.run();
 }

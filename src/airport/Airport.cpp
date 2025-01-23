@@ -36,7 +36,7 @@ Airport::Airport(std::string airport_icao_code, ColourManager &colors)
     : colors(colors), airport_icao_code(std::move(airport_icao_code)) {
     // Read region file;
 
-    ResourceManager &rm = ResourceManager::Instance();
+    ResourceManager &rm = ResourceManager::instance();
     std::string basic_res =
         rm.read_file(AIRPORTS_DIR / this->airport_icao_code / BASIC_FILE);
 

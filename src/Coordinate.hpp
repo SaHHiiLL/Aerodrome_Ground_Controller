@@ -17,7 +17,7 @@ public:
     Coordinate(std::string);
 
     // Creates a coord for "0, 0"
-    Coordinate() {}
+    Coordinate() = default;
 
     std::string to_string() {
         return "Coordinates(" + std::to_string(lateral) + ", " +

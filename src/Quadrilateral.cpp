@@ -17,15 +17,15 @@ Quadrilateral::Quadrilateral(std::vector<Vector2> vertices,
     for (size_t i = 0; i < d.triangles.size(); i += 3) {
         Vector2 x1 = {
             (float)d.coords[2 * d.triangles[i]],
-            /*tx0 */ (float)d.coords[2 * d.triangles[i] + 1]}; // ty0 };
+            /*tx0 */ (float)d.coords[(2 * d.triangles[i]) + 1]}; // ty0 };
         Vector2 x2 = {
             (float)d.coords[2 * d.triangles[i + 1]],
-            /*tx1 */ (float)d.coords[2 * d.triangles[i + 1] + 1]}; // ty1 }:
+            /*tx1 */ (float)d.coords[(2 * d.triangles[i + 1]) + 1]}; // ty1 }:
         Vector2 x3 = {
             (float)d.coords[2 * d.triangles[i + 2]],
-            /*tx2 */ (float)d.coords[2 * d.triangles[i + 2] + 1]}; // ty2 };
+            /*tx2 */ (float)d.coords[(2 * d.triangles[i + 2]) + 1]}; // ty2 };
 
-        this->triangles.push_back({x1, x2, x3});
+        this->triangles.emplace_back(x1, x2, x3);
     }
 }
 
@@ -50,13 +50,13 @@ Quadrilateral::Quadrilateral(std::array<Coordinate, 4> coords,
     for (size_t i = 0; i < d.triangles.size(); i += 3) {
         Vector2 x1 = {
             (float)d.coords[2 * d.triangles[i]],
-            /*tx0 */ (float)d.coords[2 * d.triangles[i] + 1]}; // ty0 };
+            /*tx0 */ (float)d.coords[(2 * d.triangles[i]) + 1]}; // ty0 };
         Vector2 x2 = {
             (float)d.coords[2 * d.triangles[i + 1]],
-            /*tx1 */ (float)d.coords[2 * d.triangles[i + 1] + 1]}; // ty1 }:
+            /*tx1 */ (float)d.coords[(2 * d.triangles[i + 1]) + 1]}; // ty1 }:
         Vector2 x3 = {
             (float)d.coords[2 * d.triangles[i + 2]],
-            /*tx2 */ (float)d.coords[2 * d.triangles[i + 2] + 1]}; // ty2 };
+            /*tx2 */ (float)d.coords[(2 * d.triangles[i + 2]) + 1]}; // ty2 };
 
         this->verties.push_back(x1);
         this->verties.push_back(x2);

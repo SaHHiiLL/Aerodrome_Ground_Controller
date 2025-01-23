@@ -13,22 +13,22 @@ inline const std::filesystem::path REGIONS_FILE(SMR_DIR / "Regions.txt");
 inline const std::filesystem::path LABELS_FILE(SMR_DIR / "Labels.txt");
 inline const std::filesystem::path GEO_FILE(SMR_DIR / "Geo.txt");
 
-inline Font *raylib_font = nullptr;
+inline Font *RAYLIB_FONT = nullptr;
 
-inline void Load_Font() {
+inline void load_font() {
     auto temp = LoadFont("./resource/Roboto-Medium.ttf");
-    raylib_font = static_cast<Font *>(malloc(sizeof(Font)));
-    memcpy(raylib_font, &temp, sizeof(Font));
+    RAYLIB_FONT = new Font{};
+    memcpy(RAYLIB_FONT, &temp, sizeof(Font));
 }
 
-inline void Unload_Font() {
-    UnloadFont(*raylib_font);
-    free(raylib_font);
+inline void unload_font() {
+    UnloadFont(*RAYLIB_FONT);
+    delete RAYLIB_FONT;
 }
 
-inline Font *Get_Font() {
-    if (raylib_font == NULL) {
-        Load_Font();
+inline Font *get_font() {
+    if (RAYLIB_FONT == nullptr) {
+        load_font();
     }
-    return raylib_font;
+    return RAYLIB_FONT;
 }

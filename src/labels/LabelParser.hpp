@@ -8,12 +8,12 @@
 #include <vector>
 
 class LabelParser {
-    enum TokenType {
-        Label = 0,
-        SingleCoordinate,
-        Quotation,
-        Comment,
-        ColorKey
+    enum class TokenType {
+        LABEL = 0,
+        SINGLE_COORDINATE,
+        QUOTATION,
+        COMMENT,
+        COLOR_KEY
     };
 
 public:

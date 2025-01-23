@@ -8,7 +8,7 @@ public:
     std::unordered_map<std::string, std::uint64_t> colours{};
     explicit ColourManager(std::filesystem::path resource_path);
     ColourManager() = default;
-    ~ColourManager();
+    ~ColourManager() = default;
     Color to_raylib(std::string key) { return GetColor(colours.at(key)); }
     bool is_valid(const std::string &key) const {
         return this->colours.contains(key);

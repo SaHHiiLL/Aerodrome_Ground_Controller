@@ -9,7 +9,7 @@ std::vector<std::string> split_whitespace(const std::string &str);
 class StringTrim {
 public:
     // trim from start (in place)
-    static inline void ltrim(std::string &s) {
+    static void ltrim(std::string &s) {
         s.erase(s.begin(),
                 std::ranges::find_if(s.begin(), s.end(), [](unsigned char ch) {
                     return !std::isspace(ch);
@@ -17,7 +17,7 @@ public:
     }
 
     // trim from end (in place)
-    static inline void rtrim(std::string &s) {
+    static void rtrim(std::string &s) {
         s.erase(std::ranges::find_if(
                     s.rbegin(), s.rend(),
                     [](unsigned char ch) { return !std::isspace(ch); })
@@ -26,7 +26,7 @@ public:
     }
 
     // trim from both ends
-    static inline void trim(std::string &s) {
+    static void trim(std::string &s) {
         ltrim(s);
         rtrim(s);
     }

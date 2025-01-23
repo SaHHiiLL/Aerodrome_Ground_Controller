@@ -9,7 +9,7 @@ private:
     std::string input;
 
 public:
-    PolygonParser(std::string input) { this->input = input; }
+    PolygonParser(std::string input) : input(input) {}
 
     [[nodiscard]] std::vector<Polygon> parse(ColourManager &colors);
 };

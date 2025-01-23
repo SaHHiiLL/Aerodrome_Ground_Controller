@@ -10,9 +10,9 @@ Applicaiton::Applicaiton() {
     rlImGuiSetup(this->imgui_dark_theme);
     SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_MSAA_4X_HINT |
                    FLAG_BORDERLESS_WINDOWED_MODE);
-    this->airplane_image = ResourceManager::Instance().get_airplane();
+    this->airplane_image = ResourceManager::instance().get_airplane();
     this->airplane_texture = LoadTextureFromImage(this->airplane_image);
-    Load_Font();
+    load_font();
     this->camera = Camera2D{};
     camera.zoom = 1;
     this->game = Game(&this->camera);
@@ -44,5 +44,5 @@ void Applicaiton::run() {
         EndDrawing();
     }
 
-    Unload_Font();
+    unload_font();
 }

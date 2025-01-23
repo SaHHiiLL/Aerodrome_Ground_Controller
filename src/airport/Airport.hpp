@@ -20,5 +20,5 @@ public:
     void draw() const;
 
     Airport(std::string airport_icao_code, ColourManager &colors);
-    ~Airport() {}
+    ~Airport() = default;
 };

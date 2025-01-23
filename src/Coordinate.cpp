@@ -1,6 +1,5 @@
 
 #include "Coordinate.hpp"
-#include "Utils.hpp"
 #include "raylib.h"
 #include <cassert>
 #include <cctype>
