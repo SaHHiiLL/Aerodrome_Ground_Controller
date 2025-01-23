@@ -38,12 +38,12 @@ Airport::Airport(std::string airport_icao_code, ColourManager &colors)
 
     ResourceManager &rm = ResourceManager::instance();
     std::string basic_res =
-        rm.read_file(AIRPORTS_DIR / this->airport_icao_code / BASIC_FILE);
+            rm.read_file(AIRPORTS_DIR / this->airport_icao_code / BASIC_FILE);
 
     this->parse_basic_file(basic_res);
 
     std::string region_res =
-        rm.read_file(AIRPORTS_DIR / this->airport_icao_code / REGIONS_FILE);
+            rm.read_file(AIRPORTS_DIR / this->airport_icao_code / REGIONS_FILE);
 
     PolygonParser parser = PolygonParser(region_res);
     this->polygons = parser.parse(colors);
@@ -51,13 +51,13 @@ Airport::Airport(std::string airport_icao_code, ColourManager &colors)
     const auto sW = static_cast<float>(GetScreenWidth());
     const Vector2 screen_center = {sH / 2, sW / 2};
 
-    for (auto &polygon : this->polygons) {
+    for (auto &polygon: this->polygons) {
         polygon.triangulate(this->airport_center_ref, screen_center);
     }
 
     std::string label_res =
-        rm.read_file(AIRPORTS_DIR / this->airport_icao_code / LABELS_FILE);
+            rm.read_file(AIRPORTS_DIR / this->airport_icao_code / LABELS_FILE);
     LabelParser lp =
-        LabelParser(label_res, this->colors, this->airport_center_ref);
+            LabelParser(label_res, this->colors, this->airport_center_ref);
     this->airport_label = lp.parse_all();
 }

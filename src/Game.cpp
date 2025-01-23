@@ -7,8 +7,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
-void Game::draw() { this->airport->draw(); }
-void Game::handle_input() {
+void Game::draw() const { this->airport->draw(); }
+void Game::handle_input() const {
 
     // Translate based on mouse right click
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
@@ -43,5 +43,5 @@ void Game::update() {}
 Game::Game(Camera2D *cam)
     : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
-    this->airport = new Airport("EGLL", this->colours);
+    this->airport = new Airport("EGPH", this->colours);
 }

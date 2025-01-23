@@ -20,8 +20,8 @@ public:
     Game() = default;
 
     void update();
-    void draw();
+    void draw() const;
     void draw_outline();
-    void handle_input();
+    void handle_input() const;
     float zoom_factor = 1;
 };

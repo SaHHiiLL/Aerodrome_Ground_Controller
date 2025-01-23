@@ -28,12 +28,12 @@ static bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
 
     return (n - b) * (x - m) == (y - n) * (m - a);
 }
-// TODO: do all the checks
+// TODO: Does not check if an edge is self-intersecting
 std::vector<Triangle>
 EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
 
     if (polygon_vertices.size() < 3) {
-        throw std::invalid_argument("Polygon must have atleast 3 sizes!");
+        throw std::invalid_argument("Polygon must have least 3 sizes!");
     }
 
     // check no co linear points exists

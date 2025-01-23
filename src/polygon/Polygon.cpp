@@ -22,7 +22,7 @@ void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
 }
 
 void Polygon::draw_triangle_outlines() const {
-    for (auto & triangle : this->triangles) {
+    for (auto &triangle : this->triangles) {
         triangle.draw_outline();
     }
 }
@@ -45,14 +45,12 @@ void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref,
 }
 
 void Polygon::draw(Color color) {
-    for (auto & triangle : this->triangles)
-        DrawTriangle(triangle.x1, triangle.x2,
-                     triangle.x3, color);
+    for (auto &triangle : this->triangles)
+        DrawTriangle(triangle.x1, triangle.x2, triangle.x3, color);
 }
 
 void Polygon::draw() const {
-    for (const auto & triangle : this->triangles) {
-        DrawTriangle(triangle.x1, triangle.x2,
-                     triangle.x3, this->color);
+    for (const auto &triangle : this->triangles) {
+        DrawTriangle(triangle.x1, triangle.x2, triangle.x3, this->color);
     }
 }
