@@ -10,8 +10,8 @@ Applicaiton::Applicaiton() {
     InitWindow(this->screen_width, this->screen_height, this->title);
     SetTargetFPS(this->fps);
     rlImGuiSetup(this->imgui_dark_theme);
-    SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_MSAA_4X_HINT |
-                   FLAG_BORDERLESS_WINDOWED_MODE);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE);
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     this->airplane_image = ResourceManager::instance().get_airplane();
     this->airplane_texture = LoadTextureFromImage(this->airplane_image);
     load_font();
@@ -27,12 +27,38 @@ Applicaiton::Applicaiton() {
 
 static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC"};
 
+void Applicaiton::handle_input() {
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+    if (io.WantCaptureMouse) {
+        return;
+    }
+    game.handle_input();
+}
+
+void Applicaiton::draw_ui() {
+    // Imgui goes here
+    ImGui::Begin("Debug Menu");
+    ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
+    ImGui::SameLine();
+    if (ImGui::Button("Apply")) {
+        this->game = Game(&this->camera);
+    }
+    ImGui::SliderFloat("Font Scale", &FONT_SCALE, 0.1, 50.0f);
+    for (const auto &airport : ALL_AIRPORTS) {
+        if (ImGui::Button(airport.data())) {
+            this->game.set_airport(airport);
+        }
+        ImGui::SameLine();
+    }
+
+    ImGui::End();
+}
+
 void Applicaiton::run() {
     TraceLog(LOG_INFO, "Entering Main Game Loop");
-    // char airport_buffer[1024];
-    std::string airport_buffer{};
     while (!WindowShouldClose() && !this->quit) {
-        game.handle_input();
+        this->handle_input();
         game.update();
         ClearBackground(BLACK);
         BeginDrawing();
@@ -40,26 +66,6 @@ void Applicaiton::run() {
         BeginMode2D(camera);
         {
             game.draw();
-            {
-                // Imgui goes here
-                ImGui::Begin("HEllo world");
-                ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
-                ImGui::SameLine();
-                if (ImGui::Button("Apply")) {
-                    this->game = Game(&this->camera);
-                }
-
-                ImGui::SliderFloat("Font Scale", &FONT_SCALE, 0.1, 50.0f);
-
-                for (const auto &airport : ALL_AIRPORTS) {
-                    if (ImGui::Button(airport.data())) {
-                        this->game.set_airport(airport);
-                    }
-                    ImGui::SameLine();
-                }
-
-                ImGui::End();
-            }
         }
 
         EndMode2D();

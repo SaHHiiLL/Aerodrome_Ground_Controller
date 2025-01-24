@@ -14,6 +14,8 @@ public:
 
 private:
     void load_fonts();
+    void handle_input();
+    void draw_ui();
 
     // Need Init
     Game game;
