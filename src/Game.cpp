@@ -20,6 +20,11 @@ void Game::handle_input() const {
 
     // reset the view
     if (IsKeyPressed(KEY_R)) {
+        this->camera->target = this->airport->center_coord();
+        this->camera->zoom = 1;
+        this->camera->offset = Vector2{0, 0};
+    }
+    if (IsKeyPressed(KEY_T)) {
         this->camera->target = Vector2{0, 0};
         this->camera->zoom = 1;
         this->camera->offset = Vector2{0, 0};
@@ -44,7 +49,7 @@ void Game::update() {}
 Game::Game(Camera2D *cam)
     : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
-    this->airport = new Airport("EGPH", this->colours);
+    this->airport = new Airport("EGBB", this->colours);
 }
 
 void Game::set_airport(std::string airport_name) {

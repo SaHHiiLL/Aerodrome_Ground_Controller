@@ -1,6 +1,5 @@
 #include "./Quadrilateral.hpp"
 #include "./Constants.hpp"
-#include "earcutter.hpp"
 #include "raylib.h"
 #include <delaunator.hpp>
 
@@ -36,11 +35,8 @@ Quadrilateral::Quadrilateral(std::array<Coordinate, 4> coords,
     std::vector<double> cc;
 
     for (auto &c : coords) {
-        float sH = GetScreenHeight();
-        float sW = GetScreenWidth();
-        Vector2 scree_center = {sH / 2, sW / 2};
         Vector2 xy =
-            c.geo_to_screen_by_refrence(center_ref, DRAW_SCALE, scree_center);
+            c.geo_to_screen_by_refrence(center_ref, DRAW_SCALE, SCREEN_CENTER);
         cc.push_back(xy.x);
         cc.push_back(xy.y);
     }

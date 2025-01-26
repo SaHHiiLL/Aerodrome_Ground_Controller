@@ -1,5 +1,7 @@
 #include "./earcutter.hpp"
+#include "raylib.h"
 #include <raymath.h>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 
 // Retuns true if a given angle `curr` is convex releative to `next` and `prev`
@@ -51,9 +53,10 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
     }
 
     std::vector<Vector2> ver = polygon_vertices;
+    const size_t max_out_size = polygon_vertices.size() - 2;
 
     std::vector<Triangle> out;
-    out.reserve(polygon_vertices.size() - 2);
+    out.reserve(max_out_size);
     size_t indexCount = polygon_vertices.size();
 
     // Do this process until we have the last three index
@@ -87,10 +90,17 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
                 }
             }
             if (!is_inside) {
-                out.emplace_back(prev, curr, next);
-                ver.erase(ver.begin() + i);
-                indexCount--;
-                break;
+                if (out.size() > max_out_size) {
+                    spdlog::critical(
+                        "out size increased out:{}, max_out_size:{}",
+                        out.size(), max_out_size);
+                    throw std::invalid_argument("Invalid tree");
+                } else {
+                    out.emplace_back(prev, curr, next);
+                    ver.erase(ver.begin() + i);
+                    indexCount--;
+                    break;
+                }
             }
         }
     }

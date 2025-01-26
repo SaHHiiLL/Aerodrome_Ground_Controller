@@ -5,13 +5,45 @@
 #include "imgui.h"
 #include "raylib.h"
 #include "rlImGui.h"
+#include "spdlog/spdlog.h"
+#include <cmath>
+#include <cstdarg>
+
+static void custom_loggin(int log_level, const char *msg, va_list args) {
+    switch (log_level) {
+    case LOG_INFO: {
+        spdlog::info(msg);
+        break;
+    }
+    case LOG_ERROR: {
+        spdlog::error(msg);
+        break;
+    }
+    case LOG_FATAL: {
+        spdlog::critical(msg);
+        break;
+    }
+    case LOG_WARNING: {
+        spdlog::warn(msg);
+        break;
+    }
+    default:
+        spdlog::debug(msg);
+        break;
+    }
+}
 
 Applicaiton::Applicaiton() {
+    SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_WINDOW_TOPMOST |
+                   FLAG_MSAA_4X_HINT);
+    SetTraceLogCallback(custom_loggin);
     InitWindow(this->screen_width, this->screen_height, this->title);
     SetTargetFPS(this->fps);
     rlImGuiSetup(this->imgui_dark_theme);
-    SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_WINDOW_TOPMOST |
-                   FLAG_MSAA_4X_HINT);
+
+    const auto sH = static_cast<float>(GetScreenHeight());
+    const auto sW = static_cast<float>(GetScreenWidth());
+    SCREEN_CENTER = Vector2{sH / 2, sW / 2};
     this->airplane_image = ResourceManager::instance().get_airplane();
     this->airplane_texture = LoadTextureFromImage(this->airplane_image);
     load_font();
@@ -33,6 +65,7 @@ void Applicaiton::handle_input() {
     if (io.WantCaptureMouse) {
         return;
     }
+
     game.handle_input();
 }
 
@@ -73,6 +106,4 @@ void Applicaiton::run() {
         rlImGuiEnd();
         EndDrawing();
     }
-
-    unload_font();
 }

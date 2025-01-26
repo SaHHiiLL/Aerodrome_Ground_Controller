@@ -17,6 +17,8 @@ inline const float EARTH_RADIUS_METERS = 6378137.0f;
 inline float DRAW_SCALE = 0.013;
 inline float FONT_SCALE = 1;
 
+inline Vector2 SCREEN_CENTER;
+
 inline Font *RAYLIB_FONT = nullptr;
 
 inline void load_font() {

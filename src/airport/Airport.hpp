@@ -1,9 +1,11 @@
 #pragma once
 
+#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "../colours/ColourManager.hpp"
 #include "../labels/AirportLabel.hpp"
 #include "../polygon/Polygon.hpp"
+
 #include <vector>
 
 class Airport {
@@ -18,7 +20,7 @@ private:
 
 public:
     void draw() const;
-
+    Vector2 center_coord();
     Airport(std::string airport_icao_code, ColourManager &colors);
     ~Airport() = default;
 };

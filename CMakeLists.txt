@@ -7,10 +7,13 @@ project(Aerodrome_Ground_Controller)
 set(RAYLIB_DIR libs/raylib/)
 set(DELAUNATOR libs/delaunator/)
 set(IMGUI_DIR libs/imgui/)
+set(SPDLOG_DIR libs/spdlog/)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wextra")
+
+find_package(spdlog NAMES spdlog HINTS ${SPDLOG_DIR}/ REQUIRED)
 
 find_library(
   RAYLIB_LIBRARY
@@ -22,13 +25,12 @@ find_library(
   NAMES imgui
   PATHS ${IMGUI_DIR}/build/lib)
 
-message(STATUS "Found library: ${IMGUI_LIBRARY}")
-
 # Include directories
 include_directories(libs/raylib/include)
 include_directories(libs/triangulation)
 include_directories(libs/lexer)
 include_directories(libs/imgui/include)
+include_directories(${SPDLOG_DIR}/include)
 
 file(GLOB TRI_CXX_SRC "${PROJECT_SOURCE_DIR}/libs/triangulation/*.cpp")
 file(GLOB_RECURSE SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
@@ -39,4 +41,5 @@ add_executable(
   # external Libs #
   ${TRI_CXX_SRC} ${SRC})
 
-target_link_libraries(${PROJECT_NAME} ${RAYLIB_LIBRARY} ${IMGUI_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${RAYLIB_LIBRARY} ${IMGUI_LIBRARY}
+                      spdlog::spdlog_header_only)

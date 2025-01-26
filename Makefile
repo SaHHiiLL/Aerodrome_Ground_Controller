@@ -1,18 +1,20 @@
-CC						?=clang++
 PROJECT_ROOT_DIR		?=$(shell pwd)
 TARGET					?=$(PROJECT_ROOT_DIR)/build
 TARGET_DEBUG			?=$(PROJECT_ROOT_DIR)/debug
-SRC						=$(PROJECT_ROOT_DIR)/src
-CPP_FILES				=$(shell find src/ -mindepth 1 -name '*.cpp')
-HPP_FILES				=$(shell find src/ -mindepth 1 -name '*.hpp')
+SRC						?=$(PROJECT_ROOT_DIR)/src
+CPP_FILES				?=$(shell find src/ -mindepth 1 -name '*.cpp')
+HPP_FILES				?=$(shell find src/ -mindepth 1 -name '*.hpp')
 LIBS					?=$(PROJECT_ROOT_DIR)/libs
 
 RAYLIB_VERSION			?=5.0
 RAYLIB_PATH				?=$(LIBS)/raylib-$(RAYLIB_VERSION)_linux_amd64
-RAYLIB_DOWNLOAD_PATH	=https://github.com/raysan5/raylib/releases/download/$(RAYLIB_VERSION)/raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
-RAYLIB_TAR_NAME			=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
-RAYLIB_DIR_PATH 		=$(LIBS)/raylib-$(RAYLIB_VERSION)_linux_amd64
+RAYLIB_DOWNLOAD_URL		?=https://github.com/raysan5/raylib/releases/download/$(RAYLIB_VERSION)/raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
+RAYLIB_TAR_NAME			?=raylib-$(RAYLIB_VERSION)_linux_amd64.tar.gz
+RAYLIB_DIR_PATH 		?=$(LIBS)/raylib-$(RAYLIB_VERSION)_linux_amd64
 
+SPDLOG_VERSION			?=ae1de0dc8cf480f54eaa425c4a9dc4fef29b28ba
+SPDLOG_GIT_URL			?=https://github.com/gabime/spdlog.git
+SPDLOG_DOWNLOAD_PATH	?=$(LIBS)/spdlog
 
 all: $(CPP_FILES) $(HPP_FILES)
 	@if [ ! -d "$(LIBS)" ]; then			\
@@ -20,12 +22,13 @@ all: $(CPP_FILES) $(HPP_FILES)
 		$(MAKE) download_triangulation; 	\
 		$(MAKE) download_lexer.h;			\
 		$(MAKE) download_rlImGuiBridge; 	\
+		$(MAKE) download_spdlogs; 			\
 	fi										
 
 	$(MAKE) target
 	cmake -S $(PROJECT_ROOT_DIR) -B $(TARGET)
 	## Call the make file inside 
-	make -C $(TARGET) -j8
+	cmake --build $(TARGET) -j8
 
 debug: $(CPP_FILES) $(HPP_FILES)
 	@if [ ! -d "$(LIBS)" ]; then			\
@@ -46,7 +49,6 @@ main: $(CPP_FILES)
 target:
 	@mkdir -p $(TARGET)
 
-
 lib_dir:
 	@mkdir -p $(LIBS)
 
@@ -59,10 +61,12 @@ clean:
 
 download_raylib: lib_dir
 	@echo "[+]INFO: Downloading Raylib..."
-	wget -q -O $(LIBS)/$(RAYLIB_TAR_NAME) $(RAYLIB_DOWNLOAD_PATH)
+	wget -q -O $(LIBS)/$(RAYLIB_TAR_NAME) $(RAYLIB_DOWNLOAD_URL)
 	tar -xvf $(LIBS)/$(RAYLIB_TAR_NAME) --directory=$(LIBS)/
 	mv $(RAYLIB_DIR_PATH) $(LIBS)/raylib
 
+download_spdlogs: lib_dir
+	git clone $(SPDLOG_GIT_URL) -n $(SPDLOG_DOWNLOAD_PATH)
 
 download_triangulation: lib_dir
 	@echo "[+]INFO: Downloading Triangulation Library..."
@@ -79,10 +83,4 @@ download_rlImGuiBridge: lib_dir
 	mv rlImGuiBridge $(LIBS)/imgui
 	make -C $(LIBS)/imgui
 
-dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_rlImGuiBridge
-
-compile_commands: all
-	ln -s $(TARGET)/compile_commands.json $(PROJECT_ROOT_DIR)
-
-clang_tidy:
-	clang-tidy $(CPP_FILES) $(HPP_FILES)
+dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_rlImGuiBridge download_spdlogs
