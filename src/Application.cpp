@@ -10,8 +10,8 @@ Applicaiton::Applicaiton() {
     InitWindow(this->screen_width, this->screen_height, this->title);
     SetTargetFPS(this->fps);
     rlImGuiSetup(this->imgui_dark_theme);
-    SetConfigFlags(FLAG_FULLSCREEN_MODE);
-    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_WINDOW_TOPMOST |
+                   FLAG_MSAA_4X_HINT);
     this->airplane_image = ResourceManager::instance().get_airplane();
     this->airplane_texture = LoadTextureFromImage(this->airplane_image);
     load_font();
@@ -63,6 +63,7 @@ void Applicaiton::run() {
         ClearBackground(BLACK);
         BeginDrawing();
         rlImGuiBegin();
+        draw_ui();
         BeginMode2D(camera);
         {
             game.draw();
