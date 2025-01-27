@@ -36,6 +36,7 @@ debug: $(CPP_FILES) $(HPP_FILES)
 		$(MAKE) download_triangulation; 	\
 		$(MAKE) download_lexer.h;			\
 		$(MAKE) download_rlImGuiBridge; 	\
+		$(MAKE) download_spdlogs; 			\
 	fi										
 	$(MAKE) target_debug
 	cmake -S $(PROJECT_ROOT_DIR) -B debug
@@ -84,4 +85,4 @@ download_rlImGuiBridge: lib_dir
 	mv rlImGuiBridge $(LIBS)/imgui
 	make -C $(LIBS)/imgui
 
-dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_rlImGuiBridge download_spdlogs
+dev_setup: lib_dir download_raylib download_triangulation download_lexer.h download_spdlogs download_rlImGuiBridge
