@@ -124,10 +124,9 @@ GeoMarkings::Header GeoParser::parse_header() {
         }
         case COLOR_KEY:
             if (coords.size() == 4) {
-                GeoMarkings::Line line;
+                GeoMarkings::Line line(this->center_ref);
                 line.color = this->color_manager.to_raylib(tok->literal);
-                line.start = Coordinate(coords.at(0), coords.at(1));
-                line.end = Coordinate(coords.at(2), coords.at(3));
+                line.add_points(Coordinate(coords.at(0), coords.at(1)) , Coordinate(coords.at(2), coords.at(3)));
                 current.add_line(line);
                 coords.clear();
             } else {

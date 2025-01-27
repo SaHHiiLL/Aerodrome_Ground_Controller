@@ -18,8 +18,16 @@ class GeoMarkings {
 public:
     struct Line {
         Color color = YELLOW;
-        Coordinate start;
-        Coordinate end;
+        Vector2 start;
+        Vector2 end;
+        Coordinate &center_ref;
+
+        Line(Coordinate &c) : center_ref(c) {}
+
+        void add_points(Coordinate cstart, Coordinate cend) {
+            this->start = cstart.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+            this->end = cend.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+        }
     };
 
     // Header
@@ -53,12 +61,7 @@ public:
 
     void draw() const {
         for (const auto &line : lines) {
-            Vector2 start = line.start.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
-            spdlog::debug("Start -> x: {} - y: {}", start.x, start.y);
-            const Vector2 end = line.end.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
-            spdlog::debug("end-> x: {} - y: {}", end.x, end.y);
-
-            DrawLineV(start, end, line.color);
+            DrawLineV(line.start, line.end, line.color);
         }
     }
 

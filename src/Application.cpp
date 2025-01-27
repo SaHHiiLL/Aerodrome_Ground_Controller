@@ -60,7 +60,7 @@ Applicaiton::Applicaiton() {
     TraceLog(LOG_INFO, "ImGui with Docking Loaded");
 };
 
-static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC"};
+static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC", "EGNX", "EGGW", "EGPF"};
 
 void Applicaiton::handle_input() const {
     const ImGuiIO &io = ImGui::GetIO();
@@ -87,8 +87,27 @@ void Applicaiton::draw_ui() {
         }
         ImGui::SameLine();
     }
-
+    ImGui::NewLine();
     ImGui::End();
+
+
+    // show a simple menu bar
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Quit")){}
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Window"))
+        {
+            if (ImGui::MenuItem("Demo Window")){}
+
+            ImGui::EndMenu();
+        }
+        ImGui::EndMainMenuBar();
+    }
 }
 
 void Applicaiton::run() {
