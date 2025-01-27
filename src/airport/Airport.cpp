@@ -49,7 +49,7 @@ Airport::Airport(std::string airport_icao_code, ColourManager &colors)
     this->polygons = parser.parse(colors);
 
     for (auto &polygon : this->polygons) {
-        polygon.triangulate(this->airport_center_ref, SCREEN_CENTER);
+        polygon.triangulate(this->airport_center_ref);
     }
 
     std::string label_res =

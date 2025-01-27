@@ -1,16 +1,18 @@
 
 #include "./Polygon.hpp"
+#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "../Quadrilateral.hpp"
 #include "../earcutter.hpp"
+
 #include "raylib.h"
 #include <vector>
 
 Polygon::Polygon(std::vector<Coordinate> coords, Color color)
     : coordinates(coords), color(color) {}
 
-void Polygon::triangulate(Coordinate center_ref, Vector2 screen_center) {
-    this->convert_coordinates_to_vertices(center_ref, screen_center);
+void Polygon::triangulate(Coordinate center_ref) {
+    this->convert_coordinates_to_vertices(center_ref);
     if (this->vertices.size() > 4) {
         EarCut earcut;
         this->triangles = earcut.earcut(this->vertices);
@@ -35,12 +37,11 @@ void Polygon::draw_outline() const {
               WHITE);
 }
 
-void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref,
-                                              Vector2 screen_center) {
+void Polygon::convert_coordinates_to_vertices(Coordinate centre_ref) {
     this->vertices.reserve(this->coords().size());
     for (auto &coords : this->coordinates) {
         this->vertices.push_back(
-            coords.geo_to_screen_by_refrence(centre_ref, screen_center));
+            coords.geo_to_screen_by_refrence(centre_ref, SCREEN_CENTER));
     }
 }
 

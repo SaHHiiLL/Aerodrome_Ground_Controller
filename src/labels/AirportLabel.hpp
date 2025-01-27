@@ -19,11 +19,8 @@ public:
         : color(color), world_center_ref(center_ref), data(std::move(data)),
           coords(coords) {
 
-        float sH = GetScreenHeight();
-        float sW = GetScreenWidth();
-        Vector2 screen_center = {sH / 2, sW / 2};
         this->position =
-            coords.geo_to_screen_by_refrence(world_center_ref, screen_center);
+            coords.geo_to_screen_by_refrence(world_center_ref, SCREEN_CENTER);
     }
     void draw() const {
         const Font *font = get_font();

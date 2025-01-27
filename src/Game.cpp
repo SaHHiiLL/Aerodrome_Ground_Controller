@@ -49,7 +49,7 @@ void Game::update() {}
 Game::Game(Camera2D *cam)
     : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))) {
-    this->airport = new Airport("EGBB", this->colours);
+    this->airport = new Airport("EGPH", this->colours);
 }
 
 void Game::set_airport(std::string airport_name) {

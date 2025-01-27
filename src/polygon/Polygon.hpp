@@ -28,8 +28,7 @@ public:
 
     // Converts real words space vertices to screen space vertices
     // NOTE: appends to `this->vertices`
-    void convert_coordinates_to_vertices(Coordinate centre_ref,
-                                         Vector2 screen_center);
+    void convert_coordinates_to_vertices(Coordinate centre_ref);
 
     void set_color(const Color color) { this->color = color; }
     [[nodiscard]] bool is_empty() const { return this->coordinates.empty(); }
@@ -38,8 +37,7 @@ public:
 
     // Uses `earcut` algorithm to triangulate screeen space vertices
     // @param center_ref - centre of the polygon
-    // @param screen_center - centre of the window
-    void triangulate(Coordinate center_ref, Vector2 screen_center);
+    void triangulate(Coordinate center_ref);
 
     // Draws the triangle in solid color
     void draw(Color color);
