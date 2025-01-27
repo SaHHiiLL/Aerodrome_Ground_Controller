@@ -8,27 +8,30 @@
 #include "spdlog/spdlog.h"
 #include <cmath>
 #include <cstdarg>
+#include <cstdio>
 
 static void custom_loggin(int log_level, const char *msg, va_list args) {
+    char buffer[1024];
+    vsnprintf(buffer, sizeof(buffer), msg, args);
     switch (log_level) {
     case LOG_INFO: {
-        spdlog::info(msg);
+        spdlog::info(buffer);
         break;
     }
     case LOG_ERROR: {
-        spdlog::error(msg);
+        spdlog::error(buffer);
         break;
     }
     case LOG_FATAL: {
-        spdlog::critical(msg);
+        spdlog::critical(buffer);
         break;
     }
     case LOG_WARNING: {
-        spdlog::warn(msg);
+        spdlog::warn(buffer);
         break;
     }
     default:
-        spdlog::debug(msg);
+        spdlog::debug(buffer);
         break;
     }
 }
@@ -59,8 +62,8 @@ Applicaiton::Applicaiton() {
 
 static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC"};
 
-void Applicaiton::handle_input() {
-    ImGuiIO &io = ImGui::GetIO();
+void Applicaiton::handle_input() const {
+    const ImGuiIO &io = ImGui::GetIO();
     (void)io;
     if (io.WantCaptureMouse) {
         return;

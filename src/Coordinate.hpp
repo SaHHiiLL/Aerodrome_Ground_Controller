@@ -18,10 +18,12 @@ public:
                std::to_string(longitude) + ")";
     }
 
+    Vector2 geo_to_screen_by_refrence(Coordinate center_ref) const;
+
     Vector2 geo_to_screen_by_refrence(Coordinate center_ref,
-                                      Vector2 screen_center);
+                                      Vector2 screen_center) const;
     Vector2 geo_to_screen_by_refrence(Coordinate center_ref, float scale,
-                                      Vector2 screen_center);
+                                      Vector2 screen_center) const;
     // W/E - X
     double lon() { return this->longitude; }
     // N/S - Y

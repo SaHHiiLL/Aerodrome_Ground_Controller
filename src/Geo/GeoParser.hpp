@@ -16,8 +16,7 @@ private:
         IDENT,
         COLOR_KEY,
     };
-    LEXER_IMPL(TokenType)
-
+    LEXER_IMPL(TokenType);
     std::string input;
     Lexer lexer;
     ColourManager &color_manager;
@@ -25,7 +24,7 @@ private:
 
 public:
     Lexer::Token *next_token();
-    GeoParser(const std::string input, ColourManager &color_manager,
+    GeoParser(const std::string &input, ColourManager &color_manager,
               Coordinate &center_ref);
     [[nodiscard]] std::vector<GeoMarkings> parse_all();
 

@@ -52,20 +52,24 @@ Coordinate::Coordinate(std::string lateral, std::string longitude) {
     this->longitude = parse(longitude);
 }
 
+Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref) const {
+    return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, SCREEN_CENTER);
+}
+
 // Function to convert latitude and longitude to 2D screen coordinates
 Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
-                                              Vector2 screen_center) {
+                                              Vector2 screen_center) const {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, screen_center);
 }
 
 // Function to convert latitude and longitude to 2D screen coordinates
 Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
                                               float scale,
-                                              Vector2 screen_center) {
+                                              Vector2 screen_center) const {
     // Convert latitude and longitude to radians
-    float x = (float)(this->longitude - center_ref.lon()) *
+    float x = static_cast<float>(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;
-    float y = (float)(this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
+    float y = static_cast<float>(this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
 
     // Apply scaling and offset to fit within screen space
     x = x * scale + screen_center.x;

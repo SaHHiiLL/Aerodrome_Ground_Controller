@@ -1,10 +1,12 @@
 #pragma once
 
+#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "raylib.h"
 #include <optional>
 #include <utility>
 #include <vector>
+#include <spdlog/spdlog.h>
 
 ///
 /// A geomarking can have a section with the airport's
@@ -45,10 +47,20 @@ public:
                            Coordinate("S999.00.00.000", "E999.00.00.000"));
     };
 
-    GeoMarkings(Coordinate center_ref) : center_ref(center_ref) {};
+    explicit GeoMarkings(Coordinate center_ref) : center_ref(center_ref) {};
 
     void add_line(Line line) { this->lines.push_back(line); }
-    void draw() const {}
+
+    void draw() const {
+        for (const auto &line : lines) {
+            Vector2 start = line.start.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+            spdlog::debug("Start -> x: {} - y: {}", start.x, start.y);
+            const Vector2 end = line.end.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+            spdlog::debug("end-> x: {} - y: {}", end.x, end.y);
+
+            DrawLineV(start, end, line.color);
+        }
+    }
 
     void set_header(Header &header) { this->header = header; }
     void set_center_ref(Coordinate center_ref) {

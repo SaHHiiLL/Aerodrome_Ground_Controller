@@ -17,7 +17,7 @@ void Polygon::triangulate(Coordinate center_ref) {
         EarCut earcut;
         this->triangles = earcut.earcut(this->vertices);
     } else {
-        // Quadd
+        // Quad
         Quadrilateral quad = Quadrilateral{this->vertices, center_ref, color};
         this->triangles = quad.triangle();
     }

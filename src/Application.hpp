@@ -14,7 +14,7 @@ public:
 
 private:
     void load_fonts();
-    void handle_input();
+    void handle_input() const;
     void draw_ui();
 
     // Need Init
