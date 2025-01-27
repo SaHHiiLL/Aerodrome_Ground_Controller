@@ -12,4 +12,9 @@ class GeoParser {
         IDENT,
     };
     LEXER_IMPL(TokenType)
+
+    std::string input;
+    Lexer lexer;
+    Lexer::Token *next_token();
+    // [[nodiscard]] std::vector<AirportLabel> parse_all();
 };
