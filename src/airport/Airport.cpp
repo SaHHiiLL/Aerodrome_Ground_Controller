@@ -1,11 +1,13 @@
 #include "./Airport.hpp"
 #include "../Constants.hpp"
+#include "../Geo/GeoParser.hpp"
 #include "../ResourceManager.hpp"
 #include "../Utils.hpp"
 #include "../labels/LabelParser.hpp"
 #include "../polygon/PolygonParser.hpp"
 #include <filesystem>
 #include <ranges>
+#include <spdlog/spdlog.h>
 #include <utility>
 
 void Airport::parse_basic_file(std::string input) {
@@ -29,6 +31,10 @@ void Airport::draw() const {
 
     for (auto &l : this->airport_label) {
         l.draw();
+    }
+
+    for (auto &g : this->markings) {
+        g.draw();
     }
 }
 
@@ -57,6 +63,16 @@ Airport::Airport(std::string airport_icao_code, ColourManager &colors)
     LabelParser lp =
         LabelParser(label_res, this->colors, this->airport_center_ref);
     this->airport_label = lp.parse_all();
+
+    GeoParser gp = GeoParser(
+        rm.read_file(AIRPORTS_DIR / this->airport_icao_code / GEO_FILE),
+        this->colors, this->airport_center_ref);
+    this->markings = gp.parse_all();
+    spdlog::info("Loaded    airport:   {}", this->airport_name);
+    spdlog::info("          icao:      {}", this->airport_icao_code);
+    spdlog::info("          polygons:  {}", this->polygons.size());
+    spdlog::info("          labels:    {}", this->airport_label.size());
+    spdlog::info("          markings:  {}", this->markings.size());
 }
 
 Vector2 Airport::center_coord() {

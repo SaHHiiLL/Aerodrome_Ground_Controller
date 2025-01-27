@@ -2,6 +2,7 @@
 
 #include "../Constants.hpp"
 #include "../Coordinate.hpp"
+#include "../Geo/GeoMarkings.hpp"
 #include "../colours/ColourManager.hpp"
 #include "../labels/AirportLabel.hpp"
 #include "../polygon/Polygon.hpp"
@@ -12,6 +13,7 @@ class Airport {
 private:
     std::vector<Polygon> polygons;
     std::vector<AirportLabel> airport_label;
+    std::vector<GeoMarkings> markings;
     Coordinate airport_center_ref;
     ColourManager &colors;
     std::string airport_icao_code;

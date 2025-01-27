@@ -9,8 +9,6 @@ public:
     Coordinate(std::string lateral, std::string longitude);
     Coordinate(double longitude, double lateral)
         : lateral(lateral), longitude(longitude) {};
-    // space seperated coordinate
-    Coordinate(std::string);
 
     // Creates a coord for "0, 0"
     Coordinate() = default;

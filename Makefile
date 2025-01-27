@@ -66,7 +66,8 @@ download_raylib: lib_dir
 	mv $(RAYLIB_DIR_PATH) $(LIBS)/raylib
 
 download_spdlogs: lib_dir
-	git clone $(SPDLOG_GIT_URL) $(SPDLOG_DOWNLOAD_PATH)
+	git clone $(SPDLOG_GIT_URL)
+	mv spdlog $(LIBS)/spdlog
 
 download_triangulation: lib_dir
 	@echo "[+]INFO: Downloading Triangulation Library..."

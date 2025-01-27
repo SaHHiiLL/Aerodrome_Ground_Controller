@@ -1,8 +1,10 @@
 #include "./LabelParser.hpp"
 #include "raylib.h"
 #include <regex>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 
+const std::regex COORD_REGEX(R"([N|S|W|E]\d{3}.\d{2}.\d{2}.\d{3})");
 LabelParser::Lexer::Token *LabelParser::next_token() {
     LabelParser::Lexer::Token *tok = nullptr;
     this->lexer.skip_whitespace();
@@ -34,8 +36,7 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
     default:
         if (this->lexer.is_letter()) {
             std::string ident = this->lexer.read_to_space();
-            const std::regex coord_regex(R"([N|S|W|E]\d{3}.\d{2}.\d{2}.\d{3})");
-            if (std::regex_match(ident, coord_regex)) {
+            if (std::regex_match(ident, COORD_REGEX)) {
 
                 tok = new LabelParser::Lexer::Token();
                 tok->literal = ident;
@@ -46,8 +47,7 @@ LabelParser::Lexer::Token *LabelParser::next_token() {
                 tok->literal = ident;
             } else {
                 // Invalid
-                TraceLog(LOG_WARNING, "Token of literal %s is invalid",
-                         ident.data());
+                spdlog::warn("Token of literal {} is invalid", ident.data());
             }
         }
         break;
@@ -89,7 +89,6 @@ std::vector<AirportLabel> LabelParser::parse_all() {
         case TokenType::COLOR_KEY: {
             std::string current_color = tok->literal;
             // Every option should be filled
-            // NOTE: color is currently ignore - I am just lazy
             if (!current_label.empty() && !current_ns_coords.empty() &&
                 !current_we_coords.empty() && !current_color.empty()) {
 

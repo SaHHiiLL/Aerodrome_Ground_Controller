@@ -8,7 +8,7 @@
 #include <vector>
 
 class LabelParser {
-    enum class TokenType {
+    enum class TokenType : std::uint8_t {
         LABEL = 0,
         SINGLE_COORDINATE,
         QUOTATION,
