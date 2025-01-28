@@ -117,3 +117,6 @@ std::vector<AirportLabel> LabelParser::parse_all() {
 
     return labels;
 }
+LabelParser::LabelParser(std::string input, ColourManager &colors,
+                         Coordinate &center_ref)
+    : input(input), lexer(input), colors(colors), center_ref(center_ref) {};

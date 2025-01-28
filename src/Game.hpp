@@ -25,4 +25,5 @@ public:
     void handle_input() const;
     float zoom_factor = 1;
     void set_airport(std::string airport_name);
+    void imgui_draw();
 };

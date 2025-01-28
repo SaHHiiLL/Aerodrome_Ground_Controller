@@ -2,11 +2,14 @@
 
 #include "../Constants.hpp"
 #include "../Coordinate.hpp"
+#include "imgui.h"
 #include "raylib.h"
+#include <fmt/color.h>
+#include <format>
 #include <optional>
+#include <spdlog/spdlog.h>
 #include <utility>
 #include <vector>
-#include <spdlog/spdlog.h>
 
 ///
 /// A geomarking can have a section with the airport's
@@ -15,6 +18,9 @@
 /// followed by a maybe a calibration point??? - Not sure about this one
 ///
 class GeoMarkings {
+private:
+    float line_width = 1.0f;
+
 public:
     struct Line {
         Color color = YELLOW;
@@ -25,8 +31,10 @@ public:
         Line(Coordinate &c) : center_ref(c) {}
 
         void add_points(Coordinate cstart, Coordinate cend) {
-            this->start = cstart.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
-            this->end = cend.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+            this->start =
+                cstart.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
+            this->end =
+                cend.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
         }
     };
 
@@ -61,8 +69,14 @@ public:
 
     void draw() const {
         for (const auto &line : lines) {
-            DrawLineV(line.start, line.end, line.color);
+            DrawLineEx(line.start, line.end, this->line_width, line.color);
         }
+    }
+
+    void imgui_draw() {
+        ImGui::SliderFloat(
+            std::format("Line Width {}", this->header.airport_name).data(),
+            &line_width, 0.5f, 10.0f);
     }
 
     void set_header(Header &header) { this->header = header; }

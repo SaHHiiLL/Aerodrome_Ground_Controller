@@ -18,3 +18,20 @@ std::vector<std::string> Utils::split_whitespace(const std::string &str) {
 
     return result;
 }
+void Utils::StringTrim::trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
+void Utils::StringTrim::rtrim(std::string &s) {
+    s.erase(
+        std::ranges::find_if(s.rbegin(), s.rend(),
+                             [](unsigned char ch) { return !std::isspace(ch); })
+            .base(),
+        s.end());
+}
+void Utils::StringTrim::ltrim(std::string &s) {
+    s.erase(s.begin(),
+            std::ranges::find_if(s.begin(), s.end(), [](unsigned char ch) {
+                return !std::isspace(ch);
+            }));
+}

@@ -18,8 +18,7 @@ class LabelParser {
 
 public:
     LabelParser(std::string input, ColourManager &colors,
-                Coordinate &center_ref)
-        : input(input), lexer(input), colors(colors), center_ref(center_ref) { };
+                Coordinate &center_ref);
     LEXER_IMPL(TokenType)
     std::string input;
     Lexer lexer;

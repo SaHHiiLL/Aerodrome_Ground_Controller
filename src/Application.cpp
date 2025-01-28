@@ -60,7 +60,8 @@ Applicaiton::Applicaiton() {
     TraceLog(LOG_INFO, "ImGui with Docking Loaded");
 };
 
-static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC", "EGNX", "EGGW", "EGPF"};
+static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC",
+                                                "EGNX", "EGGW", "EGPF"};
 
 void Applicaiton::handle_input() const {
     const ImGuiIO &io = ImGui::GetIO();
@@ -80,30 +81,17 @@ void Applicaiton::draw_ui() {
     if (ImGui::Button("Apply")) {
         this->game = Game(&this->camera);
     }
-    ImGui::SliderFloat("Font Scale", &FONT_SCALE, 0.1, 50.0f);
-    for (const auto &airport : ALL_AIRPORTS) {
-        if (ImGui::Button(airport.data())) {
-            this->game.set_airport(airport);
-        }
-        ImGui::SameLine();
-    }
-    ImGui::NewLine();
+    ImGui::SliderFloat("Font Scale", &FONT_SCALE, 1.0f, 50.0f);
+    this->game.imgui_draw();
     ImGui::End();
 
-
-    // show a simple menu bar
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            if (ImGui::MenuItem("Quit")){}
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Window"))
-        {
-            if (ImGui::MenuItem("Demo Window")){}
-
+    if (ImGui::BeginMainMenuBar()) {
+        if (ImGui::BeginMenu("Airport")) {
+            for (const auto &airport : ALL_AIRPORTS) {
+                if (ImGui::MenuItem(airport.c_str())) {
+                    this->game.set_airport(airport);
+                }
+            }
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
@@ -128,4 +116,8 @@ void Applicaiton::run() {
         rlImGuiEnd();
         EndDrawing();
     }
+}
+Applicaiton::~Applicaiton() {
+    rlImGuiShutdown();
+    CloseWindow();
 }

@@ -24,6 +24,12 @@ void Airport::parse_basic_file(std::string input) {
         Coordinate(coords_str.front(), coords_str.back());
 }
 
+void Airport::imgui_draw() {
+    for (auto &g : this->markings) {
+        g.imgui_draw();
+    }
+}
+
 void Airport::draw() const {
     for (auto &polygon : this->polygons) {
         polygon.draw();

@@ -19,3 +19,7 @@ Image ResourceManager::get_airplane() const {
     Image img = LoadImage(path.c_str());
     return img;
 }
+ResourceManager &ResourceManager::instance() {
+    static ResourceManager Instance;
+    return Instance;
+}

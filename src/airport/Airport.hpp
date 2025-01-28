@@ -22,6 +22,7 @@ private:
 
 public:
     void draw() const;
+    void imgui_draw();
     Vector2 center_coord();
     Airport(std::string airport_icao_code, ColourManager &colors);
     ~Airport() = default;

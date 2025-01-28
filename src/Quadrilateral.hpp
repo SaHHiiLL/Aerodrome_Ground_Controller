@@ -14,7 +14,7 @@ class Quadrilateral {
     std::vector<Triangle> triangles;
 
 public:
-    std::vector<Triangle> triangle() { return this->triangles; }
+    std::vector<Triangle> triangle();
     Quadrilateral(std::array<Coordinate, 4> coords, Coordinate center_ref,
                   Color color);
 

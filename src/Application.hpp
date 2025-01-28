@@ -7,10 +7,7 @@ class Applicaiton {
 public:
     Applicaiton();
     void run();
-    ~Applicaiton() {
-        rlImGuiShutdown();
-        CloseWindow();
-    }
+    ~Applicaiton();
 
 private:
     void load_fonts();

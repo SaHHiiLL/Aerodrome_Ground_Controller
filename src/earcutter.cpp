@@ -107,3 +107,18 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
     out.emplace_back(ver.at(0), ver.at(1), ver.at(2));
     return out;
 }
+bool Triangle::is_point_inside(Vector2 p) const {
+    Vector2 a = this->x1;
+    Vector2 b = this->x2;
+    Vector2 c = this->x3;
+    float area = 0.5f * (-b.y * c.x + a.y * (-b.x + c.x) + a.x * (b.y - c.y) +
+                         b.x * c.y);
+    const float s =
+        1.f / (2.f * area) *
+        (a.y * c.x - a.x * c.y + (c.y - a.y) * p.x + (a.x - c.x) * p.y);
+    const float t =
+        1.f / (2.f * area) *
+        (a.x * b.y - a.y * b.x + (a.y - b.y) * p.x + (b.x - a.x) * p.y);
+
+    return s > 0.f && t > 0.f && (s + t) < 1.f;
+}

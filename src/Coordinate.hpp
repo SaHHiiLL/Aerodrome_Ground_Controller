@@ -7,16 +7,12 @@
 class Coordinate {
 public:
     Coordinate(std::string lateral, std::string longitude);
-    Coordinate(double longitude, double lateral)
-        : lateral(lateral), longitude(longitude) {};
+    Coordinate(double longitude, double lateral);
 
     // Creates a coord for "0, 0"
     Coordinate() = default;
 
-    std::string to_string() {
-        return "Coordinates(" + std::to_string(lateral) + ", " +
-               std::to_string(longitude) + ")";
-    }
+    std::string to_string();
 
     Vector2 geo_to_screen_by_refrence(Coordinate center_ref) const;
 
@@ -29,10 +25,10 @@ public:
     // N/S - Y
     double lat() { return this->lateral; }
 
-    void lat(double lat) { this->lateral = lat; }
-    void lat(std::string lat) { this->lateral = parse(lat); }
-    void lon(double log) { this->longitude = log; }
-    void lon(std::string log) { this->longitude = parse(log); }
+    void lat(double lat);
+    void lat(std::string lat);
+    void lon(double log);
+    void lon(std::string log);
 
     double parse(std::string s);
 

@@ -69,7 +69,8 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
     // Convert latitude and longitude to radians
     float x = static_cast<float>(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;
-    float y = static_cast<float>(this->lateral - center_ref.lat()) * EARTH_RADIUS_METERS;
+    float y = static_cast<float>(this->lateral - center_ref.lat()) *
+              EARTH_RADIUS_METERS;
 
     // Apply scaling and offset to fit within screen space
     x = x * scale + screen_center.x;
@@ -78,3 +79,18 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
 
     return {x, y};
 }
+std::string Coordinate::to_string() {
+    return "Coordinates(" + std::to_string(lateral) + ", " +
+           std::to_string(longitude) + ")";
+}
+
+void Coordinate::lat(double lat) { this->lateral = lat; }
+
+void Coordinate::lat(std::string lat) { this->lateral = parse(lat); }
+
+void Coordinate::lon(double log) { this->longitude = log; }
+
+void Coordinate::lon(std::string log) { this->longitude = parse(log); }
+
+Coordinate::Coordinate(double longitude, double lateral)
+    : lateral(lateral), longitude(longitude) {};

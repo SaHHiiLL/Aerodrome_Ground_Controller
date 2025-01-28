@@ -8,6 +8,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+void Game::imgui_draw() { this->airport->imgui_draw(); }
+
 void Game::draw() const { this->airport->draw(); }
 void Game::handle_input() const {
 

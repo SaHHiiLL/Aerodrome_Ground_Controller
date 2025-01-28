@@ -10,7 +10,5 @@ public:
     ColourManager() = default;
     ~ColourManager() = default;
     Color to_raylib(std::string key) { return GetColor(colours.at(key)); }
-    bool is_valid(const std::string &key) const {
-        return this->colours.contains(key);
-    }
+    bool is_valid(const std::string &key) const;
 };

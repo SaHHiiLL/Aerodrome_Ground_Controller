@@ -8,7 +8,8 @@
 
 GeoParser::GeoParser(const std::string &input, ColourManager &color_manager,
                      Coordinate &center_ref)
-    : input(input), lexer(input), color_manager(color_manager), center_ref(center_ref) {
+    : input(input), lexer(input), color_manager(color_manager),
+      center_ref(center_ref) {
     this->lexer = Lexer(input);
 }
 
@@ -126,7 +127,8 @@ GeoMarkings::Header GeoParser::parse_header() {
             if (coords.size() == 4) {
                 GeoMarkings::Line line(this->center_ref);
                 line.color = this->color_manager.to_raylib(tok->literal);
-                line.add_points(Coordinate(coords.at(0), coords.at(1)) , Coordinate(coords.at(2), coords.at(3)));
+                line.add_points(Coordinate(coords.at(0), coords.at(1)),
+                                Coordinate(coords.at(2), coords.at(3)));
                 current.add_line(line);
                 coords.clear();
             } else {

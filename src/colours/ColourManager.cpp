@@ -8,3 +8,6 @@ ColourManager::ColourManager(std::filesystem::path path) {
     ColourParser parser = ColourParser(res, this->colours);
     parser.parse();
 }
+bool ColourManager::is_valid(const std::string &key) const {
+    return this->colours.contains(key);
+}
