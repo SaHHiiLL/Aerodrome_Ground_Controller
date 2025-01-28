@@ -16,17 +16,13 @@ void Game::handle_input() const {
     // Translate based on mouse right click
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
         Vector2 delta = GetMouseDelta();
+        // move with rotation
         delta = Vector2Scale(delta, -1.0f / camera->zoom);
         camera->target = Vector2Add(camera->target, delta);
     }
 
     // reset the view
     if (IsKeyPressed(KEY_R)) {
-        this->camera->target = this->airport->center_coord();
-        this->camera->zoom = 1;
-        this->camera->offset = Vector2{0, 0};
-    }
-    if (IsKeyPressed(KEY_T)) {
         this->camera->target = Vector2{0, 0};
         this->camera->zoom = 1;
         this->camera->offset = Vector2{0, 0};

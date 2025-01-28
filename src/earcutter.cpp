@@ -122,3 +122,15 @@ bool Triangle::is_point_inside(Vector2 p) const {
 
     return s > 0.f && t > 0.f && (s + t) < 1.f;
 }
+void Triangle::draw_outline() const {
+    DrawLineV(this->x1, this->x2, RAYWHITE);
+    DrawLineV(this->x2, this->x3, RAYWHITE);
+    DrawLineV(this->x3, this->x1, RAYWHITE);
+}
+
+void Triangle::draw(Color color) const { DrawTriangle(x1, x2, x3, color); }
+
+void Triangle::draw() const { DrawTriangle(x1, x2, x3, GREEN); }
+
+Triangle::Triangle(const Vector2 prev, const Vector2 curr, const Vector2 next)
+    : x1(prev), x2(curr), x3(next) {}

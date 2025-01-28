@@ -82,6 +82,7 @@ void Applicaiton::draw_ui() {
         this->game = Game(&this->camera);
     }
     ImGui::SliderFloat("Font Scale", &FONT_SCALE, 1.0f, 50.0f);
+    ImGui::SliderFloat("Camera Rotation", &this->camera.rotation, 0, 360.0f);
     this->game.imgui_draw();
     ImGui::End();
 
