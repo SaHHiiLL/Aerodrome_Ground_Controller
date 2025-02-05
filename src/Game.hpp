@@ -17,6 +17,7 @@ private:
 
 public:
     Game(Camera2D *cam);
+    Game(Camera2D *cam, std::string airport_name);
     Game() = default;
 
     void update();

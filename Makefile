@@ -39,10 +39,9 @@ debug: $(CPP_FILES) $(HPP_FILES)
 		$(MAKE) download_spdlogs; 			\
 	fi										
 	$(MAKE) target_debug
-	cmake -S $(PROJECT_ROOT_DIR) -B debug
-	cmake -DCMAKE_BUILD_TYPE=Debug debug
+	cmake -S $(PROJECT_ROOT_DIR) -B debug -DENABLE_DEBUG=ON -DCMAKE_BUILD_TYPE=Debug 
 	## Call the make file inside 
-	cmake --build $(TARGET) -j10
+	cmake --build debug/ -j10
 
 main: $(CPP_FILES)
 	$(BUILD_CMD)
@@ -59,6 +58,7 @@ target_debug:
 clean:
 	rm -rf $(TARGET)
 	rm -rf $(LIBS)
+
 
 download_raylib: lib_dir
 	@echo "[+]INFO: Downloading Raylib..."

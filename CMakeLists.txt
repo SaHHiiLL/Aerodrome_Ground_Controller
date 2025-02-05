@@ -3,6 +3,8 @@ set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 set(CMAKE_CXX_STANDARD 23)
 project(Aerodrome_Ground_Controller)
 
+option(ENABLE_DEBUG "Enable debug mode" OFF)
+
 # setting raylib path
 set(RAYLIB_DIR libs/raylib/)
 set(DELAUNATOR libs/delaunator/)
@@ -40,6 +42,10 @@ add_executable(
   Aerodrome_Ground_Controller
   # external Libs #
   ${TRI_CXX_SRC} ${SRC})
+
+if(ENABLE_DEBUG)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG)
+endif()
 
 target_link_libraries(${PROJECT_NAME} ${RAYLIB_LIBRARY} ${IMGUI_LIBRARY}
                       spdlog::spdlog_header_only)

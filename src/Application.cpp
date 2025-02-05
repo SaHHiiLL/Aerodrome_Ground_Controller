@@ -36,7 +36,7 @@ static void custom_loggin(int log_level, const char *msg, va_list args) {
     }
 }
 
-Applicaiton::Applicaiton() {
+Application::Application() {
     SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_WINDOW_TOPMOST |
                    FLAG_MSAA_4X_HINT);
     SetTraceLogCallback(custom_loggin);
@@ -60,10 +60,10 @@ Applicaiton::Applicaiton() {
     TraceLog(LOG_INFO, "ImGui with Docking Loaded");
 };
 
-static std::vector<std::string> ALL_AIRPORTS = {"EGLL", "EGPH", "EGCC", "EGLC",
-                                                "EGNX", "EGGW", "EGPF"};
+static inline const std::vector<std::string> ALL_AIRPORTS = {
+    "EGLL", "EGPH", "EGCC", "EGLC", "EGNX", "EGGW", "EGPF", "EGKK", "EGSS"};
 
-void Applicaiton::handle_input() const {
+void Application::handle_input() const {
     const ImGuiIO &io = ImGui::GetIO();
     (void)io;
     if (io.WantCaptureMouse) {
@@ -73,13 +73,13 @@ void Applicaiton::handle_input() const {
     game.handle_input();
 }
 
-void Applicaiton::draw_ui() {
+void Application::draw_ui() {
     // Imgui goes here
     ImGui::Begin("Debug Menu");
     ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
     ImGui::SameLine();
     if (ImGui::Button("Apply")) {
-        this->game = Game(&this->camera);
+        this->game = Game(&this->camera, this->current_airport);
     }
     ImGui::SliderFloat("Font Scale", &FONT_SCALE, 1.0f, 50.0f);
     ImGui::SliderFloat("Camera Rotation", &this->camera.rotation, 0, 360.0f);
@@ -88,9 +88,10 @@ void Applicaiton::draw_ui() {
 
     if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("Airport")) {
-            for (const auto &airport : ALL_AIRPORTS) {
+            for (const std::string &airport : ALL_AIRPORTS) {
                 if (ImGui::MenuItem(airport.c_str())) {
-                    this->game.set_airport(airport);
+                    this->current_airport = airport;
+                    this->game.set_airport(this->current_airport);
                 }
             }
             ImGui::EndMenu();
@@ -99,7 +100,7 @@ void Applicaiton::draw_ui() {
     }
 }
 
-void Applicaiton::run() {
+void Application::run() {
     TraceLog(LOG_INFO, "Entering Main Game Loop");
     while (!WindowShouldClose() && !this->quit) {
         this->handle_input();
@@ -118,7 +119,7 @@ void Applicaiton::run() {
         EndDrawing();
     }
 }
-Applicaiton::~Applicaiton() {
+Application::~Application() {
     rlImGuiShutdown();
     CloseWindow();
 }

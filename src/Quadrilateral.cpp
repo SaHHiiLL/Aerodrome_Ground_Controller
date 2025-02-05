@@ -67,4 +67,6 @@ void Quadrilateral::draw() {
                      this->verties[i + 2], this->color);
     }
 }
-std::vector<Triangle> Quadrilateral::triangle() { return this->triangles; }
+std::vector<Triangle> Quadrilateral::triangle() {
+    return std::move(this->triangles);
+}

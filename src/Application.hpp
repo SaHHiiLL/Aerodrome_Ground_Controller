@@ -1,13 +1,12 @@
 #pragma once
 #include "Game.hpp"
 #include "raylib.h"
-#include "rlImGui.h"
 
-class Applicaiton {
+class Application {
 public:
-    Applicaiton();
+    Application();
     void run();
-    ~Applicaiton();
+    ~Application();
 
 private:
     void load_fonts();
@@ -26,6 +25,6 @@ private:
     const float screen_width = GetScreenWidth();
     const int fps = 60;
     bool imgui_dark_theme = true;
-
     bool quit = false;
+    std::string current_airport = "EGPH";
 };

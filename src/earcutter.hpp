@@ -16,6 +16,8 @@ public:
     bool is_point_inside(Vector2 p) const;
 
     Triangle(const Vector2 prev, const Vector2 curr, const Vector2 next);
+    Triangle(const float x1, const float y1, const float x2, const float y2,
+             const float x3, const float y3);
     // TODO: this works for current set of points - However, some might present
     // themselves as clockwise - I must sort them aswell
     void draw() const;

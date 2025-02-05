@@ -1,8 +1,13 @@
 #include "./earcutter.hpp"
 #include "raylib.h"
+#ifdef DEBUG
+#include <chrono>
+#endif
+#include <cstddef>
 #include <raymath.h>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
+#include <sys/types.h>
 
 // Retuns true if a given angle `curr` is convex releative to `next` and `prev`
 bool EarCut::is_convex(Vector2 prev, Vector2 curr, Vector2 next) {
@@ -11,7 +16,6 @@ bool EarCut::is_convex(Vector2 prev, Vector2 curr, Vector2 next) {
     return crossproduct(curr_to_prev, curr_to_next) > 0;
 }
 
-//
 // Returns the cross product for prev -> curr -> next
 // in counter clock-wise
 float EarCut::crossproduct(Vector2 a, Vector2 b) {
@@ -30,6 +34,7 @@ static bool check_colinearpoints(Vector2 q, Vector2 w, Vector2 e) {
 
     return (n - b) * (x - m) == (y - n) * (m - a);
 }
+
 // TODO: Does not check if an edge is self-intersecting
 std::vector<Triangle>
 EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
@@ -45,8 +50,10 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
     for (size_t i = 2; i < polygon_vertices.size(); i++) {
         if (check_colinearpoints(polygon_vertices[j], polygon_vertices[k],
                                  polygon_vertices[i])) {
-            throw std::invalid_argument(
-                "Polygon must not have co linear vertices");
+            // throw std::invalid_argument(
+            //     "Polygon must not have co linear vertices");
+            spdlog::warn("Polygon must not have co linear vertices, skipping");
+            return {};
         }
         j++;
         k++;
@@ -59,6 +66,10 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
     out.reserve(max_out_size);
     size_t indexCount = polygon_vertices.size();
 
+#ifdef DEBUG
+    auto start = std::chrono::system_clock::now();
+#endif
+
     // Do this process until we have the last three index
     while (indexCount > 3) {
         for (size_t i = 0; i < indexCount; i++) {
@@ -68,11 +79,20 @@ EarCut::earcut(const std::vector<Vector2> &polygon_vertices) {
             Vector2 next = ver.at(next_idx);
             Vector2 curr = ver.at(i);
 
+#ifdef DEBUG
+            auto end = std::chrono::system_clock::now();
+            std::chrono::duration<double> elapsed_seconds = end - start;
+            if (elapsed_seconds.count() > 2) {
+                spdlog::warn("Time exceeded for earcut");
+                return {};
+            }
+#endif
+
             if (!is_convex(prev, curr, next)) {
                 continue;
             }
 
-            // Can successful make a triangle;
+            // Can successfully make a triangle;
             Triangle t(prev, next, curr);
             bool is_inside = false;
 
@@ -111,8 +131,8 @@ bool Triangle::is_point_inside(Vector2 p) const {
     Vector2 a = this->x1;
     Vector2 b = this->x2;
     Vector2 c = this->x3;
-    float area = 0.5f * (-b.y * c.x + a.y * (-b.x + c.x) + a.x * (b.y - c.y) +
-                         b.x * c.y);
+    const float area = 0.5f * (-b.y * c.x + a.y * (-b.x + c.x) +
+                               a.x * (b.y - c.y) + b.x * c.y);
     const float s =
         1.f / (2.f * area) *
         (a.y * c.x - a.x * c.y + (c.y - a.y) * p.x + (a.x - c.x) * p.y);
@@ -134,3 +154,9 @@ void Triangle::draw() const { DrawTriangle(x1, x2, x3, GREEN); }
 
 Triangle::Triangle(const Vector2 prev, const Vector2 curr, const Vector2 next)
     : x1(prev), x2(curr), x3(next) {}
+Triangle::Triangle(const float x1, const float y1, const float x2,
+                   const float y2, const float x3, const float y3) {
+    this->x1 = {.x = x1, .y = y1};
+    this->x2 = {.x = x2, .y = y2};
+    this->x3 = {.x = x3, .y = y3};
+};

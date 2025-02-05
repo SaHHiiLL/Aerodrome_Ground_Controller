@@ -4,7 +4,6 @@
 #include "../Coordinate.hpp"
 #include "imgui.h"
 #include "raylib.h"
-#include <fmt/color.h>
 #include <format>
 #include <optional>
 #include <spdlog/spdlog.h>
@@ -28,7 +27,8 @@ public:
         Vector2 end;
         Coordinate &center_ref;
 
-        Line(Coordinate &c) : center_ref(c) {}
+        Line(Coordinate &c) : center_ref(c) {
+        }
 
         void add_points(Coordinate cstart, Coordinate cend) {
             this->start =
@@ -45,8 +45,8 @@ public:
         std::optional<std::string> area_name;
 
         // Constructor to initialize the Header
-        Header(const std::string name, const std::string icao,
-               std::optional<std::string> area = std::nullopt)
+        Header(const std::string &name, const std::string &icao,
+               const std::optional<std::string> &area = std::nullopt)
             : airport_name(name), airport_icao_code(icao), area_name(area) {}
 
         Header() = default;
@@ -63,9 +63,9 @@ public:
                            Coordinate("S999.00.00.000", "E999.00.00.000"));
     };
 
-    explicit GeoMarkings(Coordinate center_ref) : center_ref(center_ref) {};
+    explicit GeoMarkings(const Coordinate center_ref) : center_ref(center_ref) {};
 
-    void add_line(Line line) { this->lines.push_back(line); }
+    void add_line(const Line &line) { this->lines.push_back(line); }
 
     void draw() const {
         for (const auto &line : lines) {
@@ -79,8 +79,8 @@ public:
             &line_width, 0.5f, 10.0f);
     }
 
-    void set_header(Header &header) { this->header = header; }
-    void set_center_ref(Coordinate center_ref) {
+    void set_header(const Header &header) { this->header = header; }
+    void set_center_ref(const Coordinate center_ref) {
         this->center_ref = center_ref;
     }
 
