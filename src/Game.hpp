@@ -1,19 +1,19 @@
-//
-// Created by Sahil on 9/18/24.
-//
-
 #pragma once
 
+#include "Aircraft/Aircraft.hpp"
 #include "airport/Airport.hpp"
 #include "colours/ColourManager.hpp"
 #include <raylib.h>
 
 class Game {
 private:
+    float last_time = GetTime();
+
     Camera2D *camera;
     // Heap allocated colours;
     ColourManager colours;
     Airport *airport;
+    std::vector<Aircraft> aircrafts;
 
 public:
     Game(Camera2D *cam);

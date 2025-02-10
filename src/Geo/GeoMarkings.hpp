@@ -27,8 +27,7 @@ public:
         Vector2 end;
         Coordinate &center_ref;
 
-        Line(Coordinate &c) : center_ref(c) {
-        }
+        Line(Coordinate &c) : center_ref(c) {}
 
         void add_points(Coordinate cstart, Coordinate cend) {
             this->start =
@@ -63,7 +62,8 @@ public:
                            Coordinate("S999.00.00.000", "E999.00.00.000"));
     };
 
-    explicit GeoMarkings(const Coordinate center_ref) : center_ref(center_ref) {};
+    explicit GeoMarkings(const Coordinate center_ref)
+        : center_ref(center_ref) {};
 
     void add_line(const Line &line) { this->lines.push_back(line); }
 

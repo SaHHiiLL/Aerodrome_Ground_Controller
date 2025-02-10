@@ -3,14 +3,26 @@
 //
 
 #include "Game.hpp"
+#include "Aircraft/Aircraft.hpp"
 #include "airport/Airport.hpp"
 #include <filesystem>
 #include <raylib.h>
 #include <raymath.h>
 
-void Game::imgui_draw() { this->airport->imgui_draw(); }
+void Game::imgui_draw() {
+    this->airport->imgui_draw();
+    for (auto &ac : this->aircrafts) {
+        ac.draw_imgui();
+    }
+}
 
-void Game::draw() const { this->airport->draw(); }
+void Game::draw() const {
+    this->airport->draw();
+
+    for (const auto &ac : this->aircrafts) {
+        ac.draw();
+    }
+}
 void Game::handle_input() const {
 
     // Translate based on mouse right click
@@ -42,11 +54,18 @@ void Game::handle_input() const {
     }
 }
 
-void Game::update() {}
+void Game::update() {
+    float delta_time = GetFrameTime();
+    for (auto &ac : this->aircrafts) {
+        ac.update(delta_time);
+    }
+}
 
 Game::Game(Camera2D *cam)
     : camera(cam), colours(ColourManager(std::filesystem::path(
-                       "./resource/UK-Sector-File/Colours.txt"))) {
+                       "./resource/UK-Sector-File/Colours.txt"))),
+      airport(nullptr) {
+    this->aircrafts.push_back(Aircraft({100, 100}, {500, 1000}));
     this->airport = new Airport("EGPH", this->colours);
 }
 
@@ -58,5 +77,7 @@ Game::Game(Camera2D *cam, std::string airport_name)
     : camera(cam), colours(ColourManager(std::filesystem::path(
                        "./resource/UK-Sector-File/Colours.txt"))),
       airport(nullptr) {
+
+    this->aircrafts.push_back(Aircraft({100, 100}, {500, 1000}));
     this->airport = new Airport(airport_name, this->colours);
 };

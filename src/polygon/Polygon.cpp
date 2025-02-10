@@ -4,7 +4,6 @@
 #include "../Coordinate.hpp"
 #include "../Quadrilateral.hpp"
 #include "../earcutter.hpp"
-#include "../sweepline.hpp"
 
 #include "raylib.h"
 #include <vector>

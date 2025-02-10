@@ -61,7 +61,7 @@ Application::Application() {
 };
 
 static inline const std::vector<std::string> ALL_AIRPORTS = {
-    "EGLL", "EGPH", "EGCC", "EGLC", "EGNX", "EGGW", "EGPF", "EGKK", "EGSS"};
+    "EGLL", "EGPH", "EGCC", "EGLC", "EGNX", "EGGW", "EGPF"};
 
 void Application::handle_input() const {
     const ImGuiIO &io = ImGui::GetIO();
@@ -74,8 +74,11 @@ void Application::handle_input() const {
 }
 
 void Application::draw_ui() {
-    // Imgui goes here
+// Imgui goes here
+#ifdef DEBUG
     ImGui::Begin("Debug Menu");
+
+    ImGui::Text("FPS: %d", GetFPS());
     ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
     ImGui::SameLine();
     if (ImGui::Button("Apply")) {
@@ -85,6 +88,7 @@ void Application::draw_ui() {
     ImGui::SliderFloat("Camera Rotation", &this->camera.rotation, 0, 360.0f);
     this->game.imgui_draw();
     ImGui::End();
+#endif
 
     if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("Airport")) {

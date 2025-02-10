@@ -15,7 +15,8 @@ void ResourceManager::set_resource_dir_path(std::filesystem::path path) {
 }
 
 Image ResourceManager::get_airplane() const {
-    std::string path(resource_dir / "images/airplane-logo-png_seeklogo.png");
+    std::string path(this->resource_dir /
+                     "images/airplane-logo-png_seeklogo.png");
     Image img = LoadImage(path.c_str());
     return img;
 }
