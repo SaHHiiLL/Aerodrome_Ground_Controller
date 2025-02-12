@@ -83,18 +83,19 @@ std::string Coordinate::to_string() {
            std::to_string(longitude) + ")";
 }
 
-flaot Coordinate::get_distance_m(Coordinate &other) {
+double Coordinate::get_distance_m(Coordinate &other) {
     double d_lat = (other.lat() - this->lat()) * DEG2RAD;
     double d_lon = (other.lon() - this->lon()) * DEG2RAD;
 
     double lat1 = this->lat_degree();
     double lat2 = other.lat_degree();
 
-    auto a = (sin(d_lat / 2) * sin(d_lat / 2)) +
-             (sin(d_lon / 2) * sin(d_lon / 2) * cos(lat1) * cos(lat2));
+    double a = (std::sin(d_lat / 2) * std::sin(d_lat / 2)) +
+               (std::sin(d_lon / 2) * std::sin(d_lon / 2) * std::cos(lat1) *
+                std::cos(lat2));
 
-    auto c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return (6371 * c) * 1000;
+    return EARTH_RADIUS_METERS *
+           (2 * std::atan2(std::sqrt(a), std::sqrt(1 - a)));
 }
 
 double Coordinate::lat_degree() { return this->lat() * DEG_2_RAD; }
