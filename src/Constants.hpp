@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -14,6 +15,7 @@ inline const std::filesystem::path LABELS_FILE(SMR_DIR / "Labels.txt");
 inline const std::filesystem::path GEO_FILE(SMR_DIR / "Geo.txt");
 
 inline const float EARTH_RADIUS_METERS = 6378137.0f;
+inline constexpr float DEG_2_RAD = M_PI / 180;
 inline float DRAW_SCALE = 0.013;
 inline float FONT_SCALE = 1;
 

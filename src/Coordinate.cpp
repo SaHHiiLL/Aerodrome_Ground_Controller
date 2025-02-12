@@ -56,7 +56,6 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref) const {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, SCREEN_CENTER);
 }
 
-// Function to convert latitude and longitude to 2D screen coordinates
 Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
                                               Vector2 screen_center) const {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, screen_center);
@@ -68,7 +67,7 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
                                               Vector2 screen_center) const {
     // Convert latitude and longitude to radians
     float x = static_cast<float>(this->longitude - center_ref.lon()) *
-              cos(center_ref.lat() * (M_PI / 180.0)) * EARTH_RADIUS_METERS;
+              cos(center_ref.lat() * (DEG_2_RAD)) * EARTH_RADIUS_METERS;
     float y = static_cast<float>(this->lateral - center_ref.lat()) *
               EARTH_RADIUS_METERS;
 
@@ -84,6 +83,23 @@ std::string Coordinate::to_string() {
            std::to_string(longitude) + ")";
 }
 
+flaot Coordinate::get_distance_m(Coordinate &other) {
+    double d_lat = (other.lat() - this->lat()) * DEG2RAD;
+    double d_lon = (other.lon() - this->lon()) * DEG2RAD;
+
+    double lat1 = this->lat_degree();
+    double lat2 = other.lat_degree();
+
+    auto a = (sin(d_lat / 2) * sin(d_lat / 2)) +
+             (sin(d_lon / 2) * sin(d_lon / 2) * cos(lat1) * cos(lat2));
+
+    auto c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return (6371 * c) * 1000;
+}
+
+double Coordinate::lat_degree() { return this->lat() * DEG_2_RAD; }
+double Coordinate::lon_degree() { return this->lon() * DEG_2_RAD; }
+
 void Coordinate::lat(double lat) { this->lateral = lat; }
 
 void Coordinate::lat(std::string lat) { this->lateral = parse(lat); }
@@ -92,5 +108,5 @@ void Coordinate::lon(double log) { this->longitude = log; }
 
 void Coordinate::lon(std::string log) { this->longitude = parse(log); }
 
-Coordinate::Coordinate(double longitude, double lateral)
+Coordinate::Coordinate(double lateral, double longitude)
     : lateral(lateral), longitude(longitude) {};

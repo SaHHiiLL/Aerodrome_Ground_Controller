@@ -7,7 +7,7 @@
 class Coordinate {
 public:
     Coordinate(std::string lateral, std::string longitude);
-    Coordinate(double longitude, double lateral);
+    Coordinate(double lateral, double longitude);
 
     // Creates a coord for "0, 0"
     Coordinate() = default;
@@ -31,6 +31,11 @@ public:
     void lon(std::string log);
 
     double parse(std::string s);
+
+    double get_distance_m(Coordinate &other);
+
+    double lat_degree();
+    double lon_degree();
 
 private:
     double lateral;
