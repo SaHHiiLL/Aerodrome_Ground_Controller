@@ -20,4 +20,5 @@ private:
     Vector2 curr_pos;
     float speed = 1.0f;
     Vector2 size = {10, 10};
+    float last_distance;
 };
