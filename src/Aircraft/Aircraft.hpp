@@ -7,10 +7,7 @@ public:
     void update(const float &delta_time);
     void draw() const;
     void draw_imgui();
-
-#ifdef DEBUG
     Aircraft(const Vector2 start_pos, const Vector2 end_pos);
-#endif
 
 private:
     float move_speed;

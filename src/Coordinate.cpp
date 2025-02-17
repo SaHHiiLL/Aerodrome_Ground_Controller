@@ -78,6 +78,9 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
 
     return {x, y};
 }
+
+Coordinate from_vector2(Vector2 v) {}
+
 std::string Coordinate::to_string() {
     return "Coordinates(" + std::to_string(lateral) + ", " +
            std::to_string(longitude) + ")";
