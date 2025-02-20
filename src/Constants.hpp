@@ -14,10 +14,15 @@ inline const std::filesystem::path REGIONS_FILE(SMR_DIR / "Regions.txt");
 inline const std::filesystem::path LABELS_FILE(SMR_DIR / "Labels.txt");
 inline const std::filesystem::path GEO_FILE(SMR_DIR / "Geo.txt");
 
-inline const float EARTH_RADIUS_METERS = 6378137.0f;
-inline constexpr float DEG_2_RAD = M_PI / 180;
-inline float DRAW_SCALE = 0.013;
 inline float FONT_SCALE = 1;
+inline constexpr float EARTH_RADIUS_METERS = 6378137.0f;
+inline constexpr float DEG_2_RAD = M_PI / 180;
+inline constexpr float DRAW_SCALE = 0.013;
+
+inline constexpr float AIRCRAFT_SPEED_KNOTS = 20;
+inline constexpr float KNOTS_TO_METERS_PER_SECOND = 0.51444f;
+inline constexpr float AIRCRAFT_SPEED_PIXEL_PER_SECOND =
+    (AIRCRAFT_SPEED_KNOTS * KNOTS_TO_METERS_PER_SECOND);
 
 inline Vector2 SCREEN_CENTER;
 

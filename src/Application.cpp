@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdarg>
 #include <cstdio>
+#include <format>
 
 static void custom_loggin(int log_level, const char *msg, va_list args) {
     char buffer[1024];
@@ -77,15 +78,12 @@ void Application::draw_ui() {
 // Imgui goes here
 #ifdef DEBUG
     ImGui::Begin("Debug Menu");
-
     ImGui::Text("FPS: %d", GetFPS());
-    ImGui::SliderFloat("Draw Scale", &DRAW_SCALE, 0.01, 1.0f);
-    ImGui::SameLine();
-    if (ImGui::Button("Apply")) {
-        this->game = Game(&this->camera, this->current_airport);
-    }
     ImGui::SliderFloat("Font Scale", &FONT_SCALE, 1.0f, 50.0f);
     ImGui::SliderFloat("Camera Rotation", &this->camera.rotation, 0, 360.0f);
+    ImGui::Text(
+        "%s",
+        std::format("Pixel Speed {}", AIRCRAFT_SPEED_PIXEL_PER_SECOND).c_str());
     this->game.imgui_draw();
     ImGui::End();
 #endif

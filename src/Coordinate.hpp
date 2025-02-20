@@ -4,6 +4,7 @@
 #include <string>
 
 // Represents Coordinates from the real world
+// https://medium.com/@suverov.dmitriy/how-to-convert-latitude-and-longitude-coordinates-into-pixel-offsets-8461093cb9f5
 class Coordinate {
 public:
     Coordinate(std::string lateral, std::string longitude);

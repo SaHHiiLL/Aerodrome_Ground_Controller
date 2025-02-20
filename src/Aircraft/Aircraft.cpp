@@ -1,4 +1,5 @@
 #include "./Aircraft.hpp"
+#include "../Constants.hpp"
 #include "imgui.h"
 #include "raylib.h"
 #include "raymath.h"
@@ -12,8 +13,9 @@ Aircraft::Aircraft(const Vector2 start_pos, const Vector2 end_pos)
 void Aircraft::draw() const { DrawCircleV(this->curr_pos, 10, WHITE); }
 
 void Aircraft::update(const float &delta_time) {
-    this->curr_pos = Vector2MoveTowards(this->curr_pos, this->end_pos,
-                                        this->move_speed * delta_time);
+    this->curr_pos =
+        Vector2MoveTowards(this->curr_pos, this->end_pos,
+                           AIRCRAFT_SPEED_PIXEL_PER_SECOND * delta_time);
 }
 
 void Aircraft::draw_imgui() {
