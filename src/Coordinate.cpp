@@ -80,8 +80,8 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
 }
 
 std::string Coordinate::to_string() {
-    return "Coordinates(" + std::to_string(lateral) + ", " +
-           std::to_string(longitude) + ")";
+    return "Coordinates(" + std::format("{}", lateral) + ", " +
+           std::format("{}", longitude) + ")";
 }
 
 double Coordinate::get_distance_m(Coordinate &other) {
@@ -112,3 +112,6 @@ void Coordinate::lon(std::string log) { this->longitude = parse(log); }
 
 Coordinate::Coordinate(double lateral, double longitude)
     : lateral(lateral), longitude(longitude) {};
+double Coordinate::lon() { return this->longitude; }
+
+double Coordinate::lat() { return this->lateral; }

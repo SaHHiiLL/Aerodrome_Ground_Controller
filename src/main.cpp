@@ -1,5 +1,7 @@
 #include "Application.hpp"
+#include "Coordinate.hpp"
 #include "spdlog/spdlog.h"
+#include <ostream>
 
 int main() {
 #ifdef DEBUG

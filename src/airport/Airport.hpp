@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "../Geo/GeoMarkings.hpp"
 #include "../colours/ColourManager.hpp"
@@ -21,7 +20,7 @@ private:
     void parse_basic_file(std::string input);
 
 public:
-    void draw() const;
+    void draw(const Camera2D &cam) const;
     void imgui_draw();
     Vector2 center_coord();
     Airport(std::string airport_icao_code, ColourManager &colors);

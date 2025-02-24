@@ -5,6 +5,7 @@
 #include "../Utils.hpp"
 #include "../labels/LabelParser.hpp"
 #include "../polygon/PolygonParser.hpp"
+#include "raylib.h"
 #include <filesystem>
 #include <ranges>
 #include <spdlog/spdlog.h>
@@ -30,13 +31,13 @@ void Airport::imgui_draw() {
     }
 }
 
-void Airport::draw() const {
+void Airport::draw(const Camera2D &cam) const {
     for (auto &polygon : this->polygons) {
         polygon.draw();
     }
 
     for (auto &l : this->airport_label) {
-        l.draw();
+        l.draw(cam);
     }
 
     for (auto &g : this->markings) {

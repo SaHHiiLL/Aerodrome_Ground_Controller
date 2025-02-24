@@ -17,7 +17,7 @@ void Game::imgui_draw() {
 }
 
 void Game::draw() const {
-    this->airport->draw();
+    this->airport->draw(*this->camera);
 
     for (const auto &ac : this->aircrafts) {
         ac.draw();

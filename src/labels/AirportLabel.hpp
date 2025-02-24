@@ -1,7 +1,4 @@
 #pragma once
-#include <utility>
-
-#include "../Constants.hpp"
 #include "../Coordinate.hpp"
 #include "raylib.h"
 
@@ -15,16 +12,6 @@ class AirportLabel {
 public:
     AirportLabel() = default;
     AirportLabel(std::string data, Coordinate coords, Coordinate center_ref,
-                 const Color color)
-        : data(std::move(data)), coords(coords), color(color),
-          world_center_ref(center_ref) {
-
-        this->position =
-            coords.geo_to_screen_by_refrence(world_center_ref, SCREEN_CENTER);
-    }
-    void draw() const {
-        const Font *font = get_font();
-        DrawTextEx(*font, this->data.c_str(), this->position, 12 * FONT_SCALE,
-                   0, this->color);
-    }
+                 const Color color);
+    void draw(const Camera2D &cam) const;
 };

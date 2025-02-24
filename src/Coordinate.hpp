@@ -22,9 +22,9 @@ public:
     Vector2 geo_to_screen_by_refrence(Coordinate center_ref, float scale,
                                       Vector2 screen_center) const;
     // W/E - X
-    double lon() { return this->longitude; }
+    double lon();
     // N/S - Y
-    double lat() { return this->lateral; }
+    double lat();
 
     void lat(double lat);
     void lat(std::string lat);
