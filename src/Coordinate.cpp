@@ -52,20 +52,17 @@ Coordinate::Coordinate(std::string lateral, std::string longitude) {
     this->longitude = parse(longitude);
 }
 
-Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref) const {
+Vec2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref) const {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, SCREEN_CENTER);
 }
 
-Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
-                                              Vector2 screen_center) const {
+Vec2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
+                                           Vector2 screen_center) const {
     return geo_to_screen_by_refrence(center_ref, DRAW_SCALE, screen_center);
 }
 
-// Function to convert latitude and longitude to 2D screen coordinates
-Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
-                                              float scale,
-                                              Vector2 screen_center) const {
-    // Convert latitude and longitude to radians
+Vec2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref, float scale,
+                                           Vector2 screen_center) const {
     float x = static_cast<float>(this->longitude - center_ref.lon()) *
               cos(center_ref.lat() * (DEG_2_RAD)) * EARTH_RADIUS_METERS;
     float y = static_cast<float>(this->lateral - center_ref.lat()) *
@@ -73,15 +70,14 @@ Vector2 Coordinate::geo_to_screen_by_refrence(Coordinate center_ref,
 
     // Apply scaling and offset to fit within screen space
     x = x * scale + screen_center.x;
-    y = -y * scale +
-        screen_center.y; // Inverting y because screen y is downwards
+    // Inverting y because screen y is downwards
+    y = -y * scale + screen_center.y;
 
     return {x, y};
 }
 
 std::string Coordinate::to_string() {
-    return "Coordinates(" + std::format("{}", lateral) + ", " +
-           std::format("{}", longitude) + ")";
+    return std::format("Coordinate({}, {})", lateral, longitude);
 }
 
 double Coordinate::get_distance_m(Coordinate &other) {

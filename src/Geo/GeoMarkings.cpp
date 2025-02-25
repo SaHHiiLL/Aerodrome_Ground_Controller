@@ -1,4 +1,8 @@
 #include "./GeoMarkings.hpp"
+#include "../Constants.hpp"
+#include "imgui.h"
+#include <format>
+
 void GeoMarkings::Line::add_points(Coordinate cstart, Coordinate cend) {
     this->start = cstart.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
     this->end = cend.geo_to_screen_by_refrence(center_ref, SCREEN_CENTER);
@@ -8,12 +12,8 @@ GeoMarkings::Header::Header(const std::string &name, const std::string &icao,
                             const std::optional<std::string> &area)
     : airport_name(name), airport_icao_code(icao), area_name(area) {}
 
-GeoMarkings::Header &GeoMarkings::Header::operator=(const Header &other) {
-    this->airport_name = other.airport_name;
-    this->airport_icao_code = other.airport_icao_code;
-    this->area_name = other.area_name;
-    return *this;
-}
+GeoMarkings::Header &
+GeoMarkings::Header::operator=(const Header &other) = default;
 
 GeoMarkings::GeoMarkings(const Coordinate center_ref)
     : center_ref(center_ref) {};

@@ -1,10 +1,7 @@
 #pragma once
 
-#include "../Constants.hpp"
 #include "../Coordinate.hpp"
-#include "imgui.h"
 #include "raylib.h"
-#include <format>
 #include <optional>
 #include <spdlog/spdlog.h>
 #include <utility>
@@ -16,6 +13,10 @@
 /// followed by an optioanl `area_name`
 /// followed by a maybe a calibration point??? - Not sure about this one
 ///
+
+static std::pair<Coordinate, Coordinate> CALIBRATION_POINT =
+    std::make_pair(Coordinate("S999.00.00.000", "E999.00.00.000"),
+                   Coordinate("S999.00.00.000", "E999.00.00.000"));
 class GeoMarkings {
 private:
     float line_width = 1.0f;
@@ -45,10 +46,6 @@ public:
         Header() = default;
 
         Header &operator=(const Header &other);
-
-        const std::pair<Coordinate, Coordinate> calibration_point =
-            std::make_pair(Coordinate("S999.00.00.000", "E999.00.00.000"),
-                           Coordinate("S999.00.00.000", "E999.00.00.000"));
     };
 
     explicit GeoMarkings(const Coordinate center_ref);

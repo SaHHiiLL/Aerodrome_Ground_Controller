@@ -55,3 +55,10 @@ void Polygon::draw() const {
         DrawTriangle(triangle.x1, triangle.x2, triangle.x3, this->color);
     }
 }
+void Polygon::set_color(const Color color) { this->color = color; }
+
+bool Polygon::is_empty() const { return this->coordinates.empty(); }
+
+size_t Polygon::size() const { return this->coordinates.size(); }
+
+std::vector<Coordinate> &Polygon::coords() { return this->coordinates; };

@@ -50,3 +50,4 @@ std::vector<Polygon> PolygonParser::parse(ColourManager &colors) {
 
     return polygons;
 }
+PolygonParser::PolygonParser(std::string input) : input(input) {}

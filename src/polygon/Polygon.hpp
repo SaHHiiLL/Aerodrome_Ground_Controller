@@ -30,10 +30,10 @@ public:
     // NOTE: appends to `this->vertices`
     void convert_coordinates_to_vertices(Coordinate centre_ref);
 
-    void set_color(const Color color) { this->color = color; }
-    [[nodiscard]] bool is_empty() const { return this->coordinates.empty(); }
-    [[nodiscard]] size_t size() const { return this->coordinates.size(); }
-    std::vector<Coordinate> &coords() { return this->coordinates; };
+    void set_color(const Color color);
+    [[nodiscard]] bool is_empty() const;
+    [[nodiscard]] size_t size() const;
+    std::vector<Coordinate> &coords();
 
     // Uses `earcut` algorithm to triangulate screeen space vertices
     // @param center_ref - centre of the polygon

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <raylib.h>
+// #include <raylib.h>
+#include "./Vec2.hpp"
 #include <string>
 
 // Represents Coordinates from the real world
@@ -15,12 +16,12 @@ public:
 
     std::string to_string();
 
-    Vector2 geo_to_screen_by_refrence(Coordinate center_ref) const;
+    Vec2 geo_to_screen_by_refrence(Coordinate center_ref) const;
 
-    Vector2 geo_to_screen_by_refrence(Coordinate center_ref,
-                                      Vector2 screen_center) const;
-    Vector2 geo_to_screen_by_refrence(Coordinate center_ref, float scale,
-                                      Vector2 screen_center) const;
+    Vec2 geo_to_screen_by_refrence(Coordinate center_ref,
+                                   Vector2 screen_center) const;
+    Vec2 geo_to_screen_by_refrence(Coordinate center_ref, float scale,
+                                   Vector2 screen_center) const;
     // W/E - X
     double lon();
     // N/S - Y
